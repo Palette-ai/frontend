@@ -19,8 +19,11 @@ const Home = () => {
 		user ?
 			<SignOut auth={auth} /> :
 			<>
+			<SafeAreaView style={styles.container}>
 				<SignInWithGoogle auth={auth} />
 				<SignIn />
+			</SafeAreaView>
+
 			</>
 	)
 }
