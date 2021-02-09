@@ -1,16 +1,18 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useState, useContext } from 'react'
+import { NavigationContainer } from '@react-navigation/native'
 
-import AppNavigator from './navigation/AppNavigator';
+import AppNavigator from './navigation/AppNavigator'
 import ReactQueryProvider from './ReactQueryProvider'
+import { firebaseInit } from './services/firebase'
 
-// This is the entry point for the App
+
 export default function App() {
+  firebaseInit()
   return (
     <ReactQueryProvider>
       <NavigationContainer>
         <AppNavigator />
       </NavigationContainer>
     </ReactQueryProvider>
-  );
+  )
 }

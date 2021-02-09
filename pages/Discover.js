@@ -5,7 +5,7 @@ const Discover = () => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<View>
-				<Text>DISCOVER YOOOOOOO</Text>
+				<Text style={styles.text}>DISCOVER YOOOOOOO</Text>
 			</View>
 		</SafeAreaView>
 	)
@@ -14,7 +14,7 @@ const Discover = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-	},
+	}
 });
 
 export default Discover
