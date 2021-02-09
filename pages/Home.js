@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView, StyleSheet} from 'react-native'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
 import SignInWithGoogle from '../components/SignInWithGoogle'
