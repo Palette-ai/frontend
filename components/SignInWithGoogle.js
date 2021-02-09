@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native'
 import firebase from 'firebase/app'
 
 const SignInWithGoogle = ({ auth }) => {
@@ -10,12 +10,15 @@ const SignInWithGoogle = ({ auth }) => {
 
 	return (
 		<>
-		<SafeAreaView>
-			<TouchableOpacity onClick={signInWithGoogle}>
-				<Text>Sign in with Google</Text>
-			</TouchableOpacity>
-		</SafeAreaView>
-			
+			<SafeAreaView>
+				<TouchableOpacity>
+					<Button
+						onPress={signInWithGoogle}
+						title='Sign in with Google'
+					/>
+				</TouchableOpacity>
+			</SafeAreaView>
+
 		</>
 	)
 }
