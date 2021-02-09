@@ -4,9 +4,7 @@ import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 const Map = () => {
 	return (
 		<SafeAreaView style={styles.container}>
-			<View>
-				<Text>DIS BE DA Map</Text>
-			</View>
+			<Text>Here is the map</Text>
 		</SafeAreaView>
 	)
 }
