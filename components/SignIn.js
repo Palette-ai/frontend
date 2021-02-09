@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView } from 'react-native'
 import {
 	useMutation,
 	useQueryClient,
@@ -36,31 +36,33 @@ function SignIn() {
 	}
 
 	return (
-		<View style={styles.container}>
-			<Text>Or create a new account</Text>
-			<input
-				name='username'
-				value={username}
-				onChange={(e) => setUsername(e.target.value)}
-				placeholder='username'
-			>
-			</input>
-			<input
-				name='email'
-				value={email}
-				onChange={(e) => setEmail(e.target.value)}
-				placeholder='email'
-			>
-			</input>
-			<input
-				name='password'
-				value={password}
-				onChange={(e) => setPassword(e.target.value)}
-				placeholder='password'
-			>
-			</input>
-			<button onClick={onSubmit}>Create new account</button>
-		</View>
+		<SafeAreaView>
+			<View style={styles.container}>
+				<Text>Or create a new account</Text>
+				<TextInput
+					name='username'
+					value={username}
+					onChange={(e) => setUsername(e.target.value)}
+					placeholder='username'
+				>
+				</TextInput>
+				<TextInput
+					name='email'
+					value={email}
+					onChange={(e) => setEmail(e.target.value)}
+					placeholder='email'
+				>
+				</TextInput>
+				<TextInput
+					name='password'
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+					placeholder='password'
+				>
+				</TextInput>
+				<TouchableOpacity onClick={onSubmit}><Text>Create new account</Text></TouchableOpacity>
+			</View>
+		</SafeAreaView>
 	);
 }
 
