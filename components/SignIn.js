@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView, Button } from 'react-native'
 import {
 	useMutation,
 	useQueryClient,
@@ -60,7 +60,12 @@ function SignIn() {
 					placeholder='password'
 				>
 				</TextInput>
-				<TouchableOpacity onClick={onSubmit}><Text>Create new account</Text></TouchableOpacity>
+				<TouchableOpacity>
+					<Button
+						onPress={onSubmit}
+						title='Create new account'
+					/>
+				</TouchableOpacity>
 			</View>
 		</SafeAreaView>
 	);

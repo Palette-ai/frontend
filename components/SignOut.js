@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, Text, View, button } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View, Button } from 'react-native'
 import firebase from 'firebase/app'
 
 const SignOut = ({ auth }) => {
@@ -7,7 +7,7 @@ const SignOut = ({ auth }) => {
 		auth.signOut()
 	}
 	return (
-		<button onClick={signOut}>Log Out</button>
+		<Button onPress={signOut}>Log Out</Button>
 	)
 }
 export default SignOut
