@@ -7,6 +7,7 @@ import Home from '../pages/Home'
 import Profile from '../pages/Profile'
 import Social from '../pages/Social'
 import Map from '../pages/Map'
+import SignIn from '../pages/SignInPage'
 
 const Tab = createBottomTabNavigator()
 export default function AppNavigator() {
@@ -22,7 +23,7 @@ export default function AppNavigator() {
 			/>
 			<Tab.Screen
 				name={'Discover'}
-				component={Discover}
+				component={SignIn}
 				options={{
 					tabBarIcon: ({ color, size }) =>
 						<MaterialCommunityIcons name="cloud-search-outline" color={color} size={size} />
