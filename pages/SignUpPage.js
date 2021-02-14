@@ -1,9 +1,9 @@
 import React from 'react';
 import IconAD from 'react-native-vector-icons/AntDesign';
 import IconET from 'react-native-vector-icons/Entypo';
-import { ImageBackground, SafeAreaView, StyleSheet, Text, View , TextInput, Image, TouchableOpacity} from 'react-native';
+import { ImageBackground, SafeAreaView, StyleSheet, Text, View , TextInput, Image} from 'react-native';
 
-const SignIn = () => {
+const SignUpPage = () => {
 	return (
 		<View style={styles.container}>
             <ImageBackground source={require('../assets/background_pic.jpg')} style={styles.image}>
@@ -16,16 +16,18 @@ const SignIn = () => {
                             />
                     </View>
                     <View style={styles.inputView}>
-                        <TextInput  
-                                style={styles.inputText}
-                                placeholder="Password" 
-                                placeholderTextColor="#003f5c"
-                                />
+                    <TextInput  
+                            style={styles.inputText}
+                            placeholder="Email" 
+                            placeholderTextColor="#003f5c"
+                            />
                     </View>
-                    <View style={styles.forgetPassword}>
-                        <TouchableOpacity>
-                            <Text>Forgot password?</Text>
-                        </TouchableOpacity>
+                    <View style={styles.inputView}>
+                    <TextInput  
+                            style={styles.inputText}
+                            placeholder="Password" 
+                            placeholderTextColor="#003f5c"
+                            />
                     </View>
                     <View style={styles.linksView}>
                         <Text>Or log in with:</Text>
@@ -64,26 +66,11 @@ const styles = StyleSheet.create({
         width:"80%",
         backgroundColor:"white",
         borderRadius:25,
-        height:"45%",
+        height:"50%",
         marginBottom:20,
         justifyContent:"flex-start",
         padding:10, 
         alignItems: "center",
-      },
-      forgetPassword:{
-        width:"95%",
-        borderRadius:10,
-        borderColor: "grey",
-        borderStyle: "solid",
-        borderWidth: 0,
-        height:30,
-        marginBottom:0,
-        marginTop:10,
-        flexDirection: "row",
-        justifyContent:"flex-start",
-        alignContent: "center",
-        padding:0,
-        flex: 1.5
       },
       inputView:{
         width:"95%",
@@ -145,4 +132,4 @@ const styles = StyleSheet.create({
       }
 });
 
-export default SignIn
+export default SignUpPage
