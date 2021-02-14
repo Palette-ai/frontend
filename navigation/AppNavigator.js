@@ -16,7 +16,7 @@ export default function AppNavigator() {
 		<Tab.Navigator>
 			<Tab.Screen
 				name={'Home'}
-				component={SignUpPage}
+				component={Home}
 				options={{
 					tabBarIcon: ({ color, size }) =>
 						<MaterialCommunityIcons name="home" color={color} size={size} />
@@ -24,7 +24,7 @@ export default function AppNavigator() {
 			/>
 			<Tab.Screen
 				name={'Discover'}
-				component={SignIn}
+				component={Discover}
 				options={{
 					tabBarIcon: ({ color, size }) =>
 						<MaterialCommunityIcons name="cloud-search-outline" color={color} size={size} />
