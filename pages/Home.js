@@ -2,10 +2,11 @@ import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
+import SignInWithFacebook from '../components/SignInWithFacebook'
 import SignInWithGoogle from '../components/SignInWithGoogle'
 import SignOut from '../components/SignOut'
 import useFirebase from '../hooks/useFirebase'
-import SignIn from '../components/SignIn';
+import SignIn from '../components/SignIn'
 
 const Home = () => {
 	const { auth } = useFirebase()
@@ -17,6 +18,7 @@ const Home = () => {
 			<>
 				<SafeAreaView style={styles.container}>
 					<SignInWithGoogle auth={auth} />
+					<SignInWithFacebook auth={auth} />
 					<SignIn />
 				</SafeAreaView>
 

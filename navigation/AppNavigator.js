@@ -8,16 +8,19 @@ import Profile from '../pages/Profile'
 import Social from '../pages/Social'
 import Map from '../pages/Map'
 
+import Icons from './icons'
+
 const Tab = createBottomTabNavigator()
 export default function AppNavigator() {
 	return (
 		<Tab.Navigator>
 			<Tab.Screen
+				style={{Backgroundcolor: '#303030'}}
 				name={'Home'}
 				component={Home}
 				options={{
 					tabBarIcon: ({ color, size }) =>
-						<MaterialCommunityIcons name="home" color={color} size={size} />
+					<MaterialCommunityIcons name="home" color={color} size={size} />
 				}}
 			/>
 			<Tab.Screen
