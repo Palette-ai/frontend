@@ -1,38 +1,29 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView, Button } from 'react-native'
-import {
-	useMutation,
-	useQueryClient,
-} from "react-query"
-import { request, gql } from "graphql-request"
+import { useMutation } from '@apollo/client'
 
-const CREATE_USER = gql`
-	mutation createUser($username: String $email: String $password: String){
-		createUser(username: $username email: $email password: $password){
-			username
-			email
-			id
-		}
-	}
-`
-const endpoint = 'http://localhost:5000/'
+import { CREATE_USER } from '../queries/users'
+
 
 function SignIn() {
 	const [username, setUsername] = useState('')
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
-	const queryClient = useQueryClient()
-	const mutation = useMutation(() => {
-		request(endpoint, CREATE_USER, { username, email, password })
-	}, {
-		onError: (error) => console.log(error),
-		onSuccess: (data) => console.log(data)
+	const [createUser] = useMutation(CREATE_USER, {
+		onCompleted(data) {
+			console.log(data);
+		}
 	})
 
-	const onSubmit = e => {
-		e.preventDefault()
-		mutation.mutate()
+	const onSubmit = () => {
+		//e.preventDefault()
+		console.log(username);
+		createUser({
+			variables: {
+				record: { name: username, location: "Testy test test" }
+			}
+		})
 	}
 
 	return (
@@ -42,27 +33,27 @@ function SignIn() {
 				<TextInput
 					name='username'
 					value={username}
-					onChange={(e) => setUsername(e.target.value)}
+					onChangeText={text => setUsername(text)}
 					placeholder='username'
 				>
 				</TextInput>
 				<TextInput
 					name='email'
 					value={email}
-					onChange={(e) => setEmail(e.target.value)}
+					onChangeText={text => setEmail(text)}
 					placeholder='email'
 				>
 				</TextInput>
 				<TextInput
 					name='password'
 					value={password}
-					onChange={(e) => setPassword(e.target.value)}
+					onChangeText={text => setPassword(text)}
 					placeholder='password'
 				>
 				</TextInput>
 				<TouchableOpacity>
 					<Button
-						onPress={onSubmit}
+						onPress={() => onSubmit(username)}
 						title='Create new account'
 					/>
 				</TouchableOpacity>
