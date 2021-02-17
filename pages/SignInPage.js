@@ -5,6 +5,7 @@ import { ImageBackground, SafeAreaView, StyleSheet, Text, View , TextInput, Imag
 
 const SignIn = () => {
 	return (
+
 		<View style={styles.container}>
             <ImageBackground source={require('../assets/background_pic.jpg')} style={styles.image}>
                 <View style={styles.FormView}>
