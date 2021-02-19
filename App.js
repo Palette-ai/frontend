@@ -1,22 +1,30 @@
 import React, { useState, useContext } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import ReactQueryProvider from './ReactQueryProvider' //Gonna rip this out and replace with Apollo soon
 import { ApolloProvider } from '@apollo/client'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 import client from './graphql/ApolloProvider';
 import AppNavigator from './navigation/AppNavigator'
 import { firebaseInit } from './services/firebase'
+import SignInWithGoogle from './components/SignInWithGoogle'
+import SignOut from './components/SignOut'
+import useFirebase from './hooks/useFirebase'
+import SignIn from './components/SignIn';
 
 
 export default function App() {
   firebaseInit()
+  const { auth } = useFirebase()
+  const [user] = useAuthState(auth)
   return (
-    <ReactQueryProvider>
-      <ApolloProvider client={client}>
-        <NavigationContainer>
-          <AppNavigator />
-        </NavigationContainer>
-      </ApolloProvider>
-    </ReactQueryProvider>
+    <ApolloProvider client={client}>
+      <NavigationContainer>
+        {
+          user ?
+            <AppNavigator /> :
+            <SignIn />
+        }
+      </NavigationContainer>
+    </ApolloProvider>
   )
 }

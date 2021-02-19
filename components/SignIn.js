@@ -3,6 +3,8 @@ import { View, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView, Butt
 import { useMutation } from '@apollo/client'
 
 import { CREATE_USER } from '../queries/users'
+import LoginBG from './Login/LoginBG'
+import LoginBox from './Login/LoginBox'
 
 
 function SignIn() {
@@ -27,8 +29,13 @@ function SignIn() {
 	}
 
 	return (
-		<SafeAreaView>
-			<View style={styles.container}>
+		<>
+			{/* <LoginBG /> */}
+			<LoginBox style={StyleSheet.LoginBox} />
+
+			{/* Will add following functionality once styling is done */}
+
+			{/* <View style={styles.container}>
 				<Text>Or create a new account</Text>
 				<TextInput
 					name='username'
@@ -57,13 +64,16 @@ function SignIn() {
 						title='Create new account'
 					/>
 				</TouchableOpacity>
-			</View>
-		</SafeAreaView>
+			</View> */}
+		</>
+
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {}
+	container: {
+		flex: 1
+	}
 });
 
 export default SignIn;
