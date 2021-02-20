@@ -1,50 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	StyleSheet,
 	View,
 	TextInput,
 	Text,
-	TouchableOpacity
+	TouchableOpacity,
+	KeyboardAvoidingView
 } from "react-native";
+import { useMutation } from '@apollo/client'
 
-function LoginBox(props) {
+import LoginButton from "./LoginButton";
+import LoginInputBox from "./LoginInputBox";
+import { CREATE_USER } from '../../queries/users'
+
+function LoginBox() {
+	const [username, setUsername] = useState('')
+	const [password, setPassword] = useState('')
+
+	const [createUser] = useMutation(CREATE_USER, {
+		onCompleted(data) {
+			console.log(data);
+		},
+		onError(error) {
+			console.log(error);
+		}
+	})
+
+	const onSubmit = (username, password) => {
+		console.log(username, password);
+		createUser({
+			variables: {
+				record: { name: username }
+			}
+		})
+	}
 	return (
-		<View style={styles.container}>
+		<KeyboardAvoidingView behavior="padding" style={styles.container}>
 			<View style={styles.loginBG}>
-				<View style={styles.usernameInputBox}>
-					<View style={styles.usernamePlaceholderStack}>
-						<TextInput
-							placeholder="UsernamePlaceholder"
-							style={styles.usernamePlaceholder}
-						></TextInput>
-						<View style={styles.rect2}></View>
-						<View style={styles.fieldName}>
-							<View style={styles.rect3}>
-								<Text style={styles.username}>Username</Text>
-							</View>
-						</View>
-					</View>
-				</View>
-				<View style={styles.passwordInputBox}>
-					<View style={styles.textInputStack}>
-						<TextInput
-							placeholder="PasswordPlaceholder"
-							style={styles.textInput}
-						></TextInput>
-						<View style={styles.rect4}></View>
-						<View style={styles.rect5}>
-							<View style={styles.rect6}>
-								<Text style={styles.password2}>Password</Text>
-							</View>
-						</View>
-					</View>
-				</View>
-				<View style={styles.loginButton}>
-					<TouchableOpacity style={styles.button}>
-						<View style={styles.loginFiller}></View>
-						<Text style={styles.login}>Login</Text>
-					</TouchableOpacity>
-				</View>
+				<LoginInputBox
+					field={username}
+					setField={setUsername}
+					placeholder="Username"
+				/>
+				<LoginInputBox
+					field={password}
+					setField={setPassword}
+					placeholder="Password"
+				/>
+				<LoginButton
+					onSubmit={onSubmit}
+					username={username}
+					password={password}
+				/>
 				<View style={styles.otherLoginProviders}>
 					<Text style={styles.orLoginWith}>Or Login With</Text>
 					<TouchableOpacity style={styles.button2}></TouchableOpacity>
@@ -52,15 +59,49 @@ function LoginBox(props) {
 					<TouchableOpacity style={styles.button4}></TouchableOpacity>
 				</View>
 			</View>
-		</View>
+		</KeyboardAvoidingView>
 	);
 }
+
+{/* Will add following functionality once styling is done */ }
+
+{/* <View style={styles.container}>
+				<Text>Or create a new account</Text>
+				<TextInput
+					name='username'
+					value={username}
+					onChangeText={text => setUsername(text)}
+					placeholder='username'
+				>
+				</TextInput>
+				<TextInput
+					name='email'
+					value={email}
+					onChangeText={text => setEmail(text)}
+					placeholder='email'
+				>
+				</TextInput>
+				<TextInput
+					name='password'
+					value={password}
+					onChangeText={text => setPassword(text)}
+					placeholder='password'
+				>
+				</TextInput>
+				<TouchableOpacity>
+					<Button
+						onPress={() => onSubmit(username)}
+						title='Create new account'
+					/>
+				</TouchableOpacity>
+			</View> */}
 
 const styles = StyleSheet.create({
 	container: {
 		width: 300,
 		height: 350,
-		justifyContent: "center"
+		justifyContent: "center",
+		zIndex: 2
 	},
 	loginBG: {
 		width: 300,
@@ -84,7 +125,6 @@ const styles = StyleSheet.create({
 		alignSelf: "center"
 	},
 	usernamePlaceholder: {
-		top: 12,
 		left: 13,
 		position: "absolute",
 		fontFamily: "roboto-regular",
@@ -101,7 +141,7 @@ const styles = StyleSheet.create({
 		borderColor: "rgba(223,225,225,1)",
 		borderRadius: 8,
 		borderBottomWidth: 1,
-		left: 0
+		left: 0,
 	},
 	fieldName: {
 		top: 0,
@@ -136,7 +176,6 @@ const styles = StyleSheet.create({
 		marginLeft: 26
 	},
 	textInput: {
-		top: 12,
 		left: 13,
 		position: "absolute",
 		fontFamily: "roboto-regular",
