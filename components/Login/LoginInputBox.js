@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
 	fieldPlaceholder: {
 		left: 13,
 		position: "absolute",
-		fontFamily: "roboto-regular",
 		color: "#121212",
 		height: 45,
 		width: 236
@@ -61,7 +60,6 @@ const styles = StyleSheet.create({
 		marginLeft: 15
 	},
 	field: {
-		fontFamily: "roboto-regular",
 		color: "rgba(105,105,105,1)",
 		height: 18,
 		width: 66,

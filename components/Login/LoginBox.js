@@ -12,10 +12,13 @@ import { useMutation } from '@apollo/client'
 import LoginButton from "./LoginButton";
 import LoginInputBox from "./LoginInputBox";
 import { CREATE_USER } from '../../queries/users'
+import SignUpLink from "./SignUpLink";
 
 function LoginBox() {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
+	const [email, setEmail] = useState('')
+	const [isSignUp, setIsSignUp] = useState(true)
 
 	const [createUser] = useMutation(CREATE_USER, {
 		onCompleted(data) {
@@ -26,17 +29,20 @@ function LoginBox() {
 		}
 	})
 
-	const onSubmit = (username, password) => {
-		console.log(username, password);
+	const SignUp = (username, password, email) => {
+		console.log(username, password, email);
 		createUser({
 			variables: {
-				record: { name: username }
+				record: { name: username, email }
 			}
 		})
 	}
+
+	const LogIn = "to do"
+
 	return (
 		<KeyboardAvoidingView behavior="padding" style={styles.container}>
-			<View style={styles.loginBG}>
+			<View style={[styles.loginBG, { height: isSignUp ? 360 : 390 }]}>
 				<LoginInputBox
 					field={username}
 					setField={setUsername}
@@ -47,54 +53,36 @@ function LoginBox() {
 					setField={setPassword}
 					placeholder="Password"
 				/>
+				{isSignUp &&
+					<LoginInputBox
+						field={email}
+						setField={setEmail}
+						placeholder="Email"
+					/>
+				}
 				<LoginButton
-					onSubmit={onSubmit}
+					onSubmit={isSignUp ? SignUp : LogIn}
+					placeholder={isSignUp ? "Sign Up" : "Log In"}
 					username={username}
 					password={password}
+					email={email}
 				/>
-				<View style={styles.otherLoginProviders}>
-					<Text style={styles.orLoginWith}>Or Login With</Text>
-					<TouchableOpacity style={styles.button2}></TouchableOpacity>
-					<TouchableOpacity style={styles.button3}></TouchableOpacity>
-					<TouchableOpacity style={styles.button4}></TouchableOpacity>
-				</View>
+				{!isSignUp &&
+					<View style={styles.otherLoginProviders}>
+						<Text style={styles.orLoginWith}>Or Login With</Text>
+						<TouchableOpacity style={styles.button2}></TouchableOpacity>
+						<TouchableOpacity style={styles.button3}></TouchableOpacity>
+						<TouchableOpacity style={styles.button4}></TouchableOpacity>
+					</View>}
+				<SignUpLink
+					linkText={isSignUp ? "Aready Have an Account?" : "Click Here To Create An Account"}
+					isSignUp={isSignUp}
+					setIsSignUp={setIsSignUp}
+				/>
 			</View>
 		</KeyboardAvoidingView>
 	);
 }
-
-{/* Will add following functionality once styling is done */ }
-
-{/* <View style={styles.container}>
-				<Text>Or create a new account</Text>
-				<TextInput
-					name='username'
-					value={username}
-					onChangeText={text => setUsername(text)}
-					placeholder='username'
-				>
-				</TextInput>
-				<TextInput
-					name='email'
-					value={email}
-					onChangeText={text => setEmail(text)}
-					placeholder='email'
-				>
-				</TextInput>
-				<TextInput
-					name='password'
-					value={password}
-					onChangeText={text => setPassword(text)}
-					placeholder='password'
-				>
-				</TextInput>
-				<TouchableOpacity>
-					<Button
-						onPress={() => onSubmit(username)}
-						title='Create new account'
-					/>
-				</TouchableOpacity>
-			</View> */}
 
 const styles = StyleSheet.create({
 	container: {
@@ -105,7 +93,7 @@ const styles = StyleSheet.create({
 	},
 	loginBG: {
 		width: 300,
-		height: 350,
+
 		backgroundColor: "rgba(255,255,255,1)",
 		borderRadius: 19,
 		shadowColor: "rgba(0,0,0,1)",
@@ -127,7 +115,6 @@ const styles = StyleSheet.create({
 	usernamePlaceholder: {
 		left: 13,
 		position: "absolute",
-		fontFamily: "roboto-regular",
 		color: "#121212",
 		height: 45,
 		width: 236
@@ -157,7 +144,6 @@ const styles = StyleSheet.create({
 		marginLeft: 15
 	},
 	username: {
-		fontFamily: "roboto-regular",
 		color: "rgba(105,105,105,1)",
 		height: 18,
 		width: 66,
@@ -178,7 +164,6 @@ const styles = StyleSheet.create({
 	textInput: {
 		left: 13,
 		position: "absolute",
-		fontFamily: "roboto-regular",
 		color: "#121212",
 		height: 45,
 		width: 236
@@ -208,7 +193,6 @@ const styles = StyleSheet.create({
 		marginLeft: 15
 	},
 	password2: {
-		fontFamily: "roboto-regular",
 		color: "rgba(105,105,105,1)",
 		height: 18,
 		width: 66,
@@ -244,7 +228,6 @@ const styles = StyleSheet.create({
 		flex: 1
 	},
 	login: {
-		fontFamily: "roboto-regular",
 		color: "rgba(255,255,255,1)",
 		height: 46,
 		width: 249,
@@ -264,7 +247,6 @@ const styles = StyleSheet.create({
 		top: -27,
 		left: 0,
 		position: "absolute",
-		fontFamily: "roboto-regular",
 		color: "#696969",
 		height: 23,
 		width: 144,

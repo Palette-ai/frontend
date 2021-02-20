@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-export default function LoginButton({ onSubmit, username, password }) {
+export default function LoginButton({ onSubmit, username, password, placeholder, email }) {
 	return (
 		<View style={styles.loginButton}>
 			<TouchableOpacity
 				style={styles.button}
-				onPress={() => onSubmit(username, password)}
+				onPress={() => email ? onSubmit(username, password, email) : onSubmit(username, password)}
 			>
 				<View style={styles.loginFiller}></View>
-				<Text style={styles.login}>Login</Text>
+				<Text style={styles.login}>{placeholder}</Text>
 			</TouchableOpacity>
 		</View>
 	);
@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
 		flex: 1
 	},
 	login: {
-		fontFamily: "roboto-regular",
 		color: "rgba(255,255,255,1)",
 		height: 46,
 		width: 249,
