@@ -9,7 +9,8 @@ import { firebaseInit } from './services/firebase'
 import SignInWithGoogle from './components/SignInWithGoogle'
 import SignOut from './components/SignOut'
 import useFirebase from './hooks/useFirebase'
-import SignIn from './components/SignIn';
+import SignIn from './components/SignIn'
+import { AuthContextProvider } from './context/AuthContext';
 
 
 export default function App() {
@@ -18,13 +19,15 @@ export default function App() {
   const [user] = useAuthState(auth)
   return (
     <ApolloProvider client={client}>
-      <NavigationContainer>
-        {
-          user ?
-            <AppNavigator /> :
-            <SignIn />
-        }
-      </NavigationContainer>
+      <AuthContextProvider>
+        <NavigationContainer>
+          {
+            user ?
+              <AppNavigator /> :
+              <SignIn />
+          }
+        </NavigationContainer>
+      </AuthContextProvider>
     </ApolloProvider>
   )
 }

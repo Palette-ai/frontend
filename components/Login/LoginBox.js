@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
 	StyleSheet,
 	View,
-	TextInput,
 	Text,
 	TouchableOpacity,
 	KeyboardAvoidingView
