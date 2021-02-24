@@ -4,9 +4,12 @@ import {
 	View,
 	Text,
 	TouchableOpacity,
-	KeyboardAvoidingView
+	KeyboardAvoidingView,
+	Button,
+	Platform
 } from "react-native";
 import { useMutation } from '@apollo/client'
+import firebase from 'firebase/app'
 
 import LoginButton from "./LoginButton";
 import LoginInputBox from "./LoginInputBox";
@@ -14,7 +17,7 @@ import { CREATE_USER } from '../../queries/users'
 import SignUpLink from "./SignUpLink";
 
 function LoginBox() {
-	const [username, setUsername] = useState('')
+	const [name, setName] = useState('')
 	const [password, setPassword] = useState('')
 	const [email, setEmail] = useState('')
 	const [isSignUp, setIsSignUp] = useState(true)
@@ -28,51 +31,85 @@ function LoginBox() {
 		}
 	})
 
-	const SignUp = (username, password, email) => {
-		console.log(username, password, email);
-		createUser({
-			variables: {
-				record: { name: username, email }
-			}
-		})
+	// const SignUp = (username, password, email) => {
+	// 	console.log(username, password, email);
+	// 	createUser({
+	// 		variables: {
+	// 			record: { name: username, email }
+	// 		}
+	// 	})
+	// }
+
+	const SignUp = async (email, password) => {
+		firebase.auth().createUserWithEmailAndPassword(email, password)
+			.then((userCredential) => {
+				console.log(userCredential);
+				userCredential.user.updateProfile({ displayName: name })
+				console.log(userCredential.user);
+			})
+			.catch((error) => {
+				console.log(console.log(error.code, error.message));
+			});
 	}
 
-	const LogIn = "to do"
+	const signInWithFacebook = async () => {
+
+	}
+
+	const LogIn = async (email, password) => {
+		firebase.auth().signInWithEmailAndPassword(email, password)
+			.then((userCredential) => {
+				// Signed in
+				console.log(userCredential.user)
+			})
+			.catch((error) => console.log(error.code, error.message))
+
+	}
 
 	return (
-		<KeyboardAvoidingView behavior="padding" style={styles.container}>
-			<View style={[styles.loginBG, { height: isSignUp ? 360 : 390 }]}>
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			style={styles.container}
+			keyboardVerticalOffset={65}
+		>
+			<View style={[styles.loginBG, { height: isSignUp ? 460 : 390 }]}>
+				{isSignUp &&
+					<LoginInputBox
+						field={name}
+						setField={setName}
+						placeholder="Name"
+					/>
+				}
 				<LoginInputBox
-					field={username}
-					setField={setUsername}
-					placeholder="Username"
+					field={email}
+					setField={setEmail}
+					placeholder="Email"
 				/>
 				<LoginInputBox
 					field={password}
 					setField={setPassword}
 					placeholder="Password"
 				/>
-				{isSignUp &&
-					<LoginInputBox
-						field={email}
-						setField={setEmail}
-						placeholder="Email"
-					/>
-				}
+
 				<LoginButton
 					onSubmit={isSignUp ? SignUp : LogIn}
 					placeholder={isSignUp ? "Sign Up" : "Log In"}
-					username={username}
-					password={password}
 					email={email}
+					name={name}
+					password={password}
 				/>
-				{!isSignUp &&
-					<View style={styles.otherLoginProviders}>
-						<Text style={styles.orLoginWith}>Or Login With</Text>
-						<TouchableOpacity style={styles.button2}></TouchableOpacity>
-						<TouchableOpacity style={styles.button3}></TouchableOpacity>
-						<TouchableOpacity style={styles.button4}></TouchableOpacity>
-					</View>}
+				<View style={styles.otherLoginProviders}>
+					<Text style={styles.orLoginWith}>Or Login With</Text>
+					<TouchableOpacity style={styles.button2}>
+						<Button
+							onPress={signInWithFacebook}
+							title="FB"
+						>
+						</Button>
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.button3}></TouchableOpacity>
+					<TouchableOpacity style={styles.button4}></TouchableOpacity>
+				</View>
 				<SignUpLink
 					linkText={isSignUp ? "Aready Have an Account?" : "Click Here To Create An Account"}
 					isSignUp={isSignUp}
@@ -92,7 +129,6 @@ const styles = StyleSheet.create({
 	},
 	loginBG: {
 		width: 300,
-
 		backgroundColor: "rgba(255,255,255,1)",
 		borderRadius: 19,
 		shadowColor: "rgba(0,0,0,1)",
