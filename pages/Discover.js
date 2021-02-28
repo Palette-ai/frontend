@@ -1,5 +1,10 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { 
+	ScrollView, 
+	StyleSheet, 
+	Text, 
+	View 
+} from 'react-native'
 import { useQuery, gql } from '@apollo/client';
 import { StatusBar } from 'expo-status-bar';
 import { GET_ALL_DISHES } from '../queries/dishes';
@@ -24,11 +29,24 @@ const Discover = () => {
 			<View syle={styles.container}>
 				<View style={styles.filter_container}>
 					<Text style={styles.textTitle}>recommendations</Text>
+					<ScrollView style={styles.filter_scroll_container} horizontal={true}s>
+						<Text style={styles.textFiler}>price</Text>
+						<Text style={styles.textFiler}>distance</Text>
+						<Text style={styles.textFiler}>rating</Text>
+						<Text style={styles.textFiler}>score</Text>
+						<Text style={styles.textFiler}>organic</Text>
+						<Text style={styles.textFiler}>spicy</Text>
+						<Text style={styles.textFiler}>gluten</Text>
+						<Text style={styles.textFiler}>dairy</Text>
+					</ScrollView>
 				</View>
 				<View style={styles.item_container}>
-					<Text>Sushi</Text>
+					<View style={styles.rect2}></View>
+					<View style={styles.rect2}></View>
+					<View style={styles.rect2}></View>
 				</View>
 				<StatusBar style="light" />
+				<View style={styles.footer_container}/>
 			</View>
 	)
 }
@@ -48,8 +66,15 @@ const styles = StyleSheet.create({
 		borderBottomRightRadius: 30,
 
 	},
+	filter_scroll_container:{
+		marginTop: 35,
+    marginLeft: 100,
+	},
+
+	textFiler: {
+		marginRight: 25,
+	},
 	textTitle: {
-		fontFamily: "roboto-regular",
 		color:'#FFFFFF',
 		fontSize: 34,
 		marginTop: 60,
@@ -57,6 +82,19 @@ const styles = StyleSheet.create({
 		fontWeight:'600'
 	},
 	item_container: {
+		justifyContent: 'center',
+    alignItems: 'center',
+		backgroundColor: '#FDFCFC',
+	},
+	rect2: {
+    width: 315,
+    height: 130,
+    backgroundColor: "#E6E6E6",
+    marginTop: 15,
+
+  },
+	footer_container:{
+		flex: 1,
 		justifyContent: 'center',
     alignItems: 'center',
 		backgroundColor: '#FDFCFC',
