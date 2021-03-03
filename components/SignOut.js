@@ -4,10 +4,13 @@ import firebase from 'firebase/app'
 
 const SignOut = ({ auth }) => {
 	const signOut = () => {
-		auth.signOut()
+		firebase.auth().signOut()
 	}
 	return (
-		<Button onPress={signOut}>Log Out</Button>
+		<Button
+			onPress={signOut}
+			title="Sign Out"
+		/>
 	)
 }
 export default SignOut

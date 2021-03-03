@@ -3,6 +3,9 @@
     "name": "Palette-Frontend",
     "slug": "Palette-Frontend",
     "version": "1.0.0",
+    "facebookScheme": "fb479094326830883",
+    "facebookAppId": "479094326830883",
+    "facebookDisplayName": "Palette",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -17,7 +20,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.Palette-Frontend"
     },
     "android": {
       "adaptiveIcon": {

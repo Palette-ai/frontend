@@ -14,8 +14,7 @@ const firebaseInit = () => {
 		measurementId: "G-49W2XBPM4J"
 		// Initialize Firebase
 	}
-	firebase.initializeApp(firebaseConfig)
-
+	if (!firebase.apps.length) firebase.initializeApp(firebaseConfig)
 
 	return {
 		auth: firebase.auth(),

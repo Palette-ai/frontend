@@ -1,35 +1,45 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native'
-import { useAuthState } from 'react-firebase-hooks/auth'
+import React from 'react'
+import { SafeAreaView, Text, StyleSheet, View, ScrollView } from 'react-native'
+import { GET_ALL_DISHES } from '../queries/dishes'
+import { useQuery } from '@apollo/client';
+import { TouchableHighlight } from 'react-native-gesture-handler'
+import Dish from './Dish';
 
-import SignInWithFacebook from '../components/SignInWithFacebook'
-import SignInWithGoogle from '../components/SignInWithGoogle'
-import SignOut from '../components/SignOut'
-import useFirebase from '../hooks/useFirebase'
-import SignIn from '../components/SignIn'
+function Home({ navigation }) {
+	const { loading, error, data } = useQuery(GET_ALL_DISHES)
+	if (error) console.log(error);
+	if (loading) return <Text>loading...</Text>
 
-const Home = () => {
-	const { auth } = useFirebase()
-	const [user] = useAuthState(auth)
-
-	return (
-		user ?
-			<SignOut auth={auth} /> :
-			<>
-				<SafeAreaView style={styles.container}>
-					<SignInWithGoogle auth={auth} />
-					<SignInWithFacebook auth={auth} />
-					<SignIn />
-				</SafeAreaView>
-
-			</>
-	)
+	if (data) return (
+		<SafeAreaView style={styles.container}>
+			<ScrollView>
+				{data.dishMany.map(dish => (
+					<TouchableHighlight
+						onPress={() => navigation.navigate('Dish', { dish })}
+						key={dish._id}
+					>
+						<View style={styles.tempBox}>
+							<Text>{dish.dish_name}</Text>
+						</View>
+					</TouchableHighlight>
+				))}
+			</ScrollView>
+		</SafeAreaView>
+	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
+		display: 'flex'
 	},
+	tempBox: {
+		width: 100,
+		height: 100,
+		margin: 10,
+		backgroundColor: 'yellow',
+		alignItems: 'center',
+		justifyContent: 'center'
+	}
 });
 
-export default Home
+export default Home;
