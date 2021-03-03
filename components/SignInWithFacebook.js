@@ -2,9 +2,9 @@ import React from 'react'
 import { SafeAreaView, TouchableOpacity, Button } from 'react-native'
 import firebase from 'firebase/app'
 
-const SignInWithGoogle = ({ auth }) => {
-	const signInWithGoogle = () => {
-		const provider = new firebase.auth.GoogleAuthProvider()
+const SignInWithFacebook = ({ auth }) => {
+	const signInWithFacebook = () => {
+		const provider = new firebase.auth.FacebookAuthProvider()
 		auth.signInWithPopup(provider)
 	}
 
@@ -13,8 +13,8 @@ const SignInWithGoogle = ({ auth }) => {
 			<SafeAreaView>
 				<TouchableOpacity>
 					<Button
-						onPress={signInWithGoogle}
-						title='Sign in with Google'
+						onPress={signInWithFacebook}
+						title='Sign in with Facebook'
 					/>
 				</TouchableOpacity>
 			</SafeAreaView>
@@ -22,4 +22,4 @@ const SignInWithGoogle = ({ auth }) => {
 		</>
 	)
 }
-export default SignInWithGoogle
+export default SignInWithFacebook
