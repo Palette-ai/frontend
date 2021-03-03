@@ -7,10 +7,7 @@ import Home from '../pages/Home'
 import Profile from '../pages/Profile'
 import Social from '../pages/Social'
 import Map from '../pages/Map'
-import SignIn from '../pages/SignInPage'
-import SignUp from '../pages/SignUpPage'
-
-import Icons from './icons'
+import HomeStackScreen from '../navigation/DishNavigator';
 
 const Tab = createBottomTabNavigator()
 export default function AppNavigator() {
@@ -37,7 +34,7 @@ export default function AppNavigator() {
 			<Tab.Screen
 				style={{Backgroundcolor: '#303030'}}
 				name={'Home'}
-				component={Home}
+				component={HomeStackScreen}
 				options={{
 					tabBarIcon: ({ color, size }) =>
 					<MaterialCommunityIcons name="home" color={color} size={size} />

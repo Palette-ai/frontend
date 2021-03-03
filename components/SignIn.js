@@ -1,69 +1,58 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView, Button } from 'react-native'
-import { useMutation } from '@apollo/client'
-
-import { CREATE_USER } from '../queries/users'
-
+import {
+	View,
+	StyleSheet,
+	Image,
+	ImageBackground,
+	TouchableWithoutFeedback,
+	Keyboard
+} from 'react-native'
+import LoginBox from './Login/LoginBox';
 
 function SignIn() {
-	const [username, setUsername] = useState('')
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-
-	const [createUser] = useMutation(CREATE_USER, {
-		onCompleted(data) {
-			console.log(data);
-		}
-	})
-
-	const onSubmit = () => {
-		//e.preventDefault()
-		console.log(username);
-		createUser({
-			variables: {
-				record: { name: username, location: "Testy test test" }
-			}
-		})
-	}
 
 	return (
-		<SafeAreaView>
-			<View style={styles.container}>
-				<Text>Or create a new account</Text>
-				<TextInput
-					name='username'
-					value={username}
-					onChangeText={text => setUsername(text)}
-					placeholder='username'
+		<View>
+			<TouchableWithoutFeedback
+				onPress={() => Keyboard.dismiss()}
+			>
+				<ImageBackground
+					source={require("../assets/LoginBG.png")}
+					style={styles.image}
 				>
-				</TextInput>
-				<TextInput
-					name='email'
-					value={email}
-					onChangeText={text => setEmail(text)}
-					placeholder='email'
-				>
-				</TextInput>
-				<TextInput
-					name='password'
-					value={password}
-					onChangeText={text => setPassword(text)}
-					placeholder='password'
-				>
-				</TextInput>
-				<TouchableOpacity>
-					<Button
-						onPress={() => onSubmit(username)}
-						title='Create new account'
-					/>
-				</TouchableOpacity>
-			</View>
-		</SafeAreaView>
+					<Image
+						source={require("../assets/Logo.png")}
+						resizeMode="contain"
+						style={styles.logo}
+					></Image>
+					<LoginBox />
+				</ImageBackground>
+			</TouchableWithoutFeedback>
+		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {}
+	image: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: '100%',
+		height: '100%',
+		zIndex: -1
+	},
+	logo: {
+		top: -1,
+		zIndex: 1,
+		marginTop: -30,
+		marginBottom: 80,
+		width: 300,
+		height: 300,
+		transform: [
+			{
+				rotate: "-15.00deg"
+			}
+		]
+	}
 });
 
 export default SignIn;

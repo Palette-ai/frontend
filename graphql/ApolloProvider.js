@@ -17,8 +17,8 @@ const handleError = onError(({ graphQLErrors, networkError }) => {
 //! For production: 
 // const httplink = createUploadLink({ uri: 'INSERT_PROD_LINK', credentials: 'include' })
 
-//! For dev: 
-const httplink = createUploadLink({ uri: 'http://localhost:5000', credentials: 'include' })
+//! For dev (change the uri to your own ip address, couldnt get it working any other way for some reason): 
+const httplink = createUploadLink({ uri: 'http://192.168.4.104:5000/graphql', credentials: 'include' })
 
 const authLink = setContext((_, { headers }) => {
 	// get the authentication token from local storage if it exists
@@ -41,7 +41,12 @@ const links = from([
 
 const client = new ApolloClient({
 	link: links,
-	// uri: 'http://localhost:5000',
+	//uri: 'http://localhost:5000/graphql',
 	cache: new InMemoryCache()
 });
+
+// const client = new ApolloClient({
+// 	uri: 'http://localhost:5000/graphql',
+// 	cache: new InMemoryCache(),
+// });
 export default client
