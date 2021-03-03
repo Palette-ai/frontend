@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TextInput } from 'react-native';
 
 export default function LoginInputBox({ field, setField, placeholder }) {
 	return (
-		<View style={styles.fieldInputBox}>
+		<View style={[styles.fieldInputBox]}>
 			<View style={styles.rect2}>
 				<TextInput
 					placeholder={placeholder}
@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
 		width: 249,
 		height: 57,
 		marginTop: 23,
-		alignSelf: "center"
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 	fieldPlaceholder: {
 		left: 13,
@@ -37,16 +38,15 @@ const styles = StyleSheet.create({
 	},
 	fieldName: {
 		top: 0,
-		left: 18,
+		left: -15,
 		width: 78,
 		height: 22,
 		position: "absolute"
 	},
 	rect2: {
-		top: 11,
-		width: 249,
+		top: 5,
+		width: 330,
 		height: 46,
-		position: "absolute",
 		borderWidth: 1,
 		borderColor: "rgba(223,225,225,1)",
 		borderRadius: 8,
@@ -66,5 +66,5 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		fontSize: 12,
 		marginTop: 4
-	},
+	}
 });

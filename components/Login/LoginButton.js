@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
 	loginButton: {
 		width: 249,
 		height: 46,
-		marginTop: 15,
-		marginLeft: 26
+		marginTop: 25,
+		marginBottom: 8
 	},
 	button: {
 		width: 249,

@@ -7,7 +7,6 @@ import client from './graphql/ApolloProvider';
 import AppNavigator from './navigation/AppNavigator'
 import { firebaseInit } from './services/firebase'
 import firebase from 'firebase/app'
-import SignInWithGoogle from './components/SignInWithGoogle'
 import SignOut from './components/SignOut'
 import SignIn from './components/SignIn'
 import { AuthContextProvider } from './context/AuthContext';
