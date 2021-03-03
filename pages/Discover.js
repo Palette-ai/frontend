@@ -29,7 +29,7 @@ const Discover = () => {
 			<View syle={styles.container}>
 				<View style={styles.filter_container}>
 					<Text style={styles.textTitle}>recommendations</Text>
-					<ScrollView style={styles.filter_scroll_container} horizontal={true}s>
+					<ScrollView style={styles.filter_scroll_container} showsHorizontalScrollIndicator={false} horizontal={true}s>
 						<Text style={styles.textFiler}>price</Text>
 						<Text style={styles.textFiler}>distance</Text>
 						<Text style={styles.textFiler}>rating</Text>
@@ -41,9 +41,10 @@ const Discover = () => {
 					</ScrollView>
 				</View>
 				<View style={styles.item_container}>
-					<View style={styles.rect2}></View>
-					<View style={styles.rect2}></View>
-					<View style={styles.rect2}></View>
+					<View style={styles.rect2}>
+						<Text>Sushi</Text>
+						<Text>Sushiya</Text>
+					</View>
 				</View>
 				<StatusBar style="light" />
 				<View style={styles.footer_container}/>
