@@ -18,7 +18,7 @@ const handleError = onError(({ graphQLErrors, networkError }) => {
 // const httplink = createUploadLink({ uri: 'INSERT_PROD_LINK', credentials: 'include' })
 
 //! For dev (change the uri to your own ip address, couldnt get it working any other way for some reason): 
-const httplink = createUploadLink({ uri: 'http://192.168.4.104:5000/graphql', credentials: 'include' })
+const httplink = createUploadLink({ uri: 'https://palette-backend.herokuapp.com/graphql', credentials: 'include' })
 
 const authLink = setContext((_, { headers }) => {
 	// get the authentication token from local storage if it exists

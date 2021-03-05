@@ -13,24 +13,6 @@ const Tab = createBottomTabNavigator()
 export default function AppNavigator() {
 	return (
 		<Tab.Navigator>
-						<Tab.Screen
-				style={{Backgroundcolor: '#303030'}}
-				name={'SignUp'}
-				component={SignUp}
-				options={{
-					tabBarIcon: ({ color, size }) =>
-					<MaterialCommunityIcons name="home" color={color} size={size} />
-				}}
-			/>
-			<Tab.Screen
-				style={{Backgroundcolor: '#303030'}}
-				name={'Signin'}
-				component={SignIn}
-				options={{
-					tabBarIcon: ({ color, size }) =>
-					<MaterialCommunityIcons name="home" color={color} size={size} />
-				}}
-			/>
 			<Tab.Screen
 				style={{Backgroundcolor: '#303030'}}
 				name={'Home'}
