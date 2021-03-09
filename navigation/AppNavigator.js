@@ -2,29 +2,19 @@ import React from 'react'
 import { createBottomTabNavigator } from 'react-navigation-bottom-tabs-no-warnings'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
-import Discover from '../pages/Discover'
-import Home from '../pages/Home'
 import Profile from '../pages/Profile'
 import Social from '../pages/Social'
 import Map from '../pages/Map'
-import HomeStackScreen from '../navigation/DishNavigator';
+import DiscoverStackScreen from '../navigation/DishNavigator';
 
 const Tab = createBottomTabNavigator()
 export default function AppNavigator() {
 	return (
 		<Tab.Navigator>
-			<Tab.Screen
-				style={{Backgroundcolor: '#303030'}}
-				name={'Home'}
-				component={HomeStackScreen}
-				options={{
-					tabBarIcon: ({ color, size }) =>
-					<MaterialCommunityIcons name="home" color={color} size={size} />
-				}}
-			/>
+
 			<Tab.Screen
 				name={'Discover'}
-				component={Discover}
+				component={DiscoverStackScreen}
 				options={{
 					tabBarIcon: ({ color, size }) =>
 						<MaterialCommunityIcons name="cloud-search-outline" color={color} size={size} />

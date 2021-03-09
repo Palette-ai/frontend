@@ -4,16 +4,16 @@ import {
 	StyleSheet, 
 	Image,
 	Text, 
-	View 
+	View,
 } from 'react-native'
 import { useQuery } from '@apollo/client';
-import { TouchableHighlight } from 'react-native-gesture-handler'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar';
 import { GET_ALL_DISHES } from '../queries/dishes';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import {sushi, dollar_sign, hot, organic, map_sign} from '../assets';
 
-const Discover = () => {
+const Discover = ({ navigation }) => {
 	const { loading, error, data } = useQuery(GET_ALL_DISHES)
 	if (loading) return <Text> Loading... </Text>
 	if (error) return <Text>{error}</Text>
@@ -27,43 +27,43 @@ const Discover = () => {
 						<View style={styles.filter_item_select}>
 						<Grid>
 							<Col><View style={styles.filter_icon_select}/></Col>
-							<Col style={styles.text_filer_}><Text>price</Text></Col>
+							<Col style={styles.text_filter}><Text>price</Text></Col>
 						</Grid>
 						</View>
 						<View style={styles.filter_item_inactive}>
 						<Grid>
 							<Col><View style={styles.filter_icon_inactive}/></Col>
-							<Col style={styles.text_filer_}><Text>rating</Text></Col>
+							<Col style={styles.text_filter}><Text>rating</Text></Col>
 						</Grid>
 						</View>
 						<View style={styles.filter_item_inactive}>
 						<Grid>
 							<Col><View style={styles.filter_icon_inactive}/></Col>
-							<Col style={styles.text_filer_}><Text>score</Text></Col>
+							<Col style={styles.text_filter}><Text>score</Text></Col>
 						</Grid>
 						</View>
 						<View style={styles.filter_item_inactive}>
 						<Grid>
 							<Col><View style={styles.filter_icon_inactive}/></Col>
-							<Col style={styles.text_filer_}><Text>organic</Text></Col>
+							<Col style={styles.text_filter}><Text>organic</Text></Col>
 						</Grid>
 						</View>
 						<View style={styles.filter_item_inactive}>
 						<Grid>
 							<Col><View style={styles.filter_icon_inactive}/></Col>
-							<Col style={styles.text_filer_}><Text>spicy</Text></Col>
+							<Col style={styles.text_filter}><Text>spicy</Text></Col>
 						</Grid>
 						</View>
 						<View style={styles.filter_item_inactive}>
 						<Grid>
 							<Col><View style={styles.filter_icon_inactive}/></Col>
-							<Col style={styles.text_filer_}><Text>gluten</Text></Col>
+							<Col style={styles.text_filter}><Text>gluten</Text></Col>
 						</Grid>
 						</View>
 						<View style={styles.filter_item_inactive}>
 						<Grid>
 							<Col><View style={styles.filter_icon_inactive}/></Col>
-							<Col style={styles.text_filer_}><Text>dairy</Text></Col>
+							<Col style={styles.text_filter}><Text>dairy</Text></Col>
 						</Grid>
 						</View>
 					</ScrollView>
@@ -72,8 +72,9 @@ const Discover = () => {
 				<View style={styles.item_container}>
 					<ScrollView showsVerticalScrollIndicator={false}>
 					{data.dishMany.map(dish => (
-					<TouchableHighlight
-						onPress={() => navigation.navigate('Dish', { dish })}
+					<TouchableOpacity
+						activeOpacit={0.1}
+						onPress={() => navigation.navigate('Dish', { dish, navigation })}
 						key={dish._id}
 					>
 												<View style={styles.rect2}>
@@ -88,16 +89,16 @@ const Discover = () => {
 									<Col>
 									<Row>
 										<Text style={styles.dish_name}>{dish.dish_name}</Text>
-										<View style={styles.rating_circle}/>
+										{/* <View style={styles.rating_circle}/> */}
 									</Row>
-										<Row><Text style={styles.res_name}>Sushiya</Text></Row>
+										{/* <Row><Text style={styles.res_name}>Sushiya</Text></Row>
 										<Row>
 											<Image source={dollar_sign}/>
 											<Image source={dollar_sign}/>
 											<Image source={dollar_sign}/>
-										</Row>
+										</Row> */}
 									</Col>
-									<Col size={1}>
+									{/* <Col size={1}>
 										<Row style={styles.row_reverse}>
 										<Image source={organic}/>
 										<Image source={hot}/>
@@ -109,16 +110,16 @@ const Discover = () => {
 										<Row style={styles.row_reverse}>
 											<View style={styles.score_circle}/>
 										</Row>
-									</Col>
+									</Col> */}
 									</Row>
-									<Row size={.25} style={styles.row_reverse}>
+									{/* <Row size={.25} style={styles.row_reverse}>
 										<Text>2.3 miles away</Text>
 										<Image source={map_sign}/>
-									</Row>
+									</Row> */}
 								</Col>
 							</Grid>
 						</View>
-					</TouchableHighlight>
+					</TouchableOpacity>
 				))}
 					</ScrollView>
 				</View>
@@ -142,14 +143,14 @@ const styles = StyleSheet.create({
 	},
 	filter_container: {
 		backgroundColor: '#FF5349',
-    width: 430,
-    height: 215,
+    width: '100%',
+    height: '21%',
 		borderBottomLeftRadius: 30,
 		borderBottomRightRadius: 30,
 	},
 	filter_scroll_container:{
 		marginTop:25,
-    marginLeft: 10,
+    marginLeft: 5,
 	},
 	filter_item_select: {
 		marginRight: 20,
@@ -170,21 +171,24 @@ const styles = StyleSheet.create({
 		backgroundColor: '#FFFFFF',
 	},
 	filter_icon_select: {
-		marginRight: 20,
+		marginTop: 6,
+		marginLeft: 7,
 		width: 35,
 		height: 35,
 		borderRadius: 100,
 		backgroundColor: '#FFFFFF',
 	},
 	filter_icon_inactive: {
-		marginRight: 20,
+		marginTop: 6,
+		marginLeft: 7,
 		width: 35,
 		height: 35,
 		borderRadius: 100,
 		backgroundColor: '#000000',
 	},
-	text_filer: {
-		marginRight: 25,
+	text_filter: {
+		marginTop: 15,
+		marginLeft: -5,
 	},
 	text_title: {
 		color:'#FFFFFF',
@@ -206,7 +210,7 @@ const styles = StyleSheet.create({
 		width: '100%'
 	},
 	shadow_box:{
-		shadowColor: '#AFAFAF',
+		shadowColor: '#40404040',
 		shadowOffset: { width: -1, height: 2 },
 		shadowOpacity: 4,
 		shadowRadius: 1,  
