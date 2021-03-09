@@ -25,7 +25,7 @@ function SignIn() {
 						resizeMode="contain"
 						style={styles.logo}
 					></Image>
-					<LoginBox style={StyleSheet.LoginBox} />
+					<LoginBox />
 				</ImageBackground>
 			</TouchableWithoutFeedback>
 		</View>
@@ -41,9 +41,10 @@ const styles = StyleSheet.create({
 		zIndex: -1
 	},
 	logo: {
-		justifyContent: 'center',
-		alignItems: 'center',
+		top: -1,
 		zIndex: 1,
+		marginTop: -30,
+		marginBottom: 80,
 		width: 300,
 		height: 300,
 		transform: [

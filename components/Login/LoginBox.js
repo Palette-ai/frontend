@@ -4,9 +4,12 @@ import {
 	View,
 	Text,
 	TouchableOpacity,
-	KeyboardAvoidingView
+	KeyboardAvoidingView,
+	Button,
+	Platform
 } from "react-native";
 import { useMutation } from '@apollo/client'
+import firebase from 'firebase/app'
 
 import LoginButton from "./LoginButton";
 import LoginInputBox from "./LoginInputBox";
@@ -14,7 +17,7 @@ import { CREATE_USER } from '../../queries/users'
 import SignUpLink from "./SignUpLink";
 
 function LoginBox() {
-	const [username, setUsername] = useState('')
+	const [name, setName] = useState('')
 	const [password, setPassword] = useState('')
 	const [email, setEmail] = useState('')
 	const [isSignUp, setIsSignUp] = useState(true)
@@ -28,51 +31,75 @@ function LoginBox() {
 		}
 	})
 
-	const SignUp = (username, password, email) => {
-		console.log(username, password, email);
-		createUser({
-			variables: {
-				record: { name: username, email }
-			}
-		})
+	// const SignUp = (username, password, email) => {
+	// 	console.log(username, password, email);
+	// 	createUser({
+	// 		variables: {
+	// 			record: { name: username, email }
+	// 		}
+	// 	})
+	// }
+
+	const SignUp = async (email, password) => {
+		firebase.auth().createUserWithEmailAndPassword(email, password)
+			.then((userCredential) => {
+				console.log(userCredential);
+				userCredential.user.updateProfile({ displayName: name })
+				console.log(userCredential.user);
+			})
+			.catch((error) => {
+				console.log(console.log(error.code, error.message));
+			});
 	}
 
-	const LogIn = "to do"
+	const LogIn = async (email, password) => {
+		firebase.auth().signInWithEmailAndPassword(email, password)
+			.then((userCredential) => {
+				// Signed in
+				console.log(userCredential.user)
+			})
+			.catch((error) => console.log(error.code, error.message))
+
+	}
 
 	return (
-		<KeyboardAvoidingView behavior="padding" style={styles.container}>
-			<View style={[styles.loginBG, { height: isSignUp ? 360 : 390 }]}>
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			style={styles.container}
+			keyboardVerticalOffset={65}
+		>
+			<View style={[styles.loginBG, { height: isSignUp ? 510 : 430 }]}>
+				{isSignUp &&
+					<LoginInputBox
+						field={name}
+						setField={setName}
+						placeholder="Name"
+					/>
+				}
 				<LoginInputBox
-					field={username}
-					setField={setUsername}
-					placeholder="Username"
+					field={email}
+					setField={setEmail}
+					placeholder="Email"
 				/>
 				<LoginInputBox
 					field={password}
 					setField={setPassword}
 					placeholder="Password"
 				/>
-				{isSignUp &&
-					<LoginInputBox
-						field={email}
-						setField={setEmail}
-						placeholder="Email"
-					/>
-				}
 				<LoginButton
 					onSubmit={isSignUp ? SignUp : LogIn}
 					placeholder={isSignUp ? "Sign Up" : "Log In"}
-					username={username}
-					password={password}
 					email={email}
+					name={name}
+					password={password}
 				/>
-				{!isSignUp &&
-					<View style={styles.otherLoginProviders}>
-						<Text style={styles.orLoginWith}>Or Login With</Text>
-						<TouchableOpacity style={styles.button2}></TouchableOpacity>
-						<TouchableOpacity style={styles.button3}></TouchableOpacity>
-						<TouchableOpacity style={styles.button4}></TouchableOpacity>
-					</View>}
+				<View style={styles.otherLoginProviders}>
+					<Text style={styles.orLoginWith}>{isSignUp ? "Or Sign Up With" : "Or Log In With"}</Text>
+					<TouchableOpacity style={styles.providerButton}>
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.providerButton}></TouchableOpacity>
+					<TouchableOpacity style={styles.providerButton}></TouchableOpacity>
+				</View>
 				<SignUpLink
 					linkText={isSignUp ? "Aready Have an Account?" : "Click Here To Create An Account"}
 					isSignUp={isSignUp}
@@ -91,8 +118,9 @@ const styles = StyleSheet.create({
 		zIndex: 2
 	},
 	loginBG: {
-		width: 300,
-
+		width: 380,
+		justifyContent: 'center',
+		alignItems: 'center',
 		backgroundColor: "rgba(255,255,255,1)",
 		borderRadius: 19,
 		shadowColor: "rgba(0,0,0,1)",
@@ -105,171 +133,33 @@ const styles = StyleSheet.create({
 		shadowRadius: 7,
 		alignSelf: "center"
 	},
-	usernameInputBox: {
-		width: 249,
-		height: 57,
-		marginTop: 23,
-		alignSelf: "center"
-	},
-	usernamePlaceholder: {
-		left: 13,
-		position: "absolute",
-		color: "#121212",
-		height: 45,
-		width: 236
-	},
-	rect2: {
-		top: 11,
-		width: 249,
-		height: 46,
-		position: "absolute",
-		borderWidth: 1,
-		borderColor: "rgba(223,225,225,1)",
-		borderRadius: 8,
-		borderBottomWidth: 1,
-		left: 0,
-	},
-	fieldName: {
-		top: 0,
-		left: 18,
-		width: 78,
-		height: 22,
-		position: "absolute"
-	},
-	rect3: {
-		width: 66,
-		height: 22,
-		backgroundColor: "rgba(255,255,255,1)",
-		marginLeft: 15
-	},
-	username: {
-		color: "rgba(105,105,105,1)",
-		height: 18,
-		width: 66,
-		textAlign: "center",
-		fontSize: 12,
-		marginTop: 4
-	},
-	usernamePlaceholderStack: {
-		width: 249,
-		height: 57
-	},
-	passwordInputBox: {
-		width: 249,
-		height: 57,
-		marginTop: 12,
-		marginLeft: 26
-	},
-	textInput: {
-		left: 13,
-		position: "absolute",
-		color: "#121212",
-		height: 45,
-		width: 236
-	},
-	rect4: {
-		top: 11,
-		width: 249,
-		height: 46,
-		position: "absolute",
-		borderWidth: 1,
-		borderColor: "rgba(223,225,225,1)",
-		borderRadius: 8,
-		borderBottomWidth: 1,
-		left: 0
-	},
-	rect5: {
-		top: 0,
-		left: 18,
-		width: 78,
-		height: 22,
-		position: "absolute"
-	},
-	rect6: {
-		width: 66,
-		height: 22,
-		backgroundColor: "rgba(255,255,255,1)",
-		marginLeft: 15
-	},
-	password2: {
-		color: "rgba(105,105,105,1)",
-		height: 18,
-		width: 66,
-		textAlign: "center",
-		fontSize: 12,
-		marginTop: 4
-	},
-	textInputStack: {
-		width: 249,
-		height: 57
-	},
-	loginButton: {
-		width: 249,
-		height: 46,
-		marginTop: 15,
-		marginLeft: 26
-	},
-	button: {
-		width: 249,
-		height: 46,
-		backgroundColor: "rgba(65,117,5,1)",
-		borderRadius: 8,
-		shadowColor: "rgba(0,0,0,1)",
-		shadowOffset: {
-			height: 3,
-			width: -3
-		},
-		elevation: 12,
-		shadowOpacity: 0.25,
-		shadowRadius: 4
-	},
-	loginFiller: {
-		flex: 1
-	},
-	login: {
-		color: "rgba(255,255,255,1)",
-		height: 46,
-		width: 249,
-		textAlign: "center",
-		lineHeight: 44,
-		fontSize: 18
-	},
 	otherLoginProviders: {
-		width: 247,
+		width: 300,
 		height: 72,
 		flexDirection: "row",
 		justifyContent: "space-between",
 		marginTop: 45,
-		marginLeft: 27
+		alignItems: 'center'
 	},
 	orLoginWith: {
-		top: -27,
+		top: -30,
 		left: 0,
 		position: "absolute",
 		color: "#696969",
-		height: 23,
+		height: 25,
 		width: 144,
 		fontSize: 14,
 		textAlign: "left"
 	},
-	button2: {
-		width: 72,
-		height: 72,
-		backgroundColor: "#E6E6E6",
-		borderRadius: 50
-	},
-	button3: {
-		width: 72,
-		height: 72,
-		backgroundColor: "#E6E6E6",
-		borderRadius: 50
-	},
-	button4: {
-		width: 72,
-		height: 72,
+	providerButton: {
+		width: 82,
+		height: 82,
 		backgroundColor: "#E6E6E6",
 		borderRadius: 50
 	}
 });
 
 export default LoginBox;
+
+//FB ID: 479094326830883
+//FB SEcret: 00edbd70599aace76e553a1351492756

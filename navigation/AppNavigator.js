@@ -1,57 +1,39 @@
 import React from 'react'
-import { createBottomTabNavigator } from 'react-navigation-bottom-tabs-no-warnings'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import ProfileScreen from '../pages/Profile'
+import SocialScreen from '../pages/Social'
+import MapScreen from '../pages/Map'
+import DiscoverStackScreen from '../navigation/DishNavigator';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BottomNavigation, BottomNavigationTab } from '@ui-kitten/components';
 
-import Discover from '../pages/Discover'
-import Home from '../pages/Home'
-import Profile from '../pages/Profile'
-import Social from '../pages/Social'
-import Map from '../pages/Map'
+const { Navigator, Screen } = createBottomTabNavigator();
 
-const Tab = createBottomTabNavigator()
+const BottomTabBar = ({ navigation, state }) => (
+  <BottomNavigation
+    selectedIndex={state.index}
+    onSelect={index => navigation.navigate(state.routeNames[index])}>
+    <BottomNavigationTab title='DISCOVER'/>
+    <BottomNavigationTab title='MAP'/>
+		<BottomNavigationTab title='SOCIAL'/>
+    <BottomNavigationTab title='PROFILE'/>
+  </BottomNavigation>
+);
+
+const TabNavigator = () => (
+  <Navigator tabBar={props => <BottomTabBar {...props} />}>
+    <Screen name='Discover' component={DiscoverStackScreen}/>
+		<Screen name='Map' component={MapScreen}/>
+    <Screen name='Social' component={SocialScreen}/>
+		<Screen name='Profile' component={ProfileScreen}/>
+  </Navigator>
+);
+
 export default function AppNavigator() {
-	return (
-		<Tab.Navigator>
-			<Tab.Screen
-				name={'Home'}
-				component={Home}
-				options={{
-					tabBarIcon: ({ color, size }) =>
-						<MaterialCommunityIcons name="home" color={color} size={size} />
-				}}
-			/>
-			<Tab.Screen
-				name={'Discover'}
-				component={Discover}
-				options={{
-					tabBarIcon: ({ color, size }) =>
-						<MaterialCommunityIcons name="cloud-search-outline" color={color} size={size} />
-				}}
-			/>
-			<Tab.Screen
-				name={'Map'}
-				component={Map}
-				options={{
-					tabBarIcon: ({ color, size }) =>
-						<MaterialCommunityIcons name="account-group" color={color} size={size} />
-				}}
-			/>
-			<Tab.Screen
-				name={'Social'}
-				component={Social}
-				options={{
-					tabBarIcon: ({ color, size }) =>
-						<MaterialCommunityIcons name="account-group" color={color} size={size} />
-				}}
-			/>
-			<Tab.Screen
-				name={'Profile'}
-				component={Profile}
-				options={{
-					tabBarIcon: ({ color, size }) =>
-						<MaterialCommunityIcons name="account" color={color} size={size} />
-				}}
-			/>
-		</Tab.Navigator>
-	)
-}
+  return (
+	<NavigationContainer independent={true}>
+    <TabNavigator/>
+  </NavigationContainer>
+	);
+};

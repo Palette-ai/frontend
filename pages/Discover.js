@@ -1,35 +1,249 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import { useQuery, gql } from '@apollo/client';
-
+import { 
+	ScrollView, 
+	StyleSheet, 
+	Image,
+	Text, 
+	View,
+} from 'react-native'
+import { useQuery } from '@apollo/client';
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { StatusBar } from 'expo-status-bar';
 import { GET_ALL_DISHES } from '../queries/dishes';
+import { Col, Row, Grid } from "react-native-easy-grid";
+import {sushi, dollar_sign, hot, organic, map_sign} from '../assets';
 
-const Discover = () => {
+const Discover = ({ navigation }) => {
 	const { loading, error, data } = useQuery(GET_ALL_DISHES)
 	if (loading) return <Text> Loading... </Text>
 	if (error) return <Text>{error}</Text>
 	const { dishMany: dishes } = data
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<View>
-				{
-					dishes.map(({ _id, name, tags }) => (
-						<View key={_id}>
-							<Text>{`id: ${_id}`}</Text>
-							<Text>{`name: ${name}`}</Text>
-							<Text>{`tags: ${tags}`}</Text>
+			<View syle={styles.container}>
+				<View style={styles.filter_container}>
+					<Text style={styles.text_title}>recommendations</Text>
+					<ScrollView style={styles.filter_scroll_container} showsHorizontalScrollIndicator={false} horizontal={true}s>
+						<View style={styles.filter_item_select}>
+						<Grid>
+							<Col><View style={styles.filter_icon_select}><Image style={styles.filter_icons} source={dollar_sign}/></View></Col>
+							<Col style={styles.text_filter}><Text>price</Text></Col>
+						</Grid>
 						</View>
-					))
-				}
+						<View style={styles.filter_item_inactive}>
+						<Grid>
+							<Col><View style={styles.filter_icon_inactive}><Image style={styles.filter_icons} source={organic}/></View></Col>
+							<Col style={styles.text_filter}><Text>organic</Text></Col>
+						</Grid>
+						</View>
+						<View style={styles.filter_item_inactive}>
+						<Grid>
+							<Col><View style={styles.filter_icon_inactive}><Image style={styles.filter_icons} source={hot}/></View></Col>
+							<Col style={styles.text_filter}><Text>spicy</Text></Col>
+						</Grid>
+						</View>
+						<View style={styles.filter_item_inactive}>
+						<Grid>
+							<Col><View style={styles.filter_icon_inactive}/></Col>
+							<Col style={styles.text_filter}><Text>rating</Text></Col>
+						</Grid>
+						</View>
+						<View style={styles.filter_item_inactive}>
+						<Grid>
+							<Col><View style={styles.filter_icon_inactive}/></Col>
+							<Col style={styles.text_filter}><Text>score</Text></Col>
+						</Grid>
+						</View>
+						<View style={styles.filter_item_inactive}>
+						<Grid>
+							<Col><View style={styles.filter_icon_inactive}/></Col>
+							<Col style={styles.text_filter}><Text>gluten</Text></Col>
+						</Grid>
+						</View>
+						<View style={styles.filter_item_inactive}>
+						<Grid>
+							<Col><View style={styles.filter_icon_inactive}/></Col>
+							<Col style={styles.text_filter}><Text>dairy</Text></Col>
+						</Grid>
+						</View>
+					</ScrollView>
+				</View>
+				
+				<View style={styles.item_container}>
+					<ScrollView showsVerticalScrollIndicator={false}>
+					{data.dishMany.map(dish => (
+					<TouchableOpacity
+						activeOpacit={0.1}
+						onPress={() => navigation.navigate('Dish', { dish, navigation })}
+						key={dish._id}
+					>
+												<View style={styles.rect2}>
+							<Grid>
+								<Col size={.75}>
+									<View style={styles.shadow_box}>
+										<Image source={sushi} style={styles.food_pic}/>
+									</View>
+								</Col>
+								<Col>
+								<Row>
+									<Col>
+									<Row>
+										<Text style={styles.dish_name}>{dish.dish_name}</Text>
+										{/* <View style={styles.rating_circle}/> */}
+									</Row>
+										{/* <Row><Text style={styles.res_name}>Sushiya</Text></Row>
+										<Row>
+											<Image source={dollar_sign}/>
+											<Image source={dollar_sign}/>
+											<Image source={dollar_sign}/>
+										</Row> */}
+									</Col>
+									{/* <Col size={1}>
+										<Row style={styles.row_reverse}>
+										<Image source={organic}/>
+										<Image source={hot}/>
+										</Row>
+										<Row style={styles.row_reverse}>
+										<Image source={organic}/>
+										<Image source={hot}/>
+										</Row>
+										<Row style={styles.row_reverse}>
+											<View style={styles.score_circle}/>
+										</Row>
+									</Col> */}
+									</Row>
+									{/* <Row size={.25} style={styles.row_reverse}>
+										<Text>2.3 miles away</Text>
+										<Image source={map_sign}/>
+									</Row> */}
+								</Col>
+							</Grid>
+						</View>
+					</TouchableOpacity>
+				))}
+					</ScrollView>
+				</View>
+				<StatusBar style="light" />
+				<View style={styles.footer_container}/>
 			</View>
-		</SafeAreaView>
 	)
 }
 
 const styles = StyleSheet.create({
+	row_reverse: {
+		flexDirection: 'row-reverse',
+	},
+	dish_name:{fontSize: 24,},
+	rest_name:{fontSize: 32,},
 	container: {
 		flex: 1,
+		justifyContent: 'center',
+    alignItems: 'center',
+		backgroundColor: '#FDFCFC',
+	},
+	filter_container: {
+		backgroundColor: '#FF5349',
+    width: '100%',
+    height: '21%',
+		borderBottomLeftRadius: 30,
+		borderBottomRightRadius: 30,
+	},
+	filter_icons:{
+		height:'100%',
+		width: '100%',
+	},
+	filter_scroll_container:{
+		marginTop:25,
+    marginLeft: 5,
+	},
+	filter_item_select: {
+		marginRight: 20,
+		flex: 1,
+		justifyContent: 'center',
+		borderRadius: 50,
+		width: 100,
+		height: 50,
+		backgroundColor: '#F7B300',
+	},
+	filter_item_inactive: {
+		marginRight: 20,
+		flex: 1,
+		justifyContent: 'center',
+		borderRadius: 50,
+		width: 100,
+		height: 50,
+		backgroundColor: '#FFFFFF',
+	},
+	filter_icon_select: {
+		marginTop: '15%',
+		marginLeft: '15%',
+		width: 30,
+		height: 30,
+		borderRadius: 100,
+		backgroundColor: '#FFFFFF',
+	},
+	filter_icon_inactive: {
+		marginTop: '15%',
+		marginLeft: '15%',
+		width: 30,
+		height: 30,
+		borderRadius: 100,
+		borderWidth: 0,
+		backgroundColor: '#000000',
+	},
+	text_filter: {
+		marginTop: 15,
+		marginLeft: -10,
+	},
+	text_title: {
+		color:'#FFFFFF',
+		fontSize: 34,
+		marginTop: 60,
+    marginLeft: 25,
+		fontWeight:'600'
+	},
+	item_container: {
+		justifyContent: 'center',
+    alignItems: 'center',
+		height:'100%',
+		backgroundColor: '#FDFCFC',
+	},
+	food_pic: {
+		borderBottomLeftRadius: 30,
+		borderTopLeftRadius: 30,
+		height:'100%',
+		width: '100%'
+	},
+	shadow_box:{
+		shadowColor: '#40404040',
+		shadowOffset: { width: -1, height: 2 },
+		shadowOpacity: 4,
+		shadowRadius: 1,  
+	},
+	score_circle:{
+		borderRadius: 100,
+		width: 40,
+		height: 40,
+		backgroundColor: '#F7B300',
+	},
+	rating_circle:{
+		borderRadius: 100,
+		width: 25,
+		height: 25,
+		backgroundColor: '#FF5349',
+	},	
+	rect2: {
+    width:350,
+    height: 150,
+    backgroundColor: "#F3F3F3",
+    marginTop: 25,
+		borderRadius: 30,
+  },
+	footer_container:{
+		flex: 1,
+		justifyContent: 'center',
+    alignItems: 'center',
+		backgroundColor: '#FDFCFC',
 	}
 });
 
