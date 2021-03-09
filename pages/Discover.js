@@ -6,7 +6,8 @@ import {
 	Text, 
 	View 
 } from 'react-native'
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { TouchableHighlight } from 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar';
 import { GET_ALL_DISHES } from '../queries/dishes';
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -67,42 +68,59 @@ const Discover = () => {
 						</View>
 					</ScrollView>
 				</View>
+				
 				<View style={styles.item_container}>
-					<View style={styles.rect2}>
-						<Grid>
-							<Col size={2}>
-								<View style={styles.shadow_box}>
-									<Image source={sushi} style={styles.food_pic}/>
-								</View>
-							</Col>
-							<Col size={1}>
-								<Text>Sushi</Text>
-								<Text>Sushiya</Text>
+					<ScrollView showsVerticalScrollIndicator={false}>
+					{data.dishMany.map(dish => (
+					<TouchableHighlight
+						onPress={() => navigation.navigate('Dish', { dish })}
+						key={dish._id}
+					>
+												<View style={styles.rect2}>
+							<Grid>
+								<Col size={.75}>
+									<View style={styles.shadow_box}>
+										<Image source={sushi} style={styles.food_pic}/>
+									</View>
+								</Col>
+								<Col>
 								<Row>
-									<Image source={dollar_sign}/>
-									<Image source={dollar_sign}/>
-									<Image source={dollar_sign}/>
-								</Row>
-							</Col>
-							<Col size={1}>
-								<Row>
-								<Image source={organic}/>
-								<Image source={hot}/>
-								</Row>
-								<Row>
-								<Image source={organic}/>
-								<Image source={hot}/>
-								</Row>
-								<Row>
-									<View style={styles.score_circle}/>
-								</Row>
-								<Row>
-								<Image source={map_sign}/>
-									<Text>2.3 miles away</Text>
-								</Row>
-							</Col>
-						</Grid>
-					</View>
+									<Col>
+									<Row>
+										<Text style={styles.dish_name}>{dish.dish_name}</Text>
+										<View style={styles.rating_circle}/>
+									</Row>
+										<Row><Text style={styles.res_name}>Sushiya</Text></Row>
+										<Row>
+											<Image source={dollar_sign}/>
+											<Image source={dollar_sign}/>
+											<Image source={dollar_sign}/>
+										</Row>
+									</Col>
+									<Col size={1}>
+										<Row style={styles.row_reverse}>
+										<Image source={organic}/>
+										<Image source={hot}/>
+										</Row>
+										<Row style={styles.row_reverse}>
+										<Image source={organic}/>
+										<Image source={hot}/>
+										</Row>
+										<Row style={styles.row_reverse}>
+											<View style={styles.score_circle}/>
+										</Row>
+									</Col>
+									</Row>
+									<Row size={.25} style={styles.row_reverse}>
+										<Text>2.3 miles away</Text>
+										<Image source={map_sign}/>
+									</Row>
+								</Col>
+							</Grid>
+						</View>
+					</TouchableHighlight>
+				))}
+					</ScrollView>
 				</View>
 				<StatusBar style="light" />
 				<View style={styles.footer_container}/>
@@ -111,6 +129,11 @@ const Discover = () => {
 }
 
 const styles = StyleSheet.create({
+	row_reverse: {
+		flexDirection: 'row-reverse',
+	},
+	dish_name:{fontSize: 24,},
+	rest_name:{fontSize: 32,},
 	container: {
 		flex: 1,
 		justifyContent: 'center',
@@ -173,6 +196,7 @@ const styles = StyleSheet.create({
 	item_container: {
 		justifyContent: 'center',
     alignItems: 'center',
+		height:'100%',
 		backgroundColor: '#FDFCFC',
 	},
 	food_pic: {
@@ -183,7 +207,7 @@ const styles = StyleSheet.create({
 	},
 	shadow_box:{
 		shadowColor: '#AFAFAF',
-		shadowOffset: { width: 0, height: 2 },
+		shadowOffset: { width: -1, height: 2 },
 		shadowOpacity: 4,
 		shadowRadius: 1,  
 	},
@@ -193,11 +217,18 @@ const styles = StyleSheet.create({
 		height: 40,
 		backgroundColor: '#F7B300',
 	},
+	rating_circle:{
+		borderRadius: 100,
+		width: 25,
+		height: 25,
+		backgroundColor: '#FF5349',
+	},	
 	rect2: {
-    width: 400,
+    width:350,
     height: 150,
-    backgroundColor: "#FAF9F9",
-    marginTop: 15,
+    backgroundColor: "#F3F3F3",
+    marginTop: 25,
+		borderRadius: 30,
   },
 	footer_container:{
 		flex: 1,
