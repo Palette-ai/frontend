@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-
+import SignOut from '../components/SignOut';
 import Svg, { Ellipse } from "react-native-svg";
 
 const Profile = () => {
@@ -20,6 +20,7 @@ const Profile = () => {
 						></Ellipse>
 					</Svg>
 				</View>
+				<SignOut />
 				<Text style={styles.tasteProfile}>Taste profile</Text>
 				<View style={styles.rectRow}>
 					<View style={styles.rect}>
@@ -41,7 +42,6 @@ const Profile = () => {
 			flex: 1
 		},
 		welcomeBackSyed: {
-			fontFamily: "roboto-regular",
 			color: "#121212",
 			fontSize: 37
 		},
@@ -58,7 +58,6 @@ const Profile = () => {
 			marginRight: 34
 		},
 		tasteProfile: {
-			fontFamily: "roboto-regular",
 			color: "#121212",
 			fontSize: 24,
 			marginTop: 47,
@@ -71,7 +70,6 @@ const Profile = () => {
 			marginTop: 3
 		},
 		groups: {
-			fontFamily: "roboto-regular",
 			color: "#121212",
 			marginTop: 30,
 			marginLeft: 24
@@ -84,7 +82,6 @@ const Profile = () => {
 			marginTop: 3
 		},
 		friends: {
-			fontFamily: "roboto-regular",
 			color: "#121212",
 			marginTop: 30,
 			marginLeft: 25
@@ -96,7 +93,6 @@ const Profile = () => {
 			marginLeft: 29
 		},
 		history: {
-			fontFamily: "roboto-regular",
 			color: "#121212",
 			marginTop: 28,
 			marginLeft: 25

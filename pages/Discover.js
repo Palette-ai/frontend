@@ -26,8 +26,20 @@ const Discover = ({ navigation }) => {
 					<ScrollView style={styles.filter_scroll_container} showsHorizontalScrollIndicator={false} horizontal={true}s>
 						<View style={styles.filter_item_select}>
 						<Grid>
-							<Col><View style={styles.filter_icon_select}/></Col>
+							<Col><View style={styles.filter_icon_select}><Image style={styles.filter_icons} source={dollar_sign}/></View></Col>
 							<Col style={styles.text_filter}><Text>price</Text></Col>
+						</Grid>
+						</View>
+						<View style={styles.filter_item_inactive}>
+						<Grid>
+							<Col><View style={styles.filter_icon_inactive}><Image style={styles.filter_icons} source={organic}/></View></Col>
+							<Col style={styles.text_filter}><Text>organic</Text></Col>
+						</Grid>
+						</View>
+						<View style={styles.filter_item_inactive}>
+						<Grid>
+							<Col><View style={styles.filter_icon_inactive}><Image style={styles.filter_icons} source={hot}/></View></Col>
+							<Col style={styles.text_filter}><Text>spicy</Text></Col>
 						</Grid>
 						</View>
 						<View style={styles.filter_item_inactive}>
@@ -40,18 +52,6 @@ const Discover = ({ navigation }) => {
 						<Grid>
 							<Col><View style={styles.filter_icon_inactive}/></Col>
 							<Col style={styles.text_filter}><Text>score</Text></Col>
-						</Grid>
-						</View>
-						<View style={styles.filter_item_inactive}>
-						<Grid>
-							<Col><View style={styles.filter_icon_inactive}/></Col>
-							<Col style={styles.text_filter}><Text>organic</Text></Col>
-						</Grid>
-						</View>
-						<View style={styles.filter_item_inactive}>
-						<Grid>
-							<Col><View style={styles.filter_icon_inactive}/></Col>
-							<Col style={styles.text_filter}><Text>spicy</Text></Col>
 						</Grid>
 						</View>
 						<View style={styles.filter_item_inactive}>
@@ -148,6 +148,10 @@ const styles = StyleSheet.create({
 		borderBottomLeftRadius: 30,
 		borderBottomRightRadius: 30,
 	},
+	filter_icons:{
+		height:'100%',
+		width: '100%',
+	},
 	filter_scroll_container:{
 		marginTop:25,
     marginLeft: 5,
@@ -171,24 +175,25 @@ const styles = StyleSheet.create({
 		backgroundColor: '#FFFFFF',
 	},
 	filter_icon_select: {
-		marginTop: 6,
-		marginLeft: 7,
-		width: 35,
-		height: 35,
+		marginTop: '15%',
+		marginLeft: '15%',
+		width: 30,
+		height: 30,
 		borderRadius: 100,
 		backgroundColor: '#FFFFFF',
 	},
 	filter_icon_inactive: {
-		marginTop: 6,
-		marginLeft: 7,
-		width: 35,
-		height: 35,
+		marginTop: '15%',
+		marginLeft: '15%',
+		width: 30,
+		height: 30,
 		borderRadius: 100,
+		borderWidth: 0,
 		backgroundColor: '#000000',
 	},
 	text_filter: {
 		marginTop: 15,
-		marginLeft: -5,
+		marginLeft: -10,
 	},
 	text_title: {
 		color:'#FFFFFF',

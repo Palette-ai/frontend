@@ -1,15 +1,15 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { ApolloProvider } from '@apollo/client'
 import { useAuthState } from 'react-firebase-hooks/auth'
-
 import client from './graphql/ApolloProvider';
 import AppNavigator from './navigation/AppNavigator'
 import { firebaseInit } from './services/firebase'
 import firebase from 'firebase/app'
-import SignOut from './components/SignOut'
 import SignIn from './components/SignIn'
 import { AuthContextProvider } from './context/AuthContext';
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider } from '@ui-kitten/components';
 
 
 export default function App() {
@@ -18,15 +18,17 @@ export default function App() {
   const [user] = useAuthState(auth)
   return (
     <ApolloProvider client={client}>
-      <AuthContextProvider>
-        <NavigationContainer>
-          {
-            user ?
-              <AppNavigator /> :
-              <SignIn />
-          }
-        </NavigationContainer>
-      </AuthContextProvider>
+      <ApplicationProvider {...eva} theme={eva.light}>
+        <AuthContextProvider>
+          <NavigationContainer>
+            {
+              user ?
+                <AppNavigator /> :
+                <SignIn />
+            }
+          </NavigationContainer>
+        </AuthContextProvider>
+      </ApplicationProvider>
     </ApolloProvider>
   )
 }

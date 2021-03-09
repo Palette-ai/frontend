@@ -1,7 +1,7 @@
 import React from 'react';
 import IconAD from 'react-native-vector-icons/AntDesign';
 import IconET from 'react-native-vector-icons/Entypo';
-import { ImageBackground, SafeAreaView, StyleSheet, Text, View , TextInput, Image, TouchableOpacity} from 'react-native';
+import { ImageBackground, StyleSheet, Text, View , TextInput, Image, TouchableOpacity} from 'react-native';
 
 const SignIn = () => {
 	return (

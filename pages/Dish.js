@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
 		borderTopRightRadius: 30,
 		zIndex: -1,
 	},
-	dish_name:{fontSize: 24,},
+	dish_name:{fontSize: 28},
 	item_container: {
 		flex: 1,
 	},
