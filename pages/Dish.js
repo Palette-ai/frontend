@@ -137,7 +137,7 @@ function Dish({ route }) {
 								style={{}}
 							/>
 							</Row>
-							{/* <Row>
+							<Row>
 							<TextInput
 								style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
 								onChangeText={num => setRating(num)}
@@ -146,7 +146,7 @@ function Dish({ route }) {
 								placeholder='Add Rating Number Here'
 								style={{ marginTop: 30 }}
 							/>
-							</Row> */}
+							</Row>
 							<Row>
 							</Row>
           <Button title="Add Review" onPress={addDishRatingHandler}>

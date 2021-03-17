@@ -16,6 +16,7 @@ export default function App() {
   firebaseInit()
   const auth = firebase.auth()
   const [user] = useAuthState(auth)
+  console.disableYellowBox = true;
   return (
     <ApolloProvider client={client}>
       <ApplicationProvider {...eva} theme={eva.light}>
