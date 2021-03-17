@@ -2,15 +2,28 @@ import React from 'react';
 import { View, StyleSheet, Text, TextInput } from 'react-native';
 
 export default function LoginInputBox({ field, setField, placeholder }) {
+
 	return (
 		<View style={[styles.fieldInputBox]}>
 			<View style={styles.rect2}>
-				<TextInput
-					placeholder={placeholder}
-					style={styles.fieldPlaceholder}
-					onChangeText={text => setField(text)}
-					value={field}
-				></TextInput>
+			{
+					placeholder === 'Password' ?
+						(
+						<TextInput
+							placeholder={placeholder}
+							style={styles.fieldPlaceholder}
+							onChangeText={text => setField(text)}
+							value={field}
+							secureTextEntry={true}
+						/>)
+				:
+						<TextInput
+						placeholder={placeholder}
+						style={styles.fieldPlaceholder}
+						onChangeText={text => setField(text)}
+						value={field}
+					/>
+			}
 			</View>
 			<View style={styles.fieldName}>
 				<View style={styles.rect3}>

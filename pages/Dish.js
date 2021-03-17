@@ -4,18 +4,17 @@ import firebase from 'firebase/app';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { DISH_ADD_RATING, GET_DISH_RATINGS } from '../queries/dishes';
 import { View, 
-	StyleSheet, 
-	Text, 
+	StyleSheet,  
 	TextInput, 
 	Image,
 	TouchableWithoutFeedback,
-	ScrollView,
-	Button, 
-	Keyboard
+	ScrollView, 
+	Keyboard,
+	Text,
  } from 'react-native';
 import {sushi, back_arrow} from '../assets';
-import { Col, Row, Grid } from "react-native-easy-grid";
-import zIndex from '@material-ui/core/styles/zIndex';
+import { Col, Row, Grid } from "react-native-easy-grid"
+import { 	Button, Card, Modal } from '@ui-kitten/components';
 
 function Dish({ route }) {
 	const { navigation } = route.params
@@ -25,6 +24,7 @@ function Dish({ route }) {
 	const [rating, setRating] = useState('')
 	const [review, setReview] = useState('')
 	const [dishRatings, setDishRatings] = useState(0)
+	const [visible, setVisible] = React.useState(false);
 
 	// Adding a dishRating, then refetching all dishRatings to update the cache
 	const [addReview] = useMutation(DISH_ADD_RATING, {
@@ -78,13 +78,13 @@ function Dish({ route }) {
 			<Grid>
 				<Row>
 					<Col>
+					<Text style={styles.dish_name}>{dish.dish_name}</Text>
 					<View style={styles.shadow_box}>
 						<Image source={sushi} style={styles.food_pic}/>
 					</View>
 					</Col>
 					<Col>
 						<Row style={styles.dish_container}>
-							<Text style={styles.dish_name}>{dish.dish_name}</Text>
 							<Text style={styles.dish_discription_container}>{dish.description}</Text>
 						</Row>
 					</Col>
@@ -94,9 +94,43 @@ function Dish({ route }) {
 			<View style={styles.review_container}>
 				<ScrollView>
 					<Grid style={styles.review_item}>
-						<Row>
+					<Row>
+						<Col>
+						<Text style={styles.review_title}>Reviews</Text>
+					</Col>
+						<Col>
+						<Button style={styles.add_review_btn} onPress={() => setVisible(true)}>
+        Add Review
+      </Button>
+						</Col>
+						</Row>
+							<Row>
+								<Col>
+							{dishRatings !== 0 &&
+								dishRatings?.map(({ dish_id, user_id, review, rating }) => (
+									<>
+									<Row>
+										<Text style={styles.review_text}>{`${review}`}</Text>
+									</Row>
+									</>
+								))
+							}
+							
+							</Col>
+							
+						</Row>
+					</Grid>
+				</ScrollView>
+			</View>
+
+      <Modal
+        visible={visible}
+        backdropStyle={styles.backdrop}
+        onBackdropPress={() => setVisible(false)}>
+        <Card disabled={true}>
+				<Row>
 						<TextInput
-								style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+								style={{ height: 50, borderColor: 'gray', borderWidth: 1}}
 								onChangeText={text => setReview(text)}
 								value={review}
 								placeholder='Add Review Text Here'
@@ -114,27 +148,12 @@ function Dish({ route }) {
 							/>
 							</Row>
 							<Row>
-							<Button
-								title="Add Review"
-								onPress={addDishRatingHandler}
-							/>
 							</Row>
-							<Row>
-								<Col>
-							{dishRatings !== 0 &&
-								dishRatings?.map(({ dish_id, user_id, review, rating }) => (
-									<>
-									<Row>
-										<Text>{`A user said that ${review}`}</Text>
-									</Row>
-									</>
-								))
-							}
-							</Col>
-						</Row>
-					</Grid>
-				</ScrollView>
-			</View>
+          <Button title="Add Review" onPress={addDishRatingHandler}>
+						Add Review
+          </Button>
+        </Card>
+      </Modal>
 		</View>
 	);
 }
@@ -144,6 +163,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#FDFCFC',
 	},
+	backdrop: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
 	back_arrow:{
 		marginTop: '10%',
 		marginLeft: '5%',
@@ -164,13 +186,17 @@ const styles = StyleSheet.create({
 		},
 	review_container: {
 		backgroundColor: '#FF5349',
+		paddingTop:'10%',
     width: '100%',
-    height: '75%',
+    height: '70%',
 		borderTopLeftRadius: 30,
 		borderTopRightRadius: 30,
 		zIndex: -1,
 	},
-	dish_name:{fontSize: 28},
+	dish_name:{
+		fontSize: 28,
+		marginLeft: '15%'
+	},
 	item_container: {
 		flex: 1,
 	},
@@ -179,16 +205,19 @@ const styles = StyleSheet.create({
 		marginLeft: '5%'
 	},
 	dish_container:{
-		marginTop: '5%',
-		width: '75%',
+		marginTop: '15%',
+		width: '90%',
 		flexWrap: 'wrap'
 	},
 	dish_discription_container:{
-		marginTop: '15%',
-		width: '75%',
+		width: '100%',
 		flexWrap: 'wrap',
 		zIndex: 2,
 	},
-
+	review_title: {fontSize: 28, color:'#fff',},
+	review_text: {color:'#fff'},
+	add_review_btn: {
+		marginRight: '5%'
+	}
 });
 export default Dish;
