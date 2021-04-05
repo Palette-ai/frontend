@@ -7,12 +7,7 @@
     "facebookAppId": "479094326830883",
     "facebookDisplayName": "Palette",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./styles/loading.json",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+    // "icon": "./assets/icon.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -24,13 +19,12 @@
       "bundleIdentifier": "com.Palette-Frontend"
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+      // "adaptiveIcon": {
+      //   "backgroundColor": "#FFFFFF"
+      // }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      // "favicon": "./assets/favicon.png"
     }
   }
 }

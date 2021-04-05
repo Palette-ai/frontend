@@ -4,11 +4,10 @@ import { ApolloProvider } from '@apollo/client'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { firebaseInit } from './services/firebase'
 import firebase from 'firebase/app'
-import { AuthContextProvider } from './context/AuthContext';
-import * as eva from '@eva-design/eva';
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import { LogBox } from 'react-native'
+import SignIn from './components/SignIn'
+import { AuthContextProvider } from './context/AuthContext'
+import * as eva from '@eva-design/eva'
+import { ApplicationProvider } from '@ui-kitten/components'
 
 import SignIn from './pages/SignIn'
 import AppNavigator from './navigation/AppNavigator'

@@ -1,37 +1,6 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import MapView, { Callout, CalloutSubview, Marker } from 'react-native-maps';
-import { GET_ALL_RESTAURANTS } from '../queries/restaurants';
-import { useQuery } from '@apollo/client';
-import axios from 'axios';
-
-// const MAPS_API = "https://plus.codes/api?address="
-
-const Map = ({ navigation }) => {
-
-	const { loading, error, data } = useQuery(GET_ALL_RESTAURANTS)
-	if (loading) return <Text> Loading... </Text>
-	if (error) return <Text>{error}</Text>
-	const { restaurantMany: restaurants } = data
-
-	// const getLatLong = async (pc) => {
-	// 	 await axios({
-	// 		method: 'get',
-	// 		url: MAPS_API + pc,
-	// 	}).then ((response) => {
-	// 		// console.log(response.data.plus_code.geometry.location)
-	// 		console.log({
-	// 			latitude: response.data.plus_code.geometry.location.lat,
-	// 			longitude: response.data.plus_code.geometry.location.lng
-	// 		})
-	// 		// if (flip) return response.data.plus_code.geometry.location.lat
-	// 		// else return response.data.plus_code.geometry.location.lng
-	// 		return ({
-	// 			latitude: response.data.plus_code.geometry.location.lat,
-	// 			longitude: response.data.plus_code.geometry.location.lng
-	// 		})
-	// 	})
-	// }
+import { SafeAreaView, StyleSheet } from 'react-native';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 	return (
 		<SafeAreaView style={styles.container}>
