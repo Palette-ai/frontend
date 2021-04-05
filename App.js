@@ -7,9 +7,9 @@ import AppNavigator from './navigation/AppNavigator'
 import { firebaseInit } from './services/firebase'
 import firebase from 'firebase/app'
 import SignIn from './components/SignIn'
-import { AuthContextProvider } from './context/AuthContext';
-import * as eva from '@eva-design/eva';
-import { ApplicationProvider } from '@ui-kitten/components';
+import { AuthContextProvider } from './context/AuthContext'
+import * as eva from '@eva-design/eva'
+import { ApplicationProvider } from '@ui-kitten/components'
 
 
 export default function App() {
