@@ -3,6 +3,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import firebase from 'firebase/app';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { DISH_ADD_RATING, GET_DISH_RATINGS } from '../queries/dishes';
+import { GET_USERS } from '../queries/users';
 import { View, 
 	StyleSheet,  
 	TextInput, 
@@ -14,7 +15,8 @@ import { View,
  } from 'react-native';
 import {sushi, back_arrow} from '../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
-import { 	Button, Card, Modal } from '@ui-kitten/components';
+import { Icon, Button, Card, Modal } from '@ui-kitten/components';
+
 
 function DishReviewRow(props) {
 	const dish  = props.dish
@@ -35,16 +37,34 @@ function DishReviewRow(props) {
 		refetchQueries: [{ query: GET_DISH_RATINGS }]
 	})
 
-	// Queries all dishRatings
+	// Queries all dishRatings and usernames
 	const { loading, error, data, refetch } = useQuery(GET_DISH_RATINGS, {
 		variables: {
 			filter: { dish_id: dish._id, hasReviewText: true },
 			sort: '_ID_DESC'
 		},
 		onCompleted: (data) => {
+            //run another query 
+            // const user_ids = data.dishRatingMany.map(el => (
+            //     el.user_id
+            // ));
+            // console.log(user_ids)
+
+            // const { loading_user, error_user, data_user, refetch } = useQuery(GET_USERS, {
+            //     variables: {
+            //         filter: {user_id: user_ids}
+            //     }, 
+            //     onCompleted: (data_user) => {
+            //         console.log(data_user)
+            //     }
+            // })
+
+            
 			console.log("Query Has Been Rerun:", data)
 		}
-	})
+    })
+    
+    //want to get user by id, want username back 
 
 	// Memoizes dishRatings and is updated when the dishRating Query is reran
 	useMemo(() => {
@@ -76,12 +96,21 @@ function DishReviewRow(props) {
                             <Row key={_id} style={styles.rect2}>
                                 <View style={styles.reviewHolder}>
                                     <View style={styles.reviewTop}>
-                                        
-                                        <Text>Here</Text>
+                                        <View style={styles.iconContainer}>
+                                            <Icon
+                                            style={styles.icon}
+                                            fill='#8F9BB3'
+                                            name='person-outline'
+                                            />
+                                        </View>
+                                        <View flexDirection='column'>
+                                            <Text style={styles.username_text}>username</Text>
+                                            <Text style={styles.username_text}>{rating}</Text>
+                                        </View>            
                                     </View>
-                                    <Row> 
+                                    <View> 
                                         <Text style={styles.review_text}>{`${review}`}</Text>
-                                    </Row>
+                                    </View>
 
                                 </View>
                             </Row>
@@ -156,12 +185,17 @@ const styles = StyleSheet.create({
 		zIndex: 2,
 	},
 	review_title: {fontSize: 28, color:'#fff',},
-	review_text: {color:'#fff'},
+    review_text: {color:'#fff', fontSize: 14},
+    username_text: {
+        color:'#fff',
+        fontWeight: 'bold',
+        fontSize: 15
+    },
 	add_review_btn: {
 		marginRight: '5%'
     },
     reviewHolder:{
-        backgroundColor: 'blue',
+        // backgroundColor: 'blue',
         flex: 1,
         margin: 5
     },
@@ -174,7 +208,18 @@ const styles = StyleSheet.create({
         borderColor: '#FFFFFF',
       },
     reviewTop: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginBottom: 5
+    },
+    iconContainer: {
+        backgroundColor:'white',
+        borderColor:'black',
+        borderRadius: 50,
+        marginRight: 3
+    },
+    icon: {
+        width: 40,
+        height: 40,
     }
 });
 export default DishReviewRow;
