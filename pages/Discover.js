@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
 	},
 	item_container: {
 		justifyContent: 'center',
-		alignItems: 'center',
-		height: '100%',
+    	alignItems: 'center',
+		height:'100%',
 		backgroundColor: '#FDFCFC',
 	},
 	score_circle: {

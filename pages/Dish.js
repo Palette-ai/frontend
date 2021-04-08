@@ -15,7 +15,8 @@ import {
 } from 'react-native';
 import { sushi, back_arrow } from '../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
-import { Button, Card, Modal } from '@ui-kitten/components';
+import { 	Button, Card, Modal } from '@ui-kitten/components';
+import DishReviewRow from '../components/DishReviewRow';
 
 function Dish({ route }) {
 	const { navigation } = route.params
@@ -105,21 +106,7 @@ function Dish({ route }) {
       </Button>
 							</Col>
 						</Row>
-						<Row>
-							<Col>
-								{dishRatings !== 0 &&
-									dishRatings?.map(({ dish_id, user_id, review, rating }) => (
-										<>
-											<Row>
-												<Text style={styles.review_text}>{`${review}`}</Text>
-											</Row>
-										</>
-									))
-								}
-
-							</Col>
-
-						</Row>
+						<DishReviewRow dish = {dish}/>
 					</Grid>
 				</ScrollView>
 			</View>
