@@ -1,6 +1,6 @@
-export const hot = require('./food_icons/hot_icon.png')
-export const organic = require('./food_icons/organic_icon.png')
+export const hot = require('./hot.png')
+export const organic = require('./organic.png')
 export const sushi = require('./sushi.jpg');
-export const dollar_sign = require('./u_dollar-sign-alt.png');
-export const map_sign = require('./u_map-marker.png');
+export const dollar_sign = require('./dollar_sign.png');
+export const map_sign = require('./map_sign.png');
 export const back_arrow = require('./fi_arrow-left.png')

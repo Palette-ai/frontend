@@ -9,7 +9,8 @@ import firebase from 'firebase/app'
 import SignIn from './components/SignIn'
 import { AuthContextProvider } from './context/AuthContext';
 import * as eva from '@eva-design/eva';
-import { ApplicationProvider } from '@ui-kitten/components';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
 
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
   console.disableYellowBox = true;
   return (
     <ApolloProvider client={client}>
+      <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={eva.light}>
         <AuthContextProvider>
           <NavigationContainer>
