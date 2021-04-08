@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { sushi, dollar_sign, hot, organic, map_sign } from '../../assets'
-import { Button, Icon } from '@ui-kitten/components';
+import { Button, Icon } from '@ui-kitten/components'
 
 
 const DishCard = ({ dish }) => {
@@ -19,7 +19,6 @@ const DishCard = ({ dish }) => {
 			name='heart'
 			stroke={liked ? 'none' : 'red'}
 			fill={liked ? 'red' : 'none'}
-			scale='1'
 			{...props}
 		/>
 	);
@@ -34,17 +33,15 @@ const DishCard = ({ dish }) => {
 				</Col>
 				<Col>
 					<Col>
-						<Row>
-							<Text style={styles.dish_name}>{dish.dish_name}</Text>
-							<Button
-								accessoryLeft={HeartIcon}
-								appearance={liked ? 'filled' : 'outline'}
-								size={'giant'}
-								onPress={() => setLiked(!liked)}
-								style={styles.likeButton}
-							/>
-						</Row>
-						<Row><Text style={styles.res_name}>Sushiya</Text></Row>
+						<Text style={styles.dish_name}>{dish.dish_name}</Text>
+						<Button
+							accessoryLeft={HeartIcon}
+							appearance={liked ? 'filled' : 'outline'}
+							size={'giant'}
+							onPress={() => setLiked(!liked)}
+							style={styles.likeButton}
+						/>
+						<Text style={styles.res_name}>Sushiya</Text>
 						<Row>
 							<Image source={dollar_sign} />
 							<Image source={dollar_sign} />
@@ -64,7 +61,6 @@ const DishCard = ({ dish }) => {
 							<View style={styles.score_circle} />
 						</Row>
 					</Col> */}
-
 					<Row size={.25} style={styles.row_reverse}>
 						<Text>2.3 miles away</Text>
 						<Image source={map_sign} />
@@ -100,7 +96,11 @@ const styles = StyleSheet.create({
 		shadowOpacity: 4,
 		shadowRadius: 1,
 	},
-	dish_name: { fontSize: 24, },
+	dish_name: {
+		fontSize: 24,
+		flexWrap: 'wrap',
+		flex: 3
+	},
 	rest_name: { fontSize: 32, },
 	row_reverse: {
 		flexDirection: 'row-reverse',

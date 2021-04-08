@@ -1,23 +1,29 @@
 import React from 'react'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
 import ProfileScreen from '../pages/Profile'
 import LikedDishesScreen from '../pages/LikedDishes'
 import MapScreen from '../pages/Map'
 import DiscoverStackScreen from '../navigation/DishNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { BottomNavigation, BottomNavigationTab } from '@ui-kitten/components';
+import { BottomNavigation, BottomNavigationTab } from '@ui-kitten/components'
 
 const { Navigator, Screen } = createBottomTabNavigator();
+import {
+  HomeIcon, HomeIconFilled,
+  MapIcon, MapIconFilled,
+  StarIcon, StarIconFilled,
+  PersonIcon, PersonIconFilled
+} from './NavIcons';
 
 const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation
     selectedIndex={state.index}
-    onSelect={index => navigation.navigate(state.routeNames[index])}>
-    <BottomNavigationTab title='DISCOVER' />
-    <BottomNavigationTab title='MAP' />
-    <BottomNavigationTab title='LIKED' />
-    <BottomNavigationTab title='PROFILE' />
+    onSelect={index => navigation.navigate(state.routeNames[index])}
+  >
+    <BottomNavigationTab style={{ marginVertical: 10 }} title='DISCOVER' icon={state.index === 0 ? HomeIconFilled : HomeIcon} />
+    <BottomNavigationTab title='MAP' icon={state.index === 1 ? MapIconFilled : MapIcon} />
+    <BottomNavigationTab title='LIKED' icon={state.index === 2 ? StarIconFilled : StarIcon} />
+    <BottomNavigationTab title='PROFILE' icon={state.index === 3 ? PersonIconFilled : PersonIcon} />
   </BottomNavigation>
 );
 
