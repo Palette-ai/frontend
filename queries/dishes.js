@@ -23,10 +23,12 @@ export const DISH_ADD_RATING = gql`
 export const GET_DISH_RATINGS = gql`
 	query ($filter: FilterFindManyDishRatingInput $sort: SortFindManyDishRatingInput) {
 		dishRatingMany (filter: $filter sort: $sort) {
+			_id
 			dish_id
 			user_id
 			rating
 			review
+			createdAt
 		}
 	}
 `

@@ -15,11 +15,9 @@ import { View,
 import {sushi, back_arrow} from '../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { 	Button, Card, Modal } from '@ui-kitten/components';
-import DishReviewRow from '../components/DishReviewRow';
 
-function Dish({ route }) {
-	const { navigation } = route.params
-	const { dish } = route.params
+function DishReviewRow(props) {
+	const dish  = props.dish
 	const userID = firebase.auth().currentUser.uid
 
 	const [rating, setRating] = useState('')
@@ -67,81 +65,31 @@ function Dish({ route }) {
 		})
 	}
 
-	return (
-		<View style={styles.container}>
-			<View style={styles.item_container}>
-				<View style={styles.back_arrow}>
-					<TouchableWithoutFeedback 
-				onPress={() => navigation.navigate('Discover')}>
-					<Image source={back_arrow} />
-				</TouchableWithoutFeedback>
-				</View>
-			<Grid>
-				<Row>
-					<Col>
-					<Text style={styles.dish_name}>{dish.dish_name}</Text>
-					<View style={styles.shadow_box}>
-						<Image source={sushi} style={styles.food_pic}/>
-					</View>
-					</Col>
-					<Col>
-						<Row style={styles.dish_container}>
-							<Text style={styles.dish_discription_container}>{dish.description}</Text>
-						</Row>
-					</Col>
-				</Row>
-			</Grid>
-			</View>
-			<View style={styles.review_container}>
-				<ScrollView>
-					<Grid style={styles.review_item}>
-					<Row>
-						<Col>
-						<Text style={styles.review_title}>Reviews</Text>
-					</Col>
-						<Col>
-						<Button style={styles.add_review_btn} onPress={() => setVisible(true)}>
-        Add Review
-      </Button>
-						</Col>
-						</Row>
-						<DishReviewRow dish = {dish}/>
-					</Grid>
-				</ScrollView>
-			</View>
+    //need a way to query for the username
 
-      <Modal
-        visible={visible}
-        backdropStyle={styles.backdrop}
-        onBackdropPress={() => setVisible(false)}>
-        <Card disabled={true}>
-				<Row>
-						<TextInput
-								style={{ height: 50, borderColor: 'gray', borderWidth: 1}}
-								onChangeText={text => setReview(text)}
-								value={review}
-								placeholder='Add Review Text Here'
-								style={{}}
-							/>
-							</Row>
-							<Row>
-							<TextInput
-								style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-								onChangeText={num => setRating(num)}
-								value={rating}
-								keyboardType='numeric'
-								placeholder='Add Rating Number Here'
-								style={{ marginTop: 30 }}
-							/>
-							</Row>
-							<Row>
-							</Row>
-          <Button title="Add Review" onPress={addDishRatingHandler}>
-						Add Review
-          </Button>
-        </Card>
-      </Modal>
-		</View>
+	return (
+
+			<Row>
+				<Col>
+                    {dishRatings !== 0 &&
+                        dishRatings?.map(({ _id, dish_id, user_id, review, rating }) => (
+                            <Row key={_id} style={styles.rect2}>
+                                <View style={styles.reviewHolder}>
+                                    <View style={styles.reviewTop}>
+                                        
+                                        <Text>Here</Text>
+                                    </View>
+                                    <Row> 
+                                        <Text style={styles.review_text}>{`${review}`}</Text>
+                                    </Row>
+
+                                </View>
+                            </Row>
+                        ))
+                    }
+				</Col>					
+			</Row>
+
 	);
 }
 
@@ -162,6 +110,12 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: 0, height:1 },
 		shadowOpacity: 3,
 		shadowRadius: 4,  
+    },
+    item_container: {
+		justifyContent: 'center',
+    	alignItems: 'center',
+		height:'100%',
+		backgroundColor: '#FDFCFC',
 	},
 	food_pic: {
 		marginTop: '15%',
@@ -205,6 +159,22 @@ const styles = StyleSheet.create({
 	review_text: {color:'#fff'},
 	add_review_btn: {
 		marginRight: '5%'
-	}
+    },
+    reviewHolder:{
+        backgroundColor: 'blue',
+        flex: 1,
+        margin: 5
+    },
+    rect2: {
+        width: '106%',
+        alignSelf: 'flex-end',
+        flex: 1,
+        marginTop: 5,
+        borderBottomWidth: 1,
+        borderColor: '#FFFFFF',
+      },
+    reviewTop: {
+        flexDirection: 'row'
+    }
 });
-export default Dish;
+export default DishReviewRow;
