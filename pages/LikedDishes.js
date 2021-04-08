@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
-const Social = () => {
+const LikedDishes = () => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<View>
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default Social
+export default LikedDishes

@@ -3,18 +3,20 @@ import { useMutation, useQuery } from '@apollo/client';
 import firebase from 'firebase/app';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { DISH_ADD_RATING, GET_DISH_RATINGS } from '../queries/dishes';
-import { View, 
-	StyleSheet,  
-	TextInput, 
+import {
+	View,
+	StyleSheet,
+	TextInput,
 	Image,
 	TouchableWithoutFeedback,
-	ScrollView, 
+	ScrollView,
 	Keyboard,
 	Text,
- } from 'react-native';
-import {sushi, back_arrow} from '../assets';
+} from 'react-native';
+import { sushi, back_arrow } from '../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { 	Button, Card, Modal } from '@ui-kitten/components';
+import DishReviewRow from '../components/DishReviewRow';
 
 function Dish({ route }) {
 	const { navigation } = route.params
@@ -70,90 +72,76 @@ function Dish({ route }) {
 		<View style={styles.container}>
 			<View style={styles.item_container}>
 				<View style={styles.back_arrow}>
-					<TouchableWithoutFeedback 
-				onPress={() => navigation.navigate('Discover')}>
-					<Image source={back_arrow} />
-				</TouchableWithoutFeedback>
+					<TouchableWithoutFeedback
+						onPress={() => navigation.navigate('Discover')}>
+						<Image source={back_arrow} />
+					</TouchableWithoutFeedback>
 				</View>
-			<Grid>
-				<Row>
-					<Col>
-					<Text style={styles.dish_name}>{dish.dish_name}</Text>
-					<View style={styles.shadow_box}>
-						<Image source={sushi} style={styles.food_pic}/>
-					</View>
-					</Col>
-					<Col>
-						<Row style={styles.dish_container}>
-							<Text style={styles.dish_discription_container}>{dish.description}</Text>
-						</Row>
-					</Col>
-				</Row>
-			</Grid>
+				<Grid>
+					<Row>
+						<Col>
+							<Text style={styles.dish_name}>{dish.dish_name}</Text>
+							<View style={styles.shadow_box}>
+								<Image source={sushi} style={styles.food_pic} />
+							</View>
+						</Col>
+						<Col>
+							<Row style={styles.dish_container}>
+								<Text style={styles.dish_discription_container}>{dish.description}</Text>
+							</Row>
+						</Col>
+					</Row>
+				</Grid>
 			</View>
 			<View style={styles.review_container}>
 				<ScrollView>
 					<Grid style={styles.review_item}>
-					<Row>
-						<Col>
-						<Text style={styles.review_title}>Reviews</Text>
-					</Col>
-						<Col>
-						<Button style={styles.add_review_btn} onPress={() => setVisible(true)}>
-        Add Review
-      </Button>
-						</Col>
-						</Row>
-							<Row>
-								<Col>
-							{dishRatings !== 0 &&
-								dishRatings?.map(({ dish_id, user_id, review, rating }) => (
-									<>
-									<Row>
-										<Text style={styles.review_text}>{`${review}`}</Text>
-									</Row>
-									</>
-								))
-							}
-							
+						<Row>
+							<Col>
+								<Text style={styles.review_title}>Reviews</Text>
 							</Col>
-							
+							<Col>
+								<Button style={styles.add_review_btn} onPress={() => setVisible(true)}>
+									Add Review
+      </Button>
+							</Col>
 						</Row>
+						<DishReviewRow dish = {dish}/>
 					</Grid>
 				</ScrollView>
 			</View>
 
-      <Modal
-        visible={visible}
-        backdropStyle={styles.backdrop}
-        onBackdropPress={() => setVisible(false)}>
-        <Card disabled={true}>
-				<Row>
+			<Modal
+				visible={visible}
+				backdropStyle={styles.backdrop}
+				onBackdropPress={() => setVisible(false)}>
+				<Card disabled={true}>
+					<Row>
 						<TextInput
-								style={{ height: 50, borderColor: 'gray', borderWidth: 1}}
-								onChangeText={text => setReview(text)}
-								value={review}
-								placeholder='Add Review Text Here'
-								style={{}}
-							/>
-							</Row>
-							<Row>
-							<TextInput
-								style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-								onChangeText={num => setRating(num)}
-								value={rating}
-								keyboardType='numeric'
-								placeholder='Add Rating Number Here'
-								style={{ marginTop: 30 }}
-							/>
-							</Row>
-							<Row>
-							</Row>
-          <Button title="Add Review" onPress={addDishRatingHandler}>
+							style={{ height: 50, borderColor: 'gray', borderWidth: 1 }}
+							onChangeText={text => setReview(text)}
+							value={review}
+							placeholder='Add Review Text Here'
+							style={{}}
+						/>
+					</Row>
+					<Row>
+						<TextInput
+							style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+							onChangeText={num => setRating(num)}
+							value={rating}
+							keyboardType='numeric'
+							placeholder='Add Rating Number Here'
+							style={{ marginTop: 30 }}
+						/>
+					</Row>
+					<Row>
+					</Row>
+					<Button title="Add Review" onPress={addDishRatingHandler}>
 						Add Review
           </Button>
-        </Card>
-      </Modal>
+				</Card>
+			</Modal>
 		</View>
 	);
 }
@@ -164,36 +152,36 @@ const styles = StyleSheet.create({
 		backgroundColor: '#FDFCFC',
 	},
 	backdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-	back_arrow:{
+		backgroundColor: 'rgba(0, 0, 0, 0.5)',
+	},
+	back_arrow: {
 		marginTop: '10%',
 		marginLeft: '5%',
 	},
-	shadow_box:{
+	shadow_box: {
 		shadowColor: '#40404040',
-		shadowOffset: { width: 0, height:1 },
+		shadowOffset: { width: 0, height: 1 },
 		shadowOpacity: 3,
-		shadowRadius: 4,  
+		shadowRadius: 4,
 	},
 	food_pic: {
 		marginTop: '15%',
 		marginLeft: '10%',
-		borderRadius:30,
-		height:'100%',
+		borderRadius: 30,
+		height: '100%',
 		width: '80%',
 		zIndex: 2,
-		},
+	},
 	review_container: {
 		backgroundColor: '#FF5349',
-		paddingTop:'10%',
-    width: '100%',
-    height: '70%',
+		paddingTop: '10%',
+		width: '100%',
+		height: '70%',
 		borderTopLeftRadius: 30,
 		borderTopRightRadius: 30,
 		zIndex: -1,
 	},
-	dish_name:{
+	dish_name: {
 		fontSize: 28,
 		marginLeft: '15%'
 	},
@@ -204,18 +192,18 @@ const styles = StyleSheet.create({
 		marginTop: '20%',
 		marginLeft: '5%'
 	},
-	dish_container:{
+	dish_container: {
 		marginTop: '15%',
 		width: '90%',
 		flexWrap: 'wrap'
 	},
-	dish_discription_container:{
+	dish_discription_container: {
 		width: '100%',
 		flexWrap: 'wrap',
 		zIndex: 2,
 	},
-	review_title: {fontSize: 28, color:'#fff',},
-	review_text: {color:'#fff'},
+	review_title: { fontSize: 28, color: '#fff', },
+	review_text: { color: '#fff' },
 	add_review_btn: {
 		marginRight: '5%'
 	}

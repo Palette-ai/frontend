@@ -10,7 +10,6 @@ import {
 import LoginBox from './Login/LoginBox';
 
 function SignIn() {
-
 	return (
 		<View>
 			<TouchableWithoutFeedback

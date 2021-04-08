@@ -8,3 +8,13 @@ export const CREATE_USER = gql`
 		}
 	}
 `
+
+export const GET_USERS = gql`
+	query ($filter: FilterFindManyUserInput $sort: SortFindManyUserInput) {
+		userMany (filter: $filter sort: $sort) {
+			_id
+			user_id
+			username
+		}
+	}
+`
