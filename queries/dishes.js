@@ -34,3 +34,17 @@ export const GET_DISH_RATINGS = gql`
 		}
 	}
 `
+
+export const GET_DISHES_RESTAURANT = gql`
+	query ($filter: FilterFindManyDishInput $sort: SortFindManyDishInput) {
+		dishMany (filter: $filter sort: $sort) {
+			_id
+			dish_name
+  			restaurant_id
+  			average_rating
+  			features
+  			description
+  			tags
+		}
+	}
+`
