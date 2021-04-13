@@ -1,9 +1,11 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useQuery } from '@apollo/client';
-import {
-	View,
-	StyleSheet,
-	TextInput,
+import { useMutation, useQuery } from '@apollo/client';
+import firebase from 'firebase/app';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { DISH_ADD_RATING, GET_DISH_RATINGS } from '../queries/dishes';
+import { View, 
+	StyleSheet,  
+	TextInput, 
 	Image,
 	TouchableWithoutFeedback,
 	ScrollView,
