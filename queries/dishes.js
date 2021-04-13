@@ -3,7 +3,9 @@ import { gql } from '@apollo/client'
 export const GET_ALL_DISHES = gql`
 	query {
   		dishMany {
-			dish_name description _id
+			dish_name
+			description
+			_id
   		}
 	}
 `
