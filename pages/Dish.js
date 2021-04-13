@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import firebase from 'firebase/app';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { DISH_ADD_RATING, GET_DISH_RATINGS } from '../queries/dishes';
 import { View, 
 	StyleSheet,  
