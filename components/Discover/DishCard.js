@@ -6,22 +6,64 @@ import {
 	Text,
 	View,
 } from 'react-native'
+import { useMutation, useQuery } from '@apollo/client';
+import firebase from 'firebase/app';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { sushi, dollar_sign, hot, organic, map_sign } from '../../assets'
 import { Button, Icon } from '@ui-kitten/components'
+import { USER_LIKED_DISHES, USER_LIKE_DISH, USER_UNLIKE_DISH } from '../../queries/users';
+import mongoose from 'mongoose';
 
 
 const DishCard = ({ dish }) => {
 	const [liked, setLiked] = useState(false)
+	const userIDString = firebase.auth().currentUser.photoURL;
+	const userID = mongoose.Types.ObjectId(userIDString);
+	// console.log(firebase.auth().currentUser)
 	const HeartIcon = (props) => (
 		<Icon
 			width={30} height={30}
 			name='heart'
 			stroke={liked ? 'none' : 'red'}
 			fill={liked ? 'red' : 'none'}
+			
 			{...props}
 		/>
 	);
+
+	// Like a dish, then update the user's list of liked dishes
+	const [dishLike, { like_data }] = useMutation(USER_LIKE_DISH)
+
+	// Unlike a dish, then update the user's list of liked dishes
+	const [dishUnlike, { unlike_data }] = useMutation(USER_UNLIKE_DISH)
+
+	//Handler for adding dishRating
+	const likeDishHandler = () => {
+		console.log('liking', liked)
+		dishLike({
+			variables: {
+				dish_id: dish._id,
+				user_id: userID,
+			}
+		})
+	}
+
+	//Handler for adding dishRating
+	const unlikeDishHandler = () => {
+		console.log('unliking', liked)
+		dishUnlike({
+			variables: {
+				dish_id: dish._id,
+				user_id: userID,
+			}
+		})
+	}
+
+	const overallHandler = () => {
+		console.log('thisworks')
+		liked ? unlikeDishHandler : likeDishHandler
+		setLiked(!liked)
+	}
 
 	return (
 		<View style={styles.rect2}>
@@ -38,7 +80,7 @@ const DishCard = ({ dish }) => {
 							accessoryLeft={HeartIcon}
 							appearance={liked ? 'filled' : 'outline'}
 							size={'giant'}
-							onPress={() => setLiked(!liked)}
+							onPress={overallHandler}
 							style={styles.likeButton}
 						/>
 						<Text style={styles.res_name}>Sushiya</Text>
