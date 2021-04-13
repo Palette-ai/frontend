@@ -3,7 +3,9 @@ import { gql } from '@apollo/client'
 export const GET_ALL_DISHES = gql`
 	query {
   		dishMany {
-			dish_name description _id
+			dish_name
+			description
+			_id
   		}
 	}
 `
@@ -23,10 +25,12 @@ export const DISH_ADD_RATING = gql`
 export const GET_DISH_RATINGS = gql`
 	query ($filter: FilterFindManyDishRatingInput $sort: SortFindManyDishRatingInput) {
 		dishRatingMany (filter: $filter sort: $sort) {
+			_id
 			dish_id
 			user_id
 			rating
 			review
+			createdAt
 		}
 	}
 `
