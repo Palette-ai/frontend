@@ -37,30 +37,33 @@ const Map = () => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<MapView
-         style={{ flex: 1 }}
-  	     provider={'google'}
-         showsUserLocation={true}
-         initialRegion={{
-         latitude: 43.705130,
-         longitude: -72.289520,
-         latitudeDelta: .0095,
-         longitudeDelta: .0095}}
-      >
+				style={{ flex: 1 }}
+				provider={'google'}
+				showsUserLocation={true}
+				initialRegion={{
+					latitude: 43.705130,
+					longitude: -72.289520,
+					latitudeDelta: .0095,
+					longitudeDelta: .0095
+				}}
+			>
 				{data.restaurantMany.map(r => {
 					return (<Marker
-							key={r._id}
-							coordinate={{latitude: r.latitude,
-													 longitude: r.longitude}}
-							title={r.name}
-							description={r.phone_number}
-						>
-							<View style={{backgroundColor: "red", padding: 10}}>
-								<Text>{r.name}</Text>
-							</View>
-						</Marker>
+						key={r._id}
+						coordinate={{
+							latitude: r.latitude,
+							longitude: r.longitude
+						}}
+						title={r.name}
+						description={r.phone_number}
+					>
+						<View style={{ backgroundColor: "red", padding: 10 }}>
+							<Text>{r.name}</Text>
+						</View>
+					</Marker>
 					)
 				})}
-			</MapView>	
+			</MapView>
 		</SafeAreaView>
 	)
 }

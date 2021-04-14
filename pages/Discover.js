@@ -19,6 +19,8 @@ const Discover = ({ navigation }) => {
 	if (error) return <Text>{error}</Text>
 	const { dishMany: dishes } = data
 
+	console.log();
+
 	return (
 		<View syle={styles.container}>
 			{/* TODO: Replace search UI with search and filter functionality */}
@@ -49,8 +51,8 @@ const styles = StyleSheet.create({
 	},
 	item_container: {
 		justifyContent: 'center',
-    	alignItems: 'center',
-		height:'100%',
+		alignItems: 'center',
+		height: '100%',
 		backgroundColor: '#FDFCFC',
 	},
 	score_circle: {
