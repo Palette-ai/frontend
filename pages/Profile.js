@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import Svg, { Ellipse } from "react-native-svg";
 import firebase from 'firebase/app'
 
-import SignOut from '../components/SignOut';
+import SignOut from './SignOut';
 
 const Profile = () => {
 	return (

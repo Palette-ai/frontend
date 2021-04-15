@@ -5,7 +5,7 @@ import {
 	Text,
 	View,
 } from 'react-native'
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { TouchableOpacity } from 'react-native'
 import { StatusBar } from 'expo-status-bar';
 import { GET_ALL_DISHES } from '../queries/dishes';
@@ -17,7 +17,7 @@ const Discover = ({ navigation }) => {
 	const { loading, error, data } = useQuery(GET_ALL_DISHES)
 	if (loading) return <Text> Loading... </Text>
 	if (error) return <Text>{error}</Text>
-	const { dishMany: dishes } = data
+	// const { dishMany: dishes } = data
 
 	console.log();
 

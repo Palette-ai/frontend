@@ -7,7 +7,7 @@ import {
 	TouchableWithoutFeedback,
 	Keyboard
 } from 'react-native'
-import LoginBox from './Login/LoginBox';
+import LoginBox from '../components/Login/LoginBox';
 
 function SignIn() {
 	return (
