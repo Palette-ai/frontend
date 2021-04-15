@@ -1,13 +1,10 @@
 import React from 'react'
 import {
-	ScrollView,
 	StyleSheet,
-	Image,
 	Text,
 	View,
 } from 'react-native'
 import { Col, Row, Grid } from "react-native-easy-grid"
-import { sushi, dollar_sign, hot, organic, map_sign } from '../../assets' //? Where are these components in assets? I don't see them
 
 const RestaurantCard = (props) => {
 
