@@ -18,42 +18,52 @@ const Restaurant = ({ navigation }) => {
 
     // need to query to get dishes for the specific restaurant
     // add a prop thing 
-    const restaurant_id = '606f420b39906c7dda2be59f'
+    const restaurant =  {
+        "__typename": "Restaurant",
+        "_id": "606f420b39906c7dda2be59f",
+        "description": "Gastropub fare & drinks in a convivial, dark-wood tavern backdrop decorated with books.",
+        "latitude": 43.7020625,
+        "longitude": -72.28956249999999,
+        "name": "Murphy's On The Green",
+        "phone_number": "+16036434075",
+      }
 
     //want to get restaurant name too 
 
     // Queries all dishes with the restaurant_id
-	var { loading, error, data} = useQuery(GET_DISHES_RESTAURANT, {
+	const { loading, error, data} = useQuery(GET_DISHES_RESTAURANT, {
 		variables: {
-			filter: { restaurant_id: restaurant_id},
+			filter: { restaurant_id: restaurant._id},
 			sort: '_ID_DESC'
 		},
 		onCompleted: (data) => {
-			console.log("Dishes have been queried:", data)
+            console.log("Dishes have been queried:")
+           
 		}
     })
+    if(loading) return <Text> Loading... </Text>
+    if(error) return <Text>{error}</Text>
+
+    const dishes = data.dishMany.slice().sort((a, b) =>  b.average_rating - a.average_rating)
+
 
     //need to sort array of dishes that we get back 
 
-	var { rest_loading, rest_error, data: rest_data} = useQuery(GET_RESTAURANT_BY_ID, {
-		variables: {
-			_id: restaurant_id
-		},
-		onCompleted: (rest_data) => {
+	// const { rest_loading, rest_error, data: rest_data} = useQuery(GET_RESTAURANT_BY_ID, {
+	// 	variables: {
+	// 		_id: restaurant_id
+	// 	},
+	// 	onCompleted: (rest_data) => {
             
-			console.log("Restaurant has been queried:", rest_data)
-		}
-    })
-    console.log(rest_data)
-
-    const dishes = data.dishMany.slice().sort((a, b) =>  b.average_rating - a.average_rating)
-    console.log(dishes)
+	// 		console.log("Restaurant has been queried:" , rest_data)
+	// 	}
+    // })
 
 	return (
 		<View syle={styles.container}>
 			{/* TODO: Replace search UI with search and filter functionality */}
            
-			<RestaurantCard restaurant_name={rest_data.restaurantById.name}/>
+			<RestaurantCard restaurant_name={restaurant.name} restaurant_description={restaurant.description}/>
 			<View style={styles.item_container}>
 				<ScrollView showsVerticalScrollIndicator={false}>
 					{dishes.map(dish => (

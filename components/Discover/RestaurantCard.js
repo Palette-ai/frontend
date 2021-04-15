@@ -8,9 +8,13 @@ import { Col, Row, Grid } from "react-native-easy-grid"
 
 const RestaurantCard = (props) => {
 
+    console.log(props)
 	return (
 		<View style={styles.filter_container}>
 			<Text style={styles.text_title}>{props.restaurant_name}</Text>
+            <Row style={styles.dish_container}>
+				<Text style={styles.dish_discription_container}>{props.restaurant_description}</Text>
+			</Row>
 		</View>
 	)
 }
@@ -18,10 +22,10 @@ const RestaurantCard = (props) => {
 const styles = StyleSheet.create({
 	filter_container: {
 		backgroundColor: '#FF5349',
-		width: '100%',
-		height: '21%',
+        width: '100%',
+        height: '18%',
 		borderBottomLeftRadius: 30,
-		borderBottomRightRadius: 30,
+        borderBottomRightRadius: 30,
 	},
 	filter_icons: {
 		height: '100%',
@@ -68,7 +72,7 @@ const styles = StyleSheet.create({
 	},
 	text_title: {
 		color: '#FFFFFF',
-		fontSize: 34,
+		fontSize: 30,
 		marginTop: 60,
 		marginLeft: 25,
 		fontWeight: '600'
@@ -76,7 +80,15 @@ const styles = StyleSheet.create({
 	text_filter: {
 		marginTop: 15,
 		marginLeft: -10,
-	}
+    },
+    dish_discription_container: {
+		width: '80%',
+		flexWrap: 'wrap',
+        zIndex: 2,
+        marginLeft: 25,
+        marginTop: 10,
+        color: '#FFFFFF'
+	},
 })
 
 export default RestaurantCard

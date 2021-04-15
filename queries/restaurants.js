@@ -21,6 +21,7 @@ export const GET_RESTAURANT_BY_ID = gql`
         	  latitude
 			  longitude
         	  phone_number
+			  description
   		}
 	}
 `
