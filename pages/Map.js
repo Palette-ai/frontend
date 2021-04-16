@@ -13,7 +13,6 @@ const Map = () => {
 	if (loading) return <Text> Loading... </Text>
 	if (error) return <Text>{error}</Text>
 	const { restaurantMany: restaurants } = data
-	console.log(data.restaurantMany)
 
 	// const getLatLong = async (pc) => {
 	// 	 await axios({
