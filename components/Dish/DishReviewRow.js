@@ -21,8 +21,8 @@ function DishReviewRow({ dishRatings }) {
 	return (
 		<Row>
 			<Col>
-				{dishRatings?.map(({ _id, dish_id, user_id, review, rating }) => (
-					<Row key={_id} style={styles.rect2}>
+				{dishRatings?.map((dr) => (
+					<Row key={dr._id} style={styles.rect2}>
 						<View style={styles.reviewHolder}>
 							<View style={styles.reviewTop}>
 								<View style={styles.iconContainer}>
@@ -33,11 +33,11 @@ function DishReviewRow({ dishRatings }) {
 									/>
 								</View>
 								<View flexDirection='column'>
-									<Text style={styles.username_text}>username</Text>
+									<Text style={styles.username_text}>{dr.user.name}</Text>
 									<StarRating
 										disabled={true}
 										maxStars={5}
-										rating={rating}
+										rating={dr.rating}
 										fullStarColor={'yellow'}
 										starSize={22}
 										fullStarColor={'#ffffff'}
@@ -46,7 +46,7 @@ function DishReviewRow({ dishRatings }) {
 								</View>
 							</View>
 							<View>
-								<Text style={styles.review_text}>{`${review}`}</Text>
+								<Text style={styles.review_text}>{`${dr.review}`}</Text>
 							</View>
 						</View>
 					</Row>

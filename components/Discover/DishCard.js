@@ -72,7 +72,7 @@ const DishCard = ({ dish }) => {
 							onPress={overallHandler}
 							style={styles.likeButton}
 						/>
-						<Text style={styles.res_name}>Sushiya</Text>
+						<Text style={styles.res_name}>{dish.restaurant.name}</Text>
 						<Row>
 							<Image source={dollar_sign} />
 							<Image source={dollar_sign} />

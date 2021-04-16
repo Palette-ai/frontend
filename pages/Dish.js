@@ -26,10 +26,11 @@ function Dish({ route }) {
 	// Queries all dishRatings
 	const { loading, error, data, refetch } = useQuery(GET_DISH_RATINGS, {
 		variables: {
-			filter: { dish_id: dish._id, hasReviewText: true },
+			filter: { dish_id: dish._id, _operators: { review: { regex: "/.+/ig" } } },
 			sort: '_ID_DESC'
 		},
 	})
+	// console.log(dish._id)
 
 	// Memoizes dishRatings and is updated when the dishRating Query is reran
 	useMemo(() => {

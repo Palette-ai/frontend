@@ -17,6 +17,7 @@ export const GET_SOME_DISHES = gql`
 			dish_name
 			description
 			_id
+			restaurant { name }
   		}
 	}
 `
@@ -38,7 +39,7 @@ export const GET_DISH_RATINGS = gql`
 		dishRatingMany (filter: $filter sort: $sort) {
 			_id
 			dish_id
-			user_id
+			user { name }
 			rating
 			review
 			createdAt
