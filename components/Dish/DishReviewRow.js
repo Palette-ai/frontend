@@ -17,79 +17,40 @@ import { Col, Row, Grid } from "react-native-easy-grid"
 import { Icon, Button, Card, Modal } from '@ui-kitten/components';
 import StarRating from 'react-native-star-rating';
 
-import { DISH_ADD_RATING, GET_DISH_RATINGS } from '../../queries/dishes';
-import { GET_USERS } from '../../queries/users';
-
-
-function DishReviewRow(props) {
-	const dish = props.dish
-	const userID = firebase.auth().currentUser.uid
-
-	const [dishRatings, setDishRatings] = useState(0)
-
-	// Queries all dishRatings and usernames
-	const { loading, error, data, refetch } = useQuery(GET_DISH_RATINGS, {
-		variables: {
-			filter: { dish_id: dish._id, hasReviewText: true },
-			sort: '_ID_DESC'
-		},
-		onCompleted: (data) => {
-			//run another query 
-			// const user_ids = data.dishRatingMany.map(el => (
-			//     el.user_id
-			// ));
-			// console.log(user_ids)
-
-			// const { loading_user, error_user, data_user, refetch } = useQuery(GET_USERS, {
-			//     variables: {
-			//         filter: {user_id: user_ids}
-			//     }, 
-			//     onCompleted: (data_user) => {
-			//         console.log(data_user)
-			//     }
-			// })
-		}
-	})
-
-	// Memoizes dishRatings and is updated when the dishRating Query is reran
-	useMemo(() => {
-		if (data) setDishRatings(data.dishRatingMany)
-	}, [data])
-
+function DishReviewRow({ dishRatings }) {
 	return (
 		<Row>
 			<Col>
-				{dishRatings !== 0 &&
-					dishRatings?.map(({ _id, dish_id, user_id, review, rating }) => (
-						<Row key={_id} style={styles.rect2}>
-							<View style={styles.reviewHolder}>
-								<View style={styles.reviewTop}>
-									<View style={styles.iconContainer}>
-										<Icon
-											style={styles.icon}
-											fill='#8F9BB3'
-											name='person-outline'
-										/>
-									</View>
-									<View flexDirection='column'>
-										<Text style={styles.username_text}>username</Text>
-										<StarRating
-											disabled={true}
-											maxStars={5}
-											rating={rating}
-											fullStarColor={'yellow'}
-											starSize={22}
-											fullStarColor={'#ffffff'}
-											emptyStarColor={'#ffffff'}
-										/>
-									</View>
+				{dishRatings?.map(({ _id, dish_id, user_id, review, rating }) => (
+					<Row key={_id} style={styles.rect2}>
+						<View style={styles.reviewHolder}>
+							<View style={styles.reviewTop}>
+								<View style={styles.iconContainer}>
+									<Icon
+										style={styles.icon}
+										fill='#8F9BB3'
+										name='person-outline'
+									/>
 								</View>
-								<View>
-									<Text style={styles.review_text}>{`${review}`}</Text>
+								<View flexDirection='column'>
+									<Text style={styles.username_text}>username</Text>
+									<StarRating
+										disabled={true}
+										maxStars={5}
+										rating={rating}
+										fullStarColor={'yellow'}
+										starSize={22}
+										fullStarColor={'#ffffff'}
+										emptyStarColor={'#ffffff'}
+									/>
 								</View>
 							</View>
-						</Row>
-					))
+							<View>
+								<Text style={styles.review_text}>{`${review}`}</Text>
+							</View>
+						</View>
+					</Row>
+				))
 				}
 			</Col>
 		</Row>

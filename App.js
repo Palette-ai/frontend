@@ -8,6 +8,7 @@ import { AuthContextProvider } from './context/AuthContext';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { LogBox } from 'react-native'
 
 import SignIn from './pages/SignIn'
 import AppNavigator from './navigation/AppNavigator'
@@ -17,7 +18,7 @@ export default function App() {
   firebaseInit()
   const auth = firebase.auth()
   const [user] = useAuthState(auth)
-  console.disableYellowBox = true;
+  LogBox.ignoreAllLogs();
   return (
     <ApolloProvider client={client}>
       <IconRegistry icons={EvaIconsPack} />

@@ -55,7 +55,7 @@ const Discover = ({ navigation }) => {
 							onPress={() => navigation.navigate('Dish', { dish, navigation })}
 							key={dish._id}
 						>
-							<DishCard dish={dish} />
+							<DishCard dish={dish} restaurant={data2.restaurantByIds[idx]} />
 						</TouchableOpacity>
 					))}
 				</ScrollView>

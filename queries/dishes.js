@@ -5,6 +5,7 @@ export const GET_ALL_DISHES = gql`
   		dishMany {
 			dish_name
 			description
+			restaurant_id
 			_id
   		}
 	}
