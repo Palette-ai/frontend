@@ -40,6 +40,9 @@ const Discover = ({ navigation }) => {
 		},
 		})
 
+	if (loading) return <Text>Loading...</Text>
+	if (error) return <Text>Not good why did it break...</Text>
+
 	return (
 		<View syle={styles.container}>
 			{/* TODO: Replace search UI with search and filter functionality */}
