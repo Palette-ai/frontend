@@ -23,16 +23,19 @@ const Discover = ({ navigation }) => {
 	const [dishRecs, setDishRecs] = useState('')
 
 	const userIDString = firebase.auth().currentUser.photoURL;
-	axios.post("https://palette-backend.herokuapp.com/rec", {
-		user_id: userIDString
-	})
-	.then(res => {
-		let recDishes = res.data.map(d => mongoose.Types.ObjectId(d))
-		setDishRecs(recDishes)
-	})
-	.catch(e => {
-		console.log(e)
-	})
+	useEffect(() => {
+		axios.post("https://palette-backend.herokuapp.com/rec", {
+			user_id: userIDString
+		})
+		.then(res => {
+			let recDishes = res.data.map(d => mongoose.Types.ObjectId(d))
+			setDishRecs(recDishes)
+		})
+		.catch(e => {
+			console.log(e)
+		})
+	}, [])
+	
 
 	const { loading, error, data } = useQuery(GET_SOME_DISHES, {
 		variables: {
@@ -42,6 +45,7 @@ const Discover = ({ navigation }) => {
 
 	if (loading) return <Text>Loading...</Text>
 	if (error) return <Text>Not good why did it break...</Text>
+
 
 	return (
 		<View syle={styles.container}>

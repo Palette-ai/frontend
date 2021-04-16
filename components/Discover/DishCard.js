@@ -26,7 +26,7 @@ const DishCard = ({ dish }) => {
 			name='heart'
 			stroke={liked ? 'none' : 'red'}
 			fill={liked ? 'red' : 'none'}
-			
+
 			{...props}
 		/>
 	);
@@ -37,31 +37,20 @@ const DishCard = ({ dish }) => {
 	// Unlike a dish, then update the user's list of liked dishes
 	const [dishUnlike, { unlike_data }] = useMutation(USER_UNLIKE_DISH)
 
-	//Handler for adding dishRating
-	const likeDishHandler = () => {
-		console.log('liking', liked)
-		dishLike({
-			variables: {
-				dish_id: dish._id,
-				user_id: userID,
-			}
-		})
-	}
-
-	//Handler for adding dishRating
-	const unlikeDishHandler = () => {
-		console.log('unliking', liked)
-		dishUnlike({
-			variables: {
-				dish_id: dish._id,
-				user_id: userID,
-			}
-		})
-	}
-
 	const overallHandler = () => {
 		console.log('thisworks')
-		liked ? unlikeDishHandler : likeDishHandler
+		liked ?
+			dishUnlike({
+				variables: {
+					dish_id: dish._id,
+					user_id: userID,
+				}
+			}) : dishLike({
+				variables: {
+					dish_id: dish._id,
+					user_id: userID,
+				}
+			})
 		setLiked(!liked)
 	}
 
@@ -83,7 +72,7 @@ const DishCard = ({ dish }) => {
 							onPress={overallHandler}
 							style={styles.likeButton}
 						/>
-						<Text style={styles.res_name}>Sushiya</Text>
+						<Text style={styles.res_name}>{dish.restaurant.name}</Text>
 						<Row>
 							<Image source={dollar_sign} />
 							<Image source={dollar_sign} />

@@ -18,7 +18,7 @@ import DishReviewRow from '../components/Dish/DishReviewRow';
 import AddDishRatingModal from '../components/Dish/AddDishRatingModal';
 
 function Dish({ route }) {
-	const { navigation, dish } = route.params
+	const { dish, navigation } = route.params
 
 	const [dishRatings, setDishRatings] = useState('')
 	const [isModalVisible, setModalVisible] = useState('');
@@ -26,13 +26,11 @@ function Dish({ route }) {
 	// Queries all dishRatings
 	const { loading, error, data, refetch } = useQuery(GET_DISH_RATINGS, {
 		variables: {
-			filter: { dish_id: dish._id, hasReviewText: true },
+			filter: { dish_id: dish._id, _operators: { review: { regex: "/.+/ig" } } },
 			sort: '_ID_DESC'
 		},
-		// onCompleted: (data) => {
-		// 	console.log("Query Has Been Rerun:", data)
-		// }
 	})
+	// console.log(dish._id)
 
 	// Memoizes dishRatings and is updated when the dishRating Query is reran
 	useMemo(() => {
@@ -79,7 +77,9 @@ function Dish({ route }) {
       							</Button>
 							</Col>
 						</Row>
-						<DishReviewRow dish={dish} />
+						<DishReviewRow
+							dishRatings={dishRatings}
+						/>
 					</Grid>
 				</ScrollView>
 			</View>
@@ -97,7 +97,7 @@ function Dish({ route }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#FDFCFC',
+		backgroundColor: '#FFFFFF',
 	},
 	back_arrow: {
 		marginTop: '10%',
