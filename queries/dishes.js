@@ -10,6 +10,16 @@ export const GET_ALL_DISHES = gql`
 	}
 `
 
+export const GET_SOME_DISHES = gql`
+	query ($_ids: [MongoID!]!) {
+  		dishByIds (_ids: $_ids) {
+			dish_name
+			description
+			_id
+  		}
+	}
+`
+
 export const DISH_ADD_RATING = gql`
 	mutation ($record: CreateOneDishRatingInput!) {
 		dishRatingCreateOne (record: $record) {
