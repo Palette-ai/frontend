@@ -20,8 +20,8 @@ import AddDishRatingModal from '../components/Dish/AddDishRatingModal';
 function Dish({ route }) {
 	const { navigation, dish } = route.params
 
-	const [dishRatings, setDishRatings] = useState(0)
-	const [isModalVisible, setModalVisible] = useState(false);
+	const [dishRatings, setDishRatings] = useState('')
+	const [isModalVisible, setModalVisible] = useState('');
 
 	// Queries all dishRatings
 	const { loading, error, data, refetch } = useQuery(GET_DISH_RATINGS, {
