@@ -39,6 +39,7 @@ const DishCard = ({ dish }) => {
 
 	const overallHandler = () => {
 		console.log('thisworks')
+		setLiked(!liked)
 		liked ?
 			dishUnlike({
 				variables: {
@@ -51,7 +52,6 @@ const DishCard = ({ dish }) => {
 					user_id: userID,
 				}
 			})
-		setLiked(!liked)
 	}
 
 	return (
