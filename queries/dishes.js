@@ -17,7 +17,7 @@ export const GET_SOME_DISHES = gql`
 			dish_name
 			description
 			_id
-			restaurant { name }
+			restaurant { name, _id }
   		}
 	}
 `

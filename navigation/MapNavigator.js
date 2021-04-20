@@ -1,19 +1,17 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import DiscoverScreen from '../pages/Discover'
-import DishScreen from '../pages/Dish'
 import RestaurantScreen from '../pages/Restaurant'
+import MapScreen from '../pages/Map';
 
 const Stack = createStackNavigator();
-export default function HomeStackScreen() {
+export default function MapStackScreen() {
 	return (
 		<Stack.Navigator
 			screenOptions={{
 				headerShown: false
 			}}>
-			<Stack.Screen name="Discover" component={DiscoverScreen} />
-			<Stack.Screen name="Dish" component={DishScreen} />
+			<Stack.Screen name="MapScreen" component={MapScreen} />
 			<Stack.Screen name="Restaurant" component={RestaurantScreen} />
 		</Stack.Navigator>
 	);

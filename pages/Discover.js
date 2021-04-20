@@ -8,9 +8,11 @@ import {
 import { useMutation, useLazyQuery } from '@apollo/client';
 import { TouchableOpacity } from 'react-native'
 import { StatusBar } from 'expo-status-bar';
-import { GET_ALL_DISHES, GET_SOME_DISHES } from '../queries/dishes';
 import firebase from 'firebase/app';
 import mongoose from 'mongoose';
+import LottieView from 'lottie-react-native';
+
+import { GET_ALL_DISHES, GET_SOME_DISHES } from '../queries/dishes';
 
 
 import Search from '../components/Discover/Search'
@@ -38,12 +40,23 @@ const Discover = ({ navigation }) => {
 			})
 	}, [])
 
-
 	if (loading) return <Text>Loading...</Text>
 	if (error) return <Text>Not good why did it break...</Text>
 
 	return !data ?
-		<Text>hi</Text> :
+		<View syle={styles.container}>
+			{/* TODO: Replace search UI with search and filter functionality */}
+			<Search />
+			<View style={styles.item_container}>
+				<LottieView
+					autoPlay
+					loop
+					source={require('../styles/l.json')}
+					style={styles.animationContainer}
+				/>
+			</View>
+		</View>
+		:
 		(
 			<View syle={styles.container}>
 				{/* TODO: Replace search UI with search and filter functionality */}
@@ -66,6 +79,12 @@ const Discover = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+	animationContainer: {
+		marginTop: -90,
+		alignItems: "flex-start",
+		justifyContent: 'flex-start',
+		flex: 1,
+	},
 	container: {
 		flex: 1,
 		justifyContent: 'center',
