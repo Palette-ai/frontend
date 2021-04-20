@@ -43,6 +43,10 @@ export const GET_DISH_RATINGS = gql`
 			rating
 			review
 			createdAt
+			dish { 
+				dish_name 
+				restaurant { name }
+				}
 		}
 	}
 `

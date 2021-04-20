@@ -33,7 +33,7 @@ const TabNavigator = () => (
     <Screen name='Discover' component={DiscoverStackScreen} />
     <Screen name='Map' component={MapScreen} />
     <Screen name='LikedDishes' component={LikedDishesScreen} />
-    <Screen name='Profile' component={RestaurantScreen} />
+    <Screen name='Profile' component={ProfileScreen} />
   </Navigator>
 );
 
