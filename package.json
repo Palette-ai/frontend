@@ -31,6 +31,7 @@
     "react-dom": "16.13.1",
     "react-firebase-hooks": "^2.2.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
+    "react-native-app-link": "^1.0.1",
     "react-native-easy-grid": "^0.2.2",
     "react-native-geocoding": "^0.5.0",
     "react-native-gesture-handler": "~1.8.0",
@@ -65,9 +66,16 @@
   },
   "jest": {
     "preset": "jest-expo",
-    "snapshotSerializers": ["enzyme-to-json/serializer"],
-    "collectCoverageFrom": ["src/**/*.js", "!src/index.js"],
-    "coverageReporters": ["text"]
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/index.js"
+    ],
+    "coverageReporters": [
+      "text"
+    ]
   },
   "private": true
 }
