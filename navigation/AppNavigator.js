@@ -1,5 +1,6 @@
 import React from 'react'
 import ProfileScreen from '../pages/Profile'
+import RestaurantScreen from '../pages/Restaurant'
 import LikedDishesScreen from '../pages/LikedDishes'
 import MapScreen from '../pages/Map'
 import DiscoverStackScreen from '../navigation/DishNavigator';
@@ -32,7 +33,7 @@ const TabNavigator = () => (
     <Screen name='Discover' component={DiscoverStackScreen} />
     <Screen name='Map' component={MapScreen} />
     <Screen name='LikedDishes' component={LikedDishesScreen} />
-    <Screen name='Profile' component={ProfileScreen} />
+    <Screen name='Profile' component={RestaurantScreen} />
   </Navigator>
 );
 

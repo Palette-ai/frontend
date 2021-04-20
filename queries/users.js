@@ -18,3 +18,27 @@ export const GET_USERS = gql`
 		}
 	}
 `
+
+export const USER_LIKED_DISHES = gql`
+	query ($_id: MongoID!) {
+		userById (_id: $_id) {
+			liked_dishes
+		}
+	}
+`
+
+export const USER_LIKE_DISH = gql`
+	mutation ($user_id: String! $dish_id: String!) {
+		userAddLikedDish (user_id: $user_id dish_id: $dish_id) {
+			liked_dishes
+		}
+	}
+`
+
+export const USER_UNLIKE_DISH = gql`
+	mutation ($user_id: String! $dish_id: String!) {
+		userRemoveLikedDish (user_id: $user_id dish_id: $dish_id) {
+			liked_dishes
+		}
+	}
+`

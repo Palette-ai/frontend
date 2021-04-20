@@ -5,7 +5,6 @@ import {
 	Text,
 	TouchableOpacity,
 	KeyboardAvoidingView,
-	Button,
 	Platform
 } from "react-native";
 import { useMutation } from '@apollo/client'
@@ -24,32 +23,28 @@ function LoginBox() {
 
 	const [createUser] = useMutation(CREATE_USER, {
 		onCompleted(data) {
-			console.log(data);
+			console.log('Mongos User created: ', data.userCreateOne.recordId)
+			//Can't add custom fields to firebase, so saving mongoid in photoUrl LMAO
+			firebase.auth().createUserWithEmailAndPassword(email, password)
+				.then((userCredential) => {
+					userCredential.user.updateProfile({ displayName: name })
+					userCredential.user.updateProfile({ photoURL: data.userCreateOne.recordId })
+				})
+				.catch((error) => {
+					console.log(console.log(error.code, error.message));
+				});
 		},
 		onError(error) {
 			console.log(error);
 		}
 	})
 
-	// const SignUp = (username, password, email) => {
-	// 	console.log(username, password, email);
-	// 	createUser({
-	// 		variables: {
-	// 			record: { name: username, email }
-	// 		}
-	// 	})
-	// }
-
 	const SignUp = async (email, password) => {
-		firebase.auth().createUserWithEmailAndPassword(email, password)
-			.then((userCredential) => {
-				console.log(userCredential);
-				userCredential.user.updateProfile({ displayName: name })
-				console.log(userCredential.user);
-			})
-			.catch((error) => {
-				console.log(console.log(error.code, error.message));
-			});
+		createUser({
+			variables: {
+				record: { name, email, liked_dishes: [] }
+			}
+		})
 	}
 
 	const LogIn = async (email, password) => {

@@ -2,22 +2,23 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { ApolloProvider } from '@apollo/client'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import client from './graphql/ApolloProvider';
-import AppNavigator from './navigation/AppNavigator'
 import { firebaseInit } from './services/firebase'
 import firebase from 'firebase/app'
-import SignIn from './components/SignIn'
 import { AuthContextProvider } from './context/AuthContext';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { LogBox } from 'react-native'
 
+import SignIn from './pages/SignIn'
+import AppNavigator from './navigation/AppNavigator'
+import client from './graphql/ApolloProvider';
 
 export default function App() {
   firebaseInit()
   const auth = firebase.auth()
   const [user] = useAuthState(auth)
-  console.disableYellowBox = true;
+  LogBox.ignoreAllLogs();
   return (
     <ApolloProvider client={client}>
       <IconRegistry icons={EvaIconsPack} />

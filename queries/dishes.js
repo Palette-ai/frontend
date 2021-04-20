@@ -5,7 +5,19 @@ export const GET_ALL_DISHES = gql`
   		dishMany {
 			dish_name
 			description
+			restaurant_id
 			_id
+  		}
+	}
+`
+
+export const GET_SOME_DISHES = gql`
+	query ($_ids: [MongoID!]!) {
+  		dishByIds (_ids: $_ids) {
+			dish_name
+			description
+			_id
+			restaurant { name }
   		}
 	}
 `
@@ -27,10 +39,24 @@ export const GET_DISH_RATINGS = gql`
 		dishRatingMany (filter: $filter sort: $sort) {
 			_id
 			dish_id
-			user_id
+			user { name }
 			rating
 			review
 			createdAt
+		}
+	}
+`
+
+export const GET_DISHES_RESTAURANT = gql`
+	query ($filter: FilterFindManyDishInput $sort: SortFindManyDishInput) {
+		dishMany (filter: $filter sort: $sort) {
+			_id
+			dish_name
+  			restaurant_id
+  			average_rating
+  			features
+  			description
+  			tags
 		}
 	}
 `
