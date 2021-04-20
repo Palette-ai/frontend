@@ -1,13 +1,13 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import MapView, { Callout, CalloutSubview, Marker } from 'react-native-maps';
 import { GET_ALL_RESTAURANTS } from '../queries/restaurants';
 import { useQuery } from '@apollo/client';
 import axios from 'axios';
 
 // const MAPS_API = "https://plus.codes/api?address="
 
-const Map = () => {
+const Map = ({ navigation }) => {
 
 	const { loading, error, data } = useQuery(GET_ALL_RESTAURANTS)
 	if (loading) return <Text> Loading... </Text>
@@ -47,19 +47,29 @@ const Map = () => {
 				}}
 			>
 				{data.restaurantMany.map(r => {
-					return (<Marker
-						key={r._id}
-						coordinate={{
-							latitude: r.latitude,
-							longitude: r.longitude
-						}}
-						title={r.name}
-						description={r.phone_number}
-					>
-						<View style={{ backgroundColor: "red", padding: 10 }}>
-							<Text>{r.name}</Text>
-						</View>
-					</Marker>
+					return (
+
+						<Marker
+							key={r._id}
+							coordinate={{
+								latitude: r.latitude,
+								longitude: r.longitude
+							}}
+							title={r.name}
+							description={r.phone_number}
+						>
+							<Callout
+								onPress={() => navigation.navigate('Restaurant', { r, navigation })}
+							>
+								<View>
+									<Text>{r.name}</Text>
+									<Text>{r.phone_number}</Text>
+								</View>
+							</Callout>
+							<View style={{ backgroundColor: "red", padding: 10 }}>
+								<Text>{r.name}</Text>
+							</View>
+						</Marker>
 					)
 				})}
 			</MapView>

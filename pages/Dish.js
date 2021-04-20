@@ -12,6 +12,7 @@ import {
 import { sushi, back_arrow } from '../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { Button } from '@ui-kitten/components';
+import LottieView from 'lottie-react-native';
 
 import { GET_DISH_RATINGS } from '../queries/dishes';
 import DishReviewRow from '../components/Dish/DishReviewRow';
@@ -30,15 +31,14 @@ function Dish({ route }) {
 			sort: '_ID_DESC'
 		},
 	})
-	// console.log(dish._id)
 
 	// Memoizes dishRatings and is updated when the dishRating Query is reran
 	useMemo(() => {
 		if (data) setDishRatings(data.dishRatingMany)
 	}, [data])
 
-	if (loading) return <Text>Loading...</Text>
 	if (error) return <Text>Ratings had trouble loading, whoopsy...</Text>
+	console.log(dish);
 	return (
 		<View style={styles.container}>
 			<View style={styles.item_container}>
@@ -51,14 +51,19 @@ function Dish({ route }) {
 				<Grid>
 					<Row>
 						<Col>
-							<Text style={styles.dish_name}>{dish.dish_name}</Text>
+							<Text style={styles.dish_name}>{loading ? "Loading" : dish.dish_name}</Text>
 							<View style={styles.shadow_box}>
 								<Image source={sushi} style={styles.food_pic} />
 							</View>
 						</Col>
 						<Col>
 							<Row style={styles.dish_container}>
-								<Text style={styles.dish_discription_container}>{dish.description}</Text>
+								<Text style={styles.dish_discription_container}>{loading ? "Loading" : dish.description}</Text>
+								<Button
+									onPress={() => navigation.navigate('Restaurant', { r: dish.restaurant, navigation })}
+								>
+									{dish.restaurant.name}
+								</Button>
 							</Row>
 						</Col>
 					</Row>
@@ -77,9 +82,15 @@ function Dish({ route }) {
       							</Button>
 							</Col>
 						</Row>
-						<DishReviewRow
-							dishRatings={dishRatings}
-						/>
+						{loading ? <LottieView
+							autoPlay
+							loop
+							source={require('../styles/loading.json')}
+							style={{ width: 375, height: 375 }}
+						/> :
+							<DishReviewRow
+								dishRatings={dishRatings}
+							/>}
 					</Grid>
 				</ScrollView>
 			</View>
@@ -89,7 +100,6 @@ function Dish({ route }) {
 				dish_id={dish._id}
 				refetchAllRatings={refetch}
 			/>
-
 		</View>
 	);
 }
