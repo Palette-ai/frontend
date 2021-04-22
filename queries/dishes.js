@@ -1,11 +1,12 @@
 import { gql } from '@apollo/client'
 
 export const GET_ALL_DISHES = gql`
-	query {
-  		dishMany {
+	query ($filter: FilterFindManyDishInput $sort: SortFindManyDishInput) {
+  		dishMany (filter: $filter sort: $sort) {
 			dish_name
 			description
 			restaurant_id
+			restaurant { name }
 			_id
   		}
 	}

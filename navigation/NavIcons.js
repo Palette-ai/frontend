@@ -5,8 +5,12 @@ import { StyleSheet } from 'react-native';
 export const HomeIcon = (props) => <Icon {...props} name='home-outline' />
 export const HomeIconFilled = (props) => <Icon {...props} name='home' />
 
+export const SearchIcon = (props)=> <Icon {...props} name='search-outline' />
+export const SearchIconFilled = (props) => <Icon {...props} name='search' />
+
 export const MapIcon = (props) => <Icon {...props} name='map-outline' />
 export const MapIconFilled = (props) => <Icon {...props} name='map' />
+
 export const StarIcon = (props) => <Icon {...props} name='star-outline' />
 export const StarIconFilled = (props) => <Icon {...props} name='star' />
 
