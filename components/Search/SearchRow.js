@@ -16,8 +16,32 @@ import { Col, Row, Grid } from "react-native-easy-grid"
 import { Icon, Button, Card, Modal } from '@ui-kitten/components';
 import StarRating from 'react-native-star-rating';
 
-function SearchRow({ dishes }) {
+function SearchRow({ toggle, dishes, restaurants }) {
 	return (
+		!toggle
+		?
+		<Row>
+			<Col>
+				{restaurants?.map((r) => (
+					<Row key={r._id} style={styles.rect2}>
+						<View style={styles.reviewHolder}>
+							<View style={styles.reviewTop}>
+								<View style={styles.iconContainer}>
+								</View>
+								<View flexDirection='column'>
+									<Text style={styles.dish_name_text}>{r.name}</Text>
+								</View>
+							</View>
+							<View>
+								<Text style={styles.restaurant_text}>{`${r.description}`}</Text>
+							</View>
+						</View>
+					</Row>
+				))
+				}
+			</Col>
+		</Row>
+		:
 		<Row>
 			<Col>
 				{dishes?.map((d) => (
@@ -39,8 +63,7 @@ function SearchRow({ dishes }) {
 				}
 			</Col>
 		</Row>
-
-	);
+	)
 }
 
 const styles = StyleSheet.create({

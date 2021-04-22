@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { sushi, back_arrow } from '../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
-import { Button } from '@ui-kitten/components';
+import { Button, Toggle, Input } from '@ui-kitten/components';
 
 import { GET_ALL_DISHES } from '../queries/dishes';
 import { GET_ALL_RESTAURANTS } from '../queries/restaurants'
@@ -22,30 +22,32 @@ function Search({ route }) {
 	// const { navigation } = route.params
 
 	const [dishResults, setDishResults] = useState('')
-	// const [isModalVisible, setModalVisible] = useState('');
+	const [restaurantResults, setRestaurantResults] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
-  // const searchTerm = 'Pad'
+	const [toggle, setToggle] = useState('')
 
-  const SearchBar = () => (
-    <TextInput
-      style={{ height: 50, borderColor: 'gray', borderWidth: 1 }}
-      onChangeText={text => setSearchTerm(text)}
-      value={searchTerm}
-      placeholder='Search for Deeshes'
-      style={{ paddingBottom: 20 }}
-    />
-  );
-
-	const { loading, error, data, refetch } = useQuery(GET_ALL_DISHES, {
-		variables: {
-			filter: { _operators: { dish_name: { regex: ( searchTerm == '' ? "help" : "/".concat(searchTerm, "/ig")  ) } } }
-    },
-    onCompleted: ((data) => {console.log("completed", data.dishMany)})
-	})
-	// console.log(dish._id)
+	const { loading, error, data, refetch } = 
+		toggle
+		?
+			useQuery(GET_ALL_DISHES, {
+				variables: {
+					filter: { _operators: { dish_name: { regex: ( searchTerm == '' ? "help" : "/".concat(searchTerm, "/ig")  ) } } }
+				},
+				onCompleted: ((data) => {console.log("completed", data.dishMany)})
+			})
+		:
+			useQuery(GET_ALL_RESTAURANTS, {
+				variables: {
+					filter: { _operators: { name: { regex: ( searchTerm == '' ? "help" : "/".concat(searchTerm, "/ig")  ) } } }
+				},
+				onCompleted: ((data) => {console.log("completed", data.restaurantMany)})
+			})
 
 	useMemo(() => {
-		if (data) setDishResults(data.dishMany)
+		if (data) {
+			if (data.dishMany) setDishResults(data.dishMany)
+			else if (data.restaurantMany) setRestaurantResults(data.restaurantMany)
+		}
 	}, [data])
 
   // console.log(dishResults)
@@ -55,23 +57,41 @@ function Search({ route }) {
 	return (
 		<View style={styles.container}>
 			<View style={styles.item_container}>
+				<Grid>
+					<Row style={styles.title_container}>
+						<View>
+							<Text style={styles.title}>Search</Text>
+						</View>
+					</Row>
+					<Row>
+						<View style={styles.search_box}>
+							<TextInput
+								style={styles.search_text}
+								onChangeText={text => setSearchTerm(text)}
+								value={searchTerm}
+								autoFocus={true}
+								placeholder='Search here'
+							/>
+						</View>
+					</Row>
+					<Row style={styles.toggle_thing}>
+						<Grid style={styles.restaurant_box}>
+							<Text>Restaurants</Text>
+						</Grid>
+						<Toggle checked={toggle} onChange={checked => setToggle(checked)}/>
+						<Grid style={styles.dish_box}>
+							<Text>Dishes</Text>
+						</Grid>
+					</Row>
+				</Grid>
 			</View>
 			<View style={styles.review_container}>
 				<ScrollView>
 					<Grid style={styles.review_item}>
-						<Row>
-							<Col>
-								<TextInput
-                  style={{ height: 50, borderColor: 'gray', borderWidth: 1 }}
-                  onChangeText={text => setSearchTerm(text)}
-                  value={searchTerm}
-                  placeholder='Search for Deeshes'
-                  style={{ paddingBottom: 20 }}
-                />
-							</Col>
-						</Row>
 						<SearchRow
+							toggle={toggle}
 							dishes={dishResults}
+							restaurants={restaurantResults}
               visible={false}
 						/>
 					</Grid>
@@ -87,55 +107,66 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#FFFFFF',
 	},
-	back_arrow: {
-		marginTop: '10%',
-		marginLeft: '5%',
-	},
 	shadow_box: {
 		shadowColor: '#40404040',
 		shadowOffset: { width: 0, height: 1 },
 		shadowOpacity: 3,
 		shadowRadius: 4,
 	},
-	food_pic: {
-		marginTop: '15%',
-		marginLeft: '10%',
-		borderRadius: 30,
-		height: '100%',
-		width: '80%',
-		zIndex: 2,
-	},
 	review_container: {
 		backgroundColor: '#FF5349',
-		paddingTop: '10%',
+		paddingTop: '0%',
 		width: '100%',
 		height: '70%',
 		borderTopLeftRadius: 30,
 		borderTopRightRadius: 30,
 		zIndex: -1,
 	},
-	dish_name: {
+	title: {
 		fontSize: 28,
 		marginLeft: '15%'
 	},
+	search_box: {
+		borderWidth: 1,
+		marginLeft: '10%',
+		width: '75%',
+		marginBottom: '5%',
+	},
 	item_container: {
 		flex: 1,
+		paddingLeft: 20,
+		fontSize: 40,
 	},
 	review_item: {
 		marginTop: '20%',
 		marginLeft: '5%'
 	},
-	dish_container: {
+	title_container: {
 		marginTop: '15%',
 		width: '90%',
 		flexWrap: 'wrap'
 	},
-	dish_discription_container: {
+	search_text: {
 		width: '100%',
 		flexWrap: 'wrap',
 		zIndex: 2,
+		fontSize: 36,
 	},
-	review_title: { fontSize: 28, color: '#fff', },
+	toggle_thing: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	restaurant_box: {
+		fontSize: 36,
+		marginRight: '5%',
+		marginLeft: 'auto',
+	},
+	dish_box: {
+		fontSize: 36,
+		marginLeft: '5%',
+	},
+	review_title: { fontSize: 36, color: '#fff', },
 	review_text: { color: '#fff' },
 	add_review_btn: {
 		marginRight: '5%'
