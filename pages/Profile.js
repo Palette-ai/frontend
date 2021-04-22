@@ -8,6 +8,7 @@ import {
 	TouchableWithoutFeedback,
 	ScrollView,
 	Text,
+	RefreshControl
 } from 'react-native';
 import { sushi, back_arrow } from '../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
@@ -21,15 +22,23 @@ import SignOut from './SignOut';
 
 const Profile = () => {
 
-	
+	//discover page has it 
 	
 	const [dishRatings, setDishRatings] = useState('')
+	const [refreshing, setRefreshing] = useState(false);
+
+	
+
+	
+	
 	// Queries all dishRatings
-	const { loading, error, data, refetch } = useQuery(GET_DISH_RATINGS, {
+	const {loading, error, data, refetch } = useQuery(GET_DISH_RATINGS, {
 		variables: {
 			filter: { user_id: firebase.auth().currentUser.photoURL, _operators: { review: { regex: "/.+/ig" } } },
 		},
 	})
+
+	
 
 	// Memoizes dishRatings and is updated when the dishRating Query is reran
 	useMemo(() => {
@@ -37,8 +46,19 @@ const Profile = () => {
 	}, [data])
 
 	if (loading) return <Text>Loading...</Text>
-	if (error) return <Text>Ratings had trousble loading, whoopsy...</Text>
-	console.log(data)
+	if (error) return <Text>Ratings had trouble loading, whoopsy...</Text>
+	// console.log(data)
+
+	var reviews = data.dishRatingMany.slice().sort((a, b) =>  a.createdAt < b.createdAt)
+
+	const _onRefresh = () => {
+		setRefreshing('true')
+		refetch()
+		console.log(data)
+		reviews = data.dishRatingMany.slice().sort((a, b) =>  b.createdAt - a.createdAt)
+		setRefreshing('false')
+	}
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.item_container}>
@@ -59,12 +79,16 @@ const Profile = () => {
 				<View >
 					<Text style={styles.review_title}>Your Reviews</Text>
 				</View>
-				<ScrollView>
+				<ScrollView refreshControl={
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={_onRefresh}
+					/>}>
 					
 					<Grid style={styles.review_item}>
 
 						<DishReviewRowProfile
-							dishRatings={dishRatings}
+							dishRatings={reviews}
 						/>
 					</Grid>
 				</ScrollView>
