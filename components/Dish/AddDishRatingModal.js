@@ -52,6 +52,7 @@ function AddDishRatingModal({ isModalVisible, setModalVisible, dish_id, refetchA
 						value={review}
 						placeholder='Add Review Text Here'
 						style={{ paddingBottom: 20 }}
+						maxLength = {280}
 					/>
 				</Row>
 				<Row>

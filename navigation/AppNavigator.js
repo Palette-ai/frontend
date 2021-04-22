@@ -1,9 +1,10 @@
 import React from 'react'
 import ProfileScreen from '../pages/Profile'
-import RestaurantScreen from '../pages/Restaurant'
+//import RestaurantScreen from '../pages/Restaurants'
 import LikedDishesScreen from '../pages/LikedDishes'
 import MapScreen from '../pages/Map'
 import DiscoverStackScreen from '../navigation/DishNavigator';
+import MapStackScreen from '../navigation/MapNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, BottomNavigationTab } from '@ui-kitten/components'
@@ -31,9 +32,9 @@ const BottomTabBar = ({ navigation, state }) => (
 const TabNavigator = () => (
   <Navigator tabBar={props => <BottomTabBar {...props} />}>
     <Screen name='Discover' component={DiscoverStackScreen} />
-    <Screen name='Map' component={MapScreen} />
+    <Screen name='Map' component={MapStackScreen} />
     <Screen name='LikedDishes' component={LikedDishesScreen} />
-    <Screen name='Profile' component={RestaurantScreen} />
+    <Screen name='Profile' component={ProfileScreen} />
   </Navigator>
 );
 
