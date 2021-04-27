@@ -44,7 +44,7 @@ function Dish({ route }) {
 			<View style={styles.item_container}>
 				<View style={styles.back_arrow}>
 					<TouchableWithoutFeedback
-						onPress={() => navigation.navigate('Discover')}>
+						onPress={() => navigation.navigate(navigation.params.previous_page)}>
 						<Image source={back_arrow} />
 					</TouchableWithoutFeedback>
 				</View>
