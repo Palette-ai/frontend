@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
-	ScrollView,
 	StyleSheet,
 	Image,
 	Text,
@@ -11,15 +10,16 @@ import firebase from 'firebase/app';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { sushi, dollar_sign, hot, organic, map_sign } from '../../assets'
 import { Button, Icon } from '@ui-kitten/components'
-import { USER_LIKED_DISHES, USER_LIKE_DISH, USER_UNLIKE_DISH } from '../../queries/users';
+import { USER_LIKE_DISH, USER_UNLIKE_DISH } from '../../queries/users';
 import mongoose from 'mongoose';
 
 
-const DishCard = ({ dish }) => {
+const DishCard = ({ dish, userID, likedSet }) => {
 	const [liked, setLiked] = useState(false)
-	const userIDString = firebase.auth().currentUser.photoURL;
-	const userID = mongoose.Types.ObjectId(userIDString);
-	// console.log(firebase.auth().currentUser)
+	useEffect(() => {
+		setLiked(likedSet !== undefined && likedSet.size !== 0 && likedSet.has(dish._id) ? true : false)
+	}, [likedSet])
+
 	const HeartIcon = (props) => (
 		<Icon
 			width={30} height={30}
@@ -36,6 +36,7 @@ const DishCard = ({ dish }) => {
 
 	// Unlike a dish, then update the user's list of liked dishes
 	const [dishUnlike, { unlike_data }] = useMutation(USER_UNLIKE_DISH)
+
 
 	const overallHandler = () => {
 		console.log('thisworks')
