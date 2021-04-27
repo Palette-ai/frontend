@@ -17,6 +17,8 @@ import { Col, Row, Grid } from "react-native-easy-grid"
 import { Icon, Button, Card, Modal } from '@ui-kitten/components';
 import StarRating from 'react-native-star-rating';
 
+import TimeAgo from 'react-native-timeago';
+
 function DishReviewRow({ dishRatings }) {
 	return (
 		<Row>
@@ -47,6 +49,9 @@ function DishReviewRow({ dishRatings }) {
 							</View>
 							<View>
 								<Text style={styles.review_text}>{`${dr.review}`}</Text>
+							</View>
+							<View>
+								<TimeAgo time={dr.createdAt} interval={2000}/>
 							</View>
 						</View>
 					</Row>
@@ -121,7 +126,7 @@ const styles = StyleSheet.create({
 		zIndex: 2,
 	},
 	review_title: { fontSize: 28, color: '#fff', },
-	review_text: { color: '#fff', fontSize: 14 },
+	review_text: { color: '#fff', fontSize: 16 },
 	username_text: {
 		color: '#fff',
 		fontWeight: 'bold',
@@ -133,7 +138,9 @@ const styles = StyleSheet.create({
 	reviewHolder: {
 		// backgroundColor: 'blue',
 		flex: 1,
-		margin: 5
+		marginLeft: 8,
+		marginBottom: 5,
+		marginTop: 5
 	},
 	rect2: {
 		width: '106%',
