@@ -38,7 +38,7 @@ function Dish({ route }) {
 	}, [data])
 
 	if (error) return <Text>Ratings had trouble loading, whoopsy...</Text>
-	console.log(dish);
+	console.log(data);
 	return (
 		<View style={styles.container}>
 			<View style={styles.item_container}>
