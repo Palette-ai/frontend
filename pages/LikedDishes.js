@@ -10,12 +10,17 @@ import { USER_LIKES} from '../queries/users';
 import { useQuery } from '@apollo/client';
 
 const LikedDishes = ({ navigation }) => {
-	const [{ loading, error, data }] = useQuery(USER_LIKES)
+	const { loading, error, data } = useQuery(USER_LIKES, {
+		variables: {
+			_id: mongoose.Types.ObjectId(firebase.auth().currentUser.photoURL)
+		},
+	})
 
-	const userIDString = firebase.auth().currentUser.photoURL;
+
+	// const userIDString = firebase.auth().currentUser.photoURL;
 	
-	if (loading) return <Text>Loading...</Text>
-	if (error) return <Text>Not good why did it break...</Text>
+	if (loading) return <Text style={styles.standby}>Loading...</Text>
+	if (error) return <Text style={styles.standby}>Houston we have a problem</Text>
 	console.log(data.userById.likes)
 	return (
 			<View syle={styles.container}>
@@ -50,6 +55,10 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		height: '100%',
 		backgroundColor: '#FDFCFC',
+	},
+	standby: {
+		marginTop: 300,
+		marginLeft: 150,
 	},
 	score_circle: {
 		borderRadius: 100,
