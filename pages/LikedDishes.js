@@ -6,39 +6,24 @@ import firebase from 'firebase/app';
 import mongoose from 'mongoose';
 import axios from 'axios';
 import { GET_SOME_DISHES } from '../queries/dishes';
-import { useLazyQuery } from '@apollo/client';
+import { USER_LIKES} from '../queries/users';
+import { useQuery } from '@apollo/client';
 
 const LikedDishes = ({ navigation }) => {
-	const [getDishes, { loading, data, error }] = useLazyQuery(GET_SOME_DISHES)
+	const [{ loading, error, data }] = useQuery(USER_LIKES)
 
 	const userIDString = firebase.auth().currentUser.photoURL;
-	useEffect(() => {
-		axios.post("https://palette-backend.herokuapp.com/rec", {
-			user_id: userIDString
-		})
-			.then(res => {
-				getDishes({
-					variables: {
-						_ids: res.data.map(d => mongoose.Types.ObjectId(d))
-					},
-				})
-			})
-			.catch(e => {
-				console.log(e)
-			})
-	}, [])
-
+	
 	if (loading) return <Text>Loading...</Text>
 	if (error) return <Text>Not good why did it break...</Text>
-
-	return !data ?
-	(
-		<View syle={styles.container}>
-			<View>
-				<Like/>
+	console.log(data.userById.likes)
+	return (
+			<View syle={styles.container}>
+				{/* TODO: Replace search UI with search and filter functionality */}
+				<Like />
 				<View style={styles.item_container}>
 					<ScrollView showsVerticalScrollIndicator={false}>
-						{data.dishByIds.map(dish => (
+						{data.userById.likes.map(dish => (
 							<TouchableOpacity
 								activeOpacit={0.1}
 								onPress={() => navigation.navigate('Dish', { dish, navigation })}
@@ -50,8 +35,7 @@ const LikedDishes = ({ navigation }) => {
 					</ScrollView>
 				</View>
 			</View>
-		</View>
-	)
+		)
 }
 
 const styles = StyleSheet.create({
@@ -61,6 +45,24 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: '#FDFCFC',
 	},
+	item_container: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: '100%',
+		backgroundColor: '#FDFCFC',
+	},
+	score_circle: {
+		borderRadius: 100,
+		width: 40,
+		height: 40,
+		backgroundColor: '#F7B300',
+	},
+	footer_container: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: '#FDFCFC',
+	}
 });
 
 export default LikedDishes

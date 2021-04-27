@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     filter_container: {
 		backgroundColor: '#FF5349',
 		width: '100%',
-		height: '55%',
+		height: '15%',
 		borderBottomLeftRadius: 30,
 		borderBottomRightRadius: 30,
 	}
