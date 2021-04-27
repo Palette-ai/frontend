@@ -16,10 +16,9 @@ import { sushi, back_arrow } from '../../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { Icon, Button, Card, Modal } from '@ui-kitten/components';
 import StarRating from 'react-native-star-rating';
-
 import TimeAgo from 'react-native-timeago';
 
-function DishReviewRow({ dishRatings }) {
+function DishReviewRowProfile({ dishRatings }) {
 	return (
 		<Row>
 			<Col>
@@ -27,15 +26,8 @@ function DishReviewRow({ dishRatings }) {
 					<Row key={dr._id} style={styles.rect2}>
 						<View style={styles.reviewHolder}>
 							<View style={styles.reviewTop}>
-								<View style={styles.iconContainer}>
-									<Icon
-										style={styles.icon}
-										fill='#8F9BB3'
-										name='person-outline'
-									/>
-								</View>
 								<View flexDirection='column'>
-									<Text style={styles.username_text}>{dr.user.name}</Text>
+									<Text style={styles.username_text}>{dr.dish.dish_name} from {dr.dish.restaurant.name}</Text>
 									<StarRating
 										disabled={true}
 										maxStars={5}
@@ -165,4 +157,4 @@ const styles = StyleSheet.create({
 		height: 40,
 	}
 });
-export default DishReviewRow;
+export default DishReviewRowProfile;

@@ -1,111 +1,168 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import Svg, { Ellipse } from "react-native-svg";
-import firebase from 'firebase/app'
+import React, { useState, useMemo, useEffect } from 'react';
+import { useQuery } from '@apollo/client';
+import {
+	View,
+	StyleSheet,
+	TextInput,
+	Image,
+	TouchableWithoutFeedback,
+	ScrollView,
+	Text,
+	RefreshControl
+} from 'react-native';
+import { sushi, back_arrow } from '../assets';
+import { Col, Row, Grid } from "react-native-easy-grid"
+import { Button } from '@ui-kitten/components';
 
+import { GET_DISH_RATINGS } from '../queries/dishes';
+import DishReviewRowProfile from '../components/Dish/DishReviewRowProfile';
+import AddDishRatingModal from '../components/Dish/AddDishRatingModal';
+import firebase from 'firebase/app'
 import SignOut from './SignOut';
 
 const Profile = () => {
+
+	//discover page has it 
+	
+	const [dishRatings, setDishRatings] = useState('')
+	const [refreshing, setRefreshing] = useState(false);
+
+	
+
+	
+	
+	// Queries all dishRatings
+	const {loading, error, data, refetch } = useQuery(GET_DISH_RATINGS, {
+		variables: {
+			filter: { user_id: firebase.auth().currentUser.photoURL, _operators: { review: { regex: "/.+/ig" } } },
+		},
+	})
+
+	
+
+	// Memoizes dishRatings and is updated when the dishRating Query is reran
+	useMemo(() => {
+		if (data) setDishRatings(data.dishRatingMany)
+	}, [data])
+
+	if (loading) return <Text>Loading...</Text>
+	if (error) return <Text>Ratings had trouble loading, whoopsy...</Text>
+	// console.log(data)
+
+	var reviews = data.dishRatingMany.slice().sort((a, b) =>  a.createdAt < b.createdAt)
+
+	const _onRefresh = () => {
+		setRefreshing('true')
+		refetch()
+		console.log(data)
+		reviews = data.dishRatingMany.slice().sort((a, b) =>  b.createdAt - a.createdAt)
+		setRefreshing('false')
+	}
+
 	return (
 		<View style={styles.container}>
-			<View style={styles.welcomeBackSyedRow}>
-				<Text style={styles.welcomeBackSyed}>Welcome back, {firebase.auth().currentUser.displayName}.</Text>
-				<Svg viewBox="0 0 82.71 86.26" style={styles.ellipse}>
-					<Ellipse
-						stroke="rgba(230, 230, 230,1)"
-						strokeWidth={0}
-						fill="rgba(230, 230, 230,1)"
-						cx={41}
-						cy={43}
-						rx={41}
-						ry={43}
-					></Ellipse>
-				</Svg>
+			<View style={styles.item_container}>
+
+				<Grid>
+					<Row>
+						<Col>
+							<Text style={styles.dish_name}>{firebase.auth().currentUser.displayName}</Text>
+
+						</Col>
+						<Col>
+							<SignOut/>
+						</Col>
+					</Row>
+				</Grid>
 			</View>
-			<SignOut />
-			<Text style={styles.tasteProfile}>Taste profile</Text>
-			<View style={styles.rectRow}>
-				<View style={styles.rect}>
-					<Text style={styles.groups}>Groups</Text>
+			<View style={styles.review_container}>
+				<View >
+					<Text style={styles.review_title}>Your Reviews</Text>
 				</View>
-				<View style={styles.rect1}>
-					<Text style={styles.friends}>Friends</Text>
-				</View>
-				<View style={styles.rect2}>
-					<Text style={styles.history}>History</Text>
-				</View>
+				<ScrollView refreshControl={
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={_onRefresh}
+					/>}>
+					
+					<Grid style={styles.review_item}>
+
+						<DishReviewRowProfile
+							dishRatings={reviews}
+						/>
+					</Grid>
+				</ScrollView>
 			</View>
+		
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1
+		flex: 1,
+		backgroundColor: '#FFFFFF',
 	},
-	welcomeBackSyed: {
-		color: "#121212",
-		fontSize: 37
+	back_arrow: {
+		marginTop: '10%',
+		marginLeft: '5%',
 	},
-	ellipse: {
-		width: 86,
-		height: 86,
-		marginLeft: 53
+	shadow_box: {
+		shadowColor: '#40404040',
+		shadowOffset: { width: 0, height: 1 },
+		shadowOpacity: 3,
+		shadowRadius: 4,
 	},
-	welcomeBackSyedRow: {
-		height: 86,
-		flexDirection: "row",
-		marginTop: 68,
-		marginLeft: 17,
-		marginRight: 34
+	food_pic: {
+		marginTop: '15%',
+		marginLeft: '10%',
+		borderRadius: 30,
+		height: '100%',
+		width: '80%',
+		zIndex: 2,
 	},
-	tasteProfile: {
-		color: "#121212",
+	review_container: {
+		backgroundColor: '#FF5349',
+		paddingTop: '5%',
+		justifyContent: "center",
+		width: '100%',
+		height: '80%',
+		borderTopLeftRadius: 30,
+		borderTopRightRadius: 30,
+		zIndex: -1,
+	},
+	dish_name: {
+		fontSize: 28,
+		marginLeft: '20%'
+	},
+	item_container: {
+		flex: 1,
+		paddingTop: '20%'
+		
+	},
+	review_item: {
+		marginTop: '5%',
+		marginLeft: '5%',
+	
+	},
+	dish_container: {
+		marginTop: '15%',
+		width: '90%',
+		flexWrap: 'wrap'
+	},
+	dish_discription_container: {
+		width: '100%',
+		flexWrap: 'wrap',
+		zIndex: 2,
+	},
+	review_title: { 
 		fontSize: 24,
-		marginTop: 47,
-		marginLeft: 23
+		 color: '#fff', 
+		 marginLeft: '30%'
 	},
-	rect: {
-		width: 94,
-		height: 66,
-		backgroundColor: "#E6E6E6",
-		marginTop: 3
-	},
-	groups: {
-		color: "#121212",
-		marginTop: 30,
-		marginLeft: 24
-	},
-	rect1: {
-		width: 94,
-		height: 66,
-		backgroundColor: "#E6E6E6",
-		marginLeft: 23,
-		marginTop: 3
-	},
-	friends: {
-		color: "#121212",
-		marginTop: 30,
-		marginLeft: 25
-	},
-	rect2: {
-		width: 94,
-		height: 66,
-		backgroundColor: "#E6E6E6",
-		marginLeft: 29
-	},
-	history: {
-		color: "#121212",
-		marginTop: 28,
-		marginLeft: 25
-	},
-	rectRow: {
-		height: 69,
-		flexDirection: "row",
-		marginTop: 376,
-		marginLeft: 23,
-		marginRight: 18
+	review_text: { color: '#fff' },
+	add_review_btn: {
+		marginRight: '5%'
 	}
 });
-
-export default Profile
+export default Profile;

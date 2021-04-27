@@ -12,46 +12,28 @@ import {
 	Keyboard,
 	Text,
 } from 'react-native';
-import { sushi, back_arrow } from '../../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { Icon, Button, Card, Modal } from '@ui-kitten/components';
 import StarRating from 'react-native-star-rating';
 
-import TimeAgo from 'react-native-timeago';
-
-function DishReviewRow({ dishRatings }) {
+function SearchRow({ toggle, dishes, restaurants }) {
 	return (
+		!toggle
+		?
 		<Row>
 			<Col>
-				{dishRatings?.map((dr) => (
-					<Row key={dr._id} style={styles.rect2}>
+				{restaurants?.map((r) => (
+					<Row key={r._id} style={styles.rect2}>
 						<View style={styles.reviewHolder}>
 							<View style={styles.reviewTop}>
 								<View style={styles.iconContainer}>
-									<Icon
-										style={styles.icon}
-										fill='#8F9BB3'
-										name='person-outline'
-									/>
 								</View>
 								<View flexDirection='column'>
-									<Text style={styles.username_text}>{dr.user.name}</Text>
-									<StarRating
-										disabled={true}
-										maxStars={5}
-										rating={dr.rating}
-										fullStarColor={'yellow'}
-										starSize={22}
-										fullStarColor={'#ffffff'}
-										emptyStarColor={'#ffffff'}
-									/>
+									<Text style={styles.dish_name_text}>{r.name}</Text>
 								</View>
 							</View>
 							<View>
-								<Text style={styles.review_text}>{`${dr.review}`}</Text>
-							</View>
-							<View>
-								<TimeAgo time={dr.createdAt} interval={2000}/>
+								<Text style={styles.restaurant_text}>{`${r.description}`}</Text>
 							</View>
 						</View>
 					</Row>
@@ -59,8 +41,29 @@ function DishReviewRow({ dishRatings }) {
 				}
 			</Col>
 		</Row>
-
-	);
+		:
+		<Row>
+			<Col>
+				{dishes?.map((d) => (
+					<Row key={d._id} style={styles.rect2}>
+						<View style={styles.reviewHolder}>
+							<View style={styles.reviewTop}>
+								<View style={styles.iconContainer}>
+								</View>
+								<View flexDirection='column'>
+									<Text style={styles.dish_name_text}>{d.dish_name}</Text>
+								</View>
+							</View>
+							<View>
+								<Text style={styles.restaurant_text}>{`${d.restaurant.name}`}</Text>
+							</View>
+						</View>
+					</Row>
+				))
+				}
+			</Col>
+		</Row>
+	)
 }
 
 const styles = StyleSheet.create({
@@ -126,8 +129,8 @@ const styles = StyleSheet.create({
 		zIndex: 2,
 	},
 	review_title: { fontSize: 28, color: '#fff', },
-	review_text: { color: '#fff', fontSize: 16 },
-	username_text: {
+	restaurant_text: { color: '#fff', fontSize: 14 },
+	dish_name_text: {
 		color: '#fff',
 		fontWeight: 'bold',
 		fontSize: 15
@@ -138,9 +141,7 @@ const styles = StyleSheet.create({
 	reviewHolder: {
 		// backgroundColor: 'blue',
 		flex: 1,
-		marginLeft: 8,
-		marginBottom: 5,
-		marginTop: 5
+		margin: 5
 	},
 	rect2: {
 		width: '106%',
@@ -165,4 +166,4 @@ const styles = StyleSheet.create({
 		height: 40,
 	}
 });
-export default DishReviewRow;
+export default SearchRow;

@@ -29,6 +29,7 @@
     "graphql": "^15.5.0",
     "lottie-ios": "^3.2.0",
     "lottie-react-native": "~2.6.1",
+    "moment": "^2.29.1",
     "mongoose": "^5.12.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -44,9 +45,11 @@
     "react-native-screens": "~2.15.2",
     "react-native-star-rating": "^1.1.0",
     "react-native-svg": "^12.1.1-0",
+    "react-native-timeago": "^0.5.0",
     "react-native-vector-icons": "^8.0.0",
     "react-native-web": "~0.13.12",
-    "react-navigation-bottom-tabs-no-warnings": "^5.11.3"
+    "react-navigation-bottom-tabs-no-warnings": "^5.11.3",
+    "react-time-ago": "^6.2.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
