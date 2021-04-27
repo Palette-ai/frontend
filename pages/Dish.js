@@ -11,12 +11,7 @@ import {
 import { sushi, back_arrow } from '../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { Button } from '@ui-kitten/components';
-<<<<<<< HEAD
 import OptionsModal from '../components/Dish/OptionsModal';
-=======
-import LottieView from 'lottie-react-native';
-
->>>>>>> a4f29e8997490ec65c2580032bae6725981cfd83
 import { GET_DISH_RATINGS } from '../queries/dishes';
 import DishReviewRow from '../components/Dish/DishReviewRow';
 import AddDishRatingModal from '../components/Dish/AddDishRatingModal';
@@ -107,13 +102,10 @@ function Dish({ route }) {
 				dish_id={dish._id}
 				refetchAllRatings={refetch}
 			/>
-<<<<<<< HEAD
 			<OptionsModal
 				isModalVisible={isOptionsModalVisible}
 				setModalVisible={setOptionsModalVisible}
 			/>
-=======
->>>>>>> a4f29e8997490ec65c2580032bae6725981cfd83
 		</View>
 	);
 }

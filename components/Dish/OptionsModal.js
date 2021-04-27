@@ -15,12 +15,12 @@ function AddDishRatingModal({ isModalVisible, setModalVisible}) {
 			<Card disabled={true}>
 				<Row>
 				<Button title="Add Review" onPress={() => {AppLink.maybeOpenURL('ubereats://', { appName: 'UberEats', appStoreId: '1058959277', appStoreLocale: 'us', playStoreId: 'com.ubercab.eats' })}}>
-					open in snackpass
+					open in ubereats
           </Button>
 				</Row>
 				<Row>
 				</Row>
-				<Button title="Add Review" onPress={addDishRatingHandler}>
+				<Button title="Add Review">
 					call restaurant
           </Button>
 			</Card>
