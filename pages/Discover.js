@@ -62,7 +62,7 @@ const Discover = ({ navigation }) => {
 				{/* TODO: Replace search UI with search and filter functionality */}
 				<Search />
 				<View style={styles.item_container}>
-					<ScrollView showsVerticalScrollIndicator={false}>
+					<ScrollView showsVerticalScrollIndicator={false} marginBottom={'63%'}>
 						{data.dishByIds.map(dish => (
 							<TouchableOpacity
 								activeOpacit={0.1}
