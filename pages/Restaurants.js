@@ -65,7 +65,7 @@ const Restaurant = ({ navigation }) => {
            
 			<RestaurantCard restaurant_name={restaurant.name} restaurant_description={restaurant.description}/>
 			<View style={styles.item_container}>
-				<ScrollView showsVerticalScrollIndicator={false}>
+				<ScrollView showsVerticalScrollIndicator={false} marginBottom={'63%'}>
 					{dishes.map(dish => (
 						<TouchableOpacity
 							activeOpacit={0.1}
