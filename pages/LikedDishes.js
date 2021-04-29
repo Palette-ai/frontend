@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, RefreshControl } from 'react-native';
 import Like from '../components/Liked/Like'
 import DishCard from '../components/Discover/DishCard';
 import firebase from 'firebase/app';
@@ -10,7 +10,10 @@ import { USER_LIKES} from '../queries/users';
 import { useQuery } from '@apollo/client';
 
 const LikedDishes = ({ navigation }) => {
-	const { loading, error, data } = useQuery(USER_LIKES, {
+	
+	const [refreshing, setRefreshing] = useState(false);
+	
+	const { loading, error, data, refetch } = useQuery(USER_LIKES, {
 		variables: {
 			_id: mongoose.Types.ObjectId(firebase.auth().currentUser.photoURL)
 		},
@@ -21,13 +24,27 @@ const LikedDishes = ({ navigation }) => {
 	
 	if (loading) return <Text style={styles.standby}>Loading...</Text>
 	if (error) return <Text style={styles.standby}>Houston we have a problem</Text>
-	console.log(data.userById.likes)
+	// console.log(data.userById.likes)
+
+	const _onRefresh = () => {
+		setRefreshing('true')
+		refetch()
+		console.log("yo")
+		//reviews = data.dishRatingMany.slice().sort((a, b) =>  b.createdAt - a.createdAt)
+		setRefreshing('false')
+		console.log("here")
+	}
+
 	return (
 			<View syle={styles.container}>
 				{/* TODO: Replace search UI with search and filter functionality */}
 				<Like />
 				<View style={styles.item_container}>
-					<ScrollView showsVerticalScrollIndicator={false}>
+					<ScrollView marginBottom={'70%'} showsVerticalScrollIndicator={false} refreshControl={
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={_onRefresh}
+					/>}>
 						{data.userById.likes.map(dish => (
 							<TouchableOpacity
 								activeOpacit={0.1}
@@ -54,7 +71,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		height: '100%',
-		backgroundColor: '#FDFCFC',
+		backgroundColor: '#FDFCFC'
 	},
 	standby: {
 		marginTop: 300,
