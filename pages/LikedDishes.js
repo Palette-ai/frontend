@@ -5,7 +5,7 @@ import DishCard from '../components/Discover/DishCard';
 import firebase from 'firebase/app';
 import mongoose from 'mongoose';
 import axios from 'axios';
-import { USER_LIKES} from '../queries/users';
+import { USER_LIKES } from '../queries/users';
 import { useQuery } from '@apollo/client';
 
 const LikedDishes = ({ navigation }) => {
