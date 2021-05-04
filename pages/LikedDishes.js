@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, RefreshControl } from 'react-native';
 import Like from '../components/Liked/Like'
 import DishCard from '../components/Discover/DishCard';
 import firebase from 'firebase/app';
 import mongoose from 'mongoose';
 import axios from 'axios';
-import { GET_SOME_DISHES } from '../queries/dishes';
 import { USER_LIKES} from '../queries/users';
 import { useQuery } from '@apollo/client';
 
@@ -26,13 +25,14 @@ const LikedDishes = ({ navigation }) => {
 	if (error) return <Text style={styles.standby}>Houston we have a problem</Text>
 	// console.log(data.userById.likes)
 
+
 	const _onRefresh = () => {
 		setRefreshing('true')
 		refetch()
 		console.log("yo")
 		//reviews = data.dishRatingMany.slice().sort((a, b) =>  b.createdAt - a.createdAt)
 		setRefreshing('false')
-		console.log("here")
+		console.log(data)
 	}
 
 	return (
