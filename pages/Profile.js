@@ -8,7 +8,8 @@ import {
 	TouchableWithoutFeedback,
 	ScrollView,
 	Text,
-	RefreshControl
+	RefreshControl,
+	TouchableOpacity
 } from 'react-native';
 import { sushi, back_arrow } from '../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
@@ -16,7 +17,7 @@ import { Button } from '@ui-kitten/components';
 
 import { GET_DISH_RATINGS } from '../queries/dishes';
 import DishReviewRowProfile from '../components/Dish/DishReviewRowProfile';
-import AddDishRatingModal from '../components/Dish/AddDishRatingModal';
+import UpdateDishRatingModal from '../components/Dish/UpdateDishRatingModal';
 import firebase from 'firebase/app'
 import SignOut from './SignOut';
 
@@ -24,12 +25,15 @@ const Profile = () => {
 
 	//discover page has it 
 	
-	const [dishRatings, setDishRatings] = useState('')
-	const [refreshing, setRefreshing] = useState(false);
+	const [dishRatings, setDishRatings] = useState('');
+	const [reviews, setReviews] = useState('');
+	const [refreshing, setRefreshing] = useState('');
+	const [isModalVisible, setModalVisible] = useState('');
+	const [ratingID, setRatingID] = useState('');
+	const [rating, setRating] = useState('');
+	const [review, setReview] = useState('');
+	const [dishID, setDishID] = useState('');
 
-	
-
-	
 	
 	// Queries all dishRatings
 	const {loading, error, data, refetch } = useQuery(GET_DISH_RATINGS, {
@@ -38,24 +42,25 @@ const Profile = () => {
 		},
 	})
 
-	
-
 	// Memoizes dishRatings and is updated when the dishRating Query is reran
 	useMemo(() => {
-		if (data) setDishRatings(data.dishRatingMany)
+		if (data) {
+			setDishRatings(data.dishRatingMany)
+			setReviews(data.dishRatingMany.slice().sort((a, b) =>  a.createdAt < b.createdAt))
+		}
 	}, [data])
 
 	if (loading) return <Text>Loading...</Text>
 	if (error) return <Text>Ratings had trouble loading, whoopsy...</Text>
 	// console.log(data)
 
-	var reviews = data.dishRatingMany.slice().sort((a, b) =>  a.createdAt < b.createdAt)
+	// data.dishRatingMany.slice().sort((a, b) =>  a.createdAt < b.createdAt)
 
 	const _onRefresh = () => {
 		setRefreshing('true')
 		refetch()
-		console.log(data)
-		reviews = data.dishRatingMany.slice().sort((a, b) =>  b.createdAt - a.createdAt)
+		// console.log(data)
+		setReviews(data.dishRatingMany.slice().sort((a, b) =>  b.createdAt - a.createdAt))
 		setRefreshing('false')
 	}
 
@@ -84,16 +89,29 @@ const Profile = () => {
 						refreshing={refreshing}
 						onRefresh={_onRefresh}
 					/>}>
-					
 					<Grid style={styles.review_item}>
-
 						<DishReviewRowProfile
 							dishRatings={reviews}
+							setRatingID={setRatingID}
+							setRating={setRating}
+							setReview={setReview}
+							setDishID={setDishID}
+							setModalVisible={setModalVisible}
 						/>
 					</Grid>
 				</ScrollView>
 			</View>
-		
+			<UpdateDishRatingModal
+				isModalVisible={isModalVisible}
+				setModalVisible={setModalVisible}
+				rating={rating}
+				setRating={setRating}
+				review={review}
+				setReview={setReview}
+				dishID={dishID}
+				ratingID={ratingID}
+				refetchAllRatings={_onRefresh}
+			/>
 		</View>
 	);
 }

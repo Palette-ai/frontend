@@ -11,32 +11,39 @@ import {
 	ScrollView,
 	Keyboard,
 	Text,
+	TouchableOpacity
 } from 'react-native';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { Icon, Button, Card, Modal } from '@ui-kitten/components';
 import StarRating from 'react-native-star-rating';
 
-function SearchRow({ toggle, dishes, restaurants }) {
+function SearchRow({ toggle, dishes, restaurants, navigation }) {
 	return (
 		!toggle
 		?
 		<Row>
 			<Col>
 				{restaurants?.map((r) => (
-					<Row key={r._id} style={styles.rect2}>
-						<View style={styles.reviewHolder}>
-							<View style={styles.reviewTop}>
-								<View style={styles.iconContainer}>
+					<TouchableOpacity
+								activeOpacit={0.1}
+								onPress={() => navigation.navigate('Restaurant', { r, navigation })}
+								key={r._id}
+					>
+						<Row key={r._id} style={styles.rect2}>
+							<View style={styles.reviewHolder}>
+								<View style={styles.reviewTop}>
+									<View style={styles.iconContainer}>
+									</View>
+									<View flexDirection='column'>
+										<Text style={styles.dish_name_text}>{r.name}</Text>
+									</View>
 								</View>
-								<View flexDirection='column'>
-									<Text style={styles.dish_name_text}>{r.name}</Text>
+								<View>
+									<Text style={styles.restaurant_text}>{`${r.description}`}</Text>
 								</View>
 							</View>
-							<View>
-								<Text style={styles.restaurant_text}>{`${r.description}`}</Text>
-							</View>
-						</View>
-					</Row>
+						</Row>
+					</TouchableOpacity>
 				))
 				}
 			</Col>
@@ -44,21 +51,27 @@ function SearchRow({ toggle, dishes, restaurants }) {
 		:
 		<Row>
 			<Col>
-				{dishes?.map((d) => (
-					<Row key={d._id} style={styles.rect2}>
-						<View style={styles.reviewHolder}>
-							<View style={styles.reviewTop}>
-								<View style={styles.iconContainer}>
+				{dishes?.map((dish) => (
+					<TouchableOpacity
+								activeOpacit={0.1}
+								onPress={() => navigation.navigate('Dish', { dish, navigation })}
+								key={dish._id}
+					>
+						<Row key={dish._id} style={styles.rect2}>
+							<View style={styles.reviewHolder}>
+								<View style={styles.reviewTop}>
+									<View style={styles.iconContainer}>
+									</View>
+									<View flexDirection='column'>
+										<Text style={styles.dish_name_text}>{dish.dish_name}</Text>
+									</View>
 								</View>
-								<View flexDirection='column'>
-									<Text style={styles.dish_name_text}>{d.dish_name}</Text>
+								<View>
+									<Text style={styles.restaurant_text}>{`${dish.restaurant.name}`}</Text>
 								</View>
 							</View>
-							<View>
-								<Text style={styles.restaurant_text}>{`${d.restaurant.name}`}</Text>
-							</View>
-						</View>
-					</Row>
+						</Row>
+					</TouchableOpacity>
 				))
 				}
 			</Col>

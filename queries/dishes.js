@@ -35,6 +35,26 @@ export const DISH_ADD_RATING = gql`
 		}
 	}
 `
+
+export const DELETE_RATING = gql`
+	mutation ($_id: MongoID!) {
+		dishRatingRemoveById (_id: $_id) { recordId }
+	}
+`
+
+export const DISH_UPDATE_RATING = gql`
+	mutation ($_id: MongoID! $record: UpdateByIdDishRatingInput!) {
+		dishRatingUpdateById (_id: $_id record: $record) {
+			record {
+				dish_id
+				user_id
+				rating
+				review
+			}
+		}
+	}
+`
+
 export const GET_DISH_RATINGS = gql`
 	query ($filter: FilterFindManyDishRatingInput $sort: SortFindManyDishRatingInput) {
 		dishRatingMany (filter: $filter sort: $sort) {

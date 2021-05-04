@@ -66,9 +66,10 @@ const Map = ({ navigation }) => {
 									<Text>{r.phone_number}</Text>
 								</View>
 							</Callout>
-							<View style={{ backgroundColor: "red", padding: 10 }}>
+							{/* <View style={{ backgroundColor: "red", padding: 10 }}>
 								<Text>{r.name}</Text>
-							</View>
+							</View> */}
+							{/* <View /> */}
 						</Marker>
 					)
 				})}

@@ -18,9 +18,9 @@ import { GET_ALL_RESTAURANTS } from '../queries/restaurants'
 import SearchRow from '../components/Search/SearchRow';
 
 
-function Search({ route }) {
+function Search({ navigation }) {
 	// const { navigation } = route.params
-
+	// navigation.setParams({ previous_page: 'Search' })
 	const [dishResults, setDishResults] = useState('')
 	const [restaurantResults, setRestaurantResults] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
@@ -42,6 +42,10 @@ function Search({ route }) {
 				},
 				onCompleted: ((data) => {console.log("completed", data.restaurantMany)})
 			})
+
+	useEffect(() => {
+		navigation.setParams({ previous_page: 'Search' })
+	},[navigation])
 
 	useMemo(() => {
 		if (data) {
@@ -93,6 +97,7 @@ function Search({ route }) {
 							dishes={dishResults}
 							restaurants={restaurantResults}
               visible={false}
+							navigation={navigation}
 						/>
 					</Grid>
 				</ScrollView>

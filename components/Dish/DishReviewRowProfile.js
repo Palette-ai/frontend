@@ -11,6 +11,7 @@ import {
 	ScrollView,
 	Keyboard,
 	Text,
+	TouchableOpacity
 } from 'react-native';
 import { sushi, back_arrow } from '../../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
@@ -18,35 +19,41 @@ import { Icon, Button, Card, Modal } from '@ui-kitten/components';
 import StarRating from 'react-native-star-rating';
 import TimeAgo from 'react-native-timeago';
 
-function DishReviewRowProfile({ dishRatings }) {
+function DishReviewRowProfile({ dishRatings, setRatingID, setRating, setReview, setDishID, setModalVisible }) {
 	return (
 		<Row>
 			<Col>
 				{dishRatings?.map((dr) => (
-					<Row key={dr._id} style={styles.rect2}>
-						<View style={styles.reviewHolder}>
-							<View style={styles.reviewTop}>
-								<View flexDirection='column'>
-									<Text style={styles.username_text}>{dr.dish.dish_name} from {dr.dish.restaurant.name}</Text>
-									<StarRating
-										disabled={true}
-										maxStars={5}
-										rating={dr.rating}
-										fullStarColor={'yellow'}
-										starSize={22}
-										fullStarColor={'#ffffff'}
-										emptyStarColor={'#ffffff'}
-									/>
+					<TouchableOpacity
+								activeOpacit={0.1}
+								onPress={() => {setRatingID(dr._id); setRating(dr.rating); setDishID(dr.dish_id); setReview(dr.review); setModalVisible(true); }}
+								key={dr._id}
+					>
+						<Row key={dr._id} style={styles.rect2}>
+							<View style={styles.reviewHolder}>
+								<View style={styles.reviewTop}>
+									<View flexDirection='column'>
+										<Text style={styles.username_text}>{dr.dish.dish_name} from {dr.dish.restaurant.name}</Text>
+										<StarRating
+											disabled={true}
+											maxStars={5}
+											rating={dr.rating}
+											fullStarColor={'yellow'}
+											starSize={22}
+											fullStarColor={'#ffffff'}
+											emptyStarColor={'#ffffff'}
+										/>
+									</View>
+								</View>
+								<View>
+									<Text style={styles.review_text}>{`${dr.review}`}</Text>
+								</View>
+								<View>
+									<TimeAgo time={dr.createdAt} interval={2000}/>
 								</View>
 							</View>
-							<View>
-								<Text style={styles.review_text}>{`${dr.review}`}</Text>
-							</View>
-							<View>
-								<TimeAgo time={dr.createdAt} interval={2000}/>
-							</View>
-						</View>
-					</Row>
+						</Row>
+					</TouchableOpacity>
 				))
 				}
 			</Col>
