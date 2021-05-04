@@ -42,10 +42,6 @@ function SearchRow({ toggle, searchTerm, navigation }) {
 				onCompleted: ((data) => {console.log("completed", data.restaurantMany)})
 			})
 
-	useEffect(() => {
-		navigation.setParams({ previous_page: 'Search' })
-	},[navigation])
-
 	useMemo(() => {
 		if (data) {
 			if (data.dishMany) {

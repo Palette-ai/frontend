@@ -17,8 +17,6 @@ import SearchRow from '../components/Search/SearchRow';
 
 
 function Search({ navigation }) {
-	// const { navigation } = route.params
-	// navigation.setParams({ previous_page: 'Search' })
   const [searchTerm, setSearchTerm] = useState('')
 	const [toggle, setToggle] = useState('')
 	

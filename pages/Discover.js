@@ -29,7 +29,6 @@ const Discover = ({ navigation }) => {
 	const [likedSet, setLikedSet] = useState(new Set())
 
 	useEffect(() => {
-		navigation.setParams({ previous_page: 'Discover' })
 		axios.post("https://palette-backend.herokuapp.com/rec", {
 			user_id: userID
 		})

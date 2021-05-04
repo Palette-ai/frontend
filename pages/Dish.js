@@ -60,6 +60,11 @@ function Dish({ route }) {
 						<Col>
 							<Row style={styles.dish_container}>
 								<Text style={styles.dish_discription_container}>{dish.description}</Text>
+								<Button
+									onPress={() => navigation.navigate('Restaurant', { r: dish.restaurant, navigation })}
+								>
+									{dish.restaurant.name}
+								</Button>
 							</Row>
 						</Col>
 					</Row>
