@@ -13,12 +13,8 @@ import { Button, Icon } from '@ui-kitten/components'
 import { USER_LIKE_DISH, USER_UNLIKE_DISH } from '../../queries/users';
 import mongoose from 'mongoose';
 
-<<<<<<< HEAD
-const DishCard = ({ dish }) => {
-=======
 
 const DishCard = ({ dish, userID, likedSet }) => {
->>>>>>> f35bec03679c7170fdb316a944138bda27944365
 	const [liked, setLiked] = useState(false)
 	useEffect(() => {
 		setLiked(likedSet !== undefined && likedSet.size !== 0 && likedSet.has(dish._id) ? true : false)
