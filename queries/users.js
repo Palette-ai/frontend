@@ -27,6 +27,14 @@ export const USER_LIKED_DISHES = gql`
 	}
 `
 
+export const USER_LIKES = gql`
+	query ($_id: MongoID!) {
+		userById(_id: $_id){
+			_id
+			likes { dish_name, average_rating, description, _id, restaurant { name } }
+		}
+	}
+`
 export const USER_LIKE_DISH = gql`
 	mutation ($user_id: String! $dish_id: String!) {
 		userAddLikedDish (user_id: $user_id dish_id: $dish_id) {
