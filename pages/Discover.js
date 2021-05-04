@@ -43,20 +43,7 @@ const Discover = ({ navigation }) => {
 	if (loading) return <Text>Loading...</Text>
 	if (error) return <Text>Not good why did it break...</Text>
 
-	return !data ?
-		<View syle={styles.container}>
-			{/* TODO: Replace search UI with search and filter functionality */}
-			<Search />
-			<View style={styles.item_container}>
-				<LottieView
-					autoPlay
-					loop
-					source={require('../styles/l.json')}
-					style={styles.animationContainer}
-				/>
-			</View>
-		</View>
-		:
+	return data ?
 		(
 			<View syle={styles.container}>
 				{/* TODO: Replace search UI with search and filter functionality */}
@@ -75,7 +62,19 @@ const Discover = ({ navigation }) => {
 					</ScrollView>
 				</View>
 			</View>
-		)
+		) :
+		<View syle={styles.container}>
+		{/* TODO: Replace search UI with search and filter functionality */}
+		<Search />
+		<View style={styles.item_container}>
+			<LottieView
+				autoPlay
+				loop
+				source={require('../styles/l.json')}
+				style={styles.animationContainer}
+			/>
+		</View>
+	</View>
 }
 
 const styles = StyleSheet.create({

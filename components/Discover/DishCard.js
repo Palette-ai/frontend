@@ -14,7 +14,6 @@ import { Button, Icon } from '@ui-kitten/components'
 import { USER_LIKED_DISHES, USER_LIKE_DISH, USER_UNLIKE_DISH } from '../../queries/users';
 import mongoose from 'mongoose';
 
-
 const DishCard = ({ dish }) => {
 	const [liked, setLiked] = useState(false)
 	const userIDString = firebase.auth().currentUser.photoURL;
