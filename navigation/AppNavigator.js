@@ -1,11 +1,10 @@
 import React from 'react'
 import ProfileScreen from '../pages/Profile'
-//import RestaurantScreen from '../pages/Restaurants'
-import LikedDishesScreen from '../pages/LikedDishes'
 import MapScreen from '../pages/Map'
 import DiscoverStackScreen from '../navigation/DiscoverNavigator';
 import MapStackScreen from '../navigation/MapNavigator';
-import SearchStackScreen from '../navigation/SearchNavigator'
+import SearchStackScreen from '../navigation/SearchNavigator';
+import LikeStackScreen from '../navigation/LikeNavigator'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, BottomNavigationTab } from '@ui-kitten/components'
@@ -37,7 +36,7 @@ const TabNavigator = () => (
     <Screen name='Discover' component={DiscoverStackScreen} />
     <Screen name='Search' component={SearchStackScreen} />
     <Screen name='Map' component={MapStackScreen} />
-    <Screen name='LikedDishes' component={LikedDishesScreen} />
+    <Screen name='LikedDishes' component={LikeStackScreen} />
     <Screen name='Profile' component={ProfileScreen} />
   </Navigator>
 );

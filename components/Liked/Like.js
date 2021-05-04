@@ -8,7 +8,7 @@ import {
 const Like = () => {
 	return (
 		<View style={styles.filter_container}>
-			<Text style={styles.text_title}>Liked</Text>
+			<Text style={styles.text_title}>Liked Dishes</Text>
 		</View>
 	)
 }
