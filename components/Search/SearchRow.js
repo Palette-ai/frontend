@@ -17,13 +17,57 @@ import { Col, Row, Grid } from "react-native-easy-grid"
 import { Icon, Button, Card, Modal } from '@ui-kitten/components';
 import StarRating from 'react-native-star-rating';
 
-function SearchRow({ toggle, dishes, restaurants, navigation }) {
+import { GET_ALL_DISHES } from '../../queries/dishes';
+import { GET_ALL_RESTAURANTS } from '../../queries/restaurants'
+
+function SearchRow({ toggle, searchTerm, navigation }) {
+
+	const [dishResults, setDishResults] = useState('')
+	const [restaurantResults, setRestaurantResults] = useState('')
+
+	const { loading, error, data, refetch } = 
+		toggle
+		?
+			useQuery(GET_ALL_DISHES, {
+				variables: {
+					filter: { _operators: { dish_name: { regex: ( searchTerm == '' ? "help" : "/".concat(searchTerm, "/ig")  ) } } }
+				},
+				onCompleted: ((data) => {console.log("completed", data.dishMany)})
+			})
+		:
+			useQuery(GET_ALL_RESTAURANTS, {
+				variables: {
+					filter: { _operators: { name: { regex: ( searchTerm == '' ? "help" : "/".concat(searchTerm, "/ig")  ) } } }
+				},
+				onCompleted: ((data) => {console.log("completed", data.restaurantMany)})
+			})
+
+	useEffect(() => {
+		navigation.setParams({ previous_page: 'Search' })
+	},[navigation])
+
+	useMemo(() => {
+		if (data) {
+			if (data.dishMany) {
+				setDishResults(data.dishMany)
+				setRestaurantResults([])
+			}
+			else if (data.restaurantMany) {
+				setRestaurantResults(data.restaurantMany)
+				setDishResults([])
+			}
+		}
+	}, [data])
+
+	if (searchTerm === '') return <Text>Enter a search term</Text>
+	if (restaurantResults == [] && dishResults == []) return <Text>No results :(</Text>
+
 	return (
 		!toggle
 		?
 		<Row>
 			<Col>
-				{restaurants?.map((r) => (
+				{restaurantResults?.map((r) => (
 					<TouchableOpacity
 								activeOpacit={0.1}
 								onPress={() => navigation.navigate('Restaurant', { r, navigation })}
@@ -51,7 +95,7 @@ function SearchRow({ toggle, dishes, restaurants, navigation }) {
 		:
 		<Row>
 			<Col>
-				{dishes?.map((dish) => (
+				{dishResults?.map((dish) => (
 					<TouchableOpacity
 								activeOpacit={0.1}
 								onPress={() => navigation.navigate('Dish', { dish, navigation })}

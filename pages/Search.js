@@ -13,51 +13,15 @@ import { sushi, back_arrow } from '../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { Button, Toggle, Input } from '@ui-kitten/components';
 
-import { GET_ALL_DISHES } from '../queries/dishes';
-import { GET_ALL_RESTAURANTS } from '../queries/restaurants'
 import SearchRow from '../components/Search/SearchRow';
 
 
 function Search({ navigation }) {
 	// const { navigation } = route.params
 	// navigation.setParams({ previous_page: 'Search' })
-	const [dishResults, setDishResults] = useState('')
-	const [restaurantResults, setRestaurantResults] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
 	const [toggle, setToggle] = useState('')
-
-	const { loading, error, data, refetch } = 
-		toggle
-		?
-			useQuery(GET_ALL_DISHES, {
-				variables: {
-					filter: { _operators: { dish_name: { regex: ( searchTerm == '' ? "help" : "/".concat(searchTerm, "/ig")  ) } } }
-				},
-				onCompleted: ((data) => {console.log("completed", data.dishMany)})
-			})
-		:
-			useQuery(GET_ALL_RESTAURANTS, {
-				variables: {
-					filter: { _operators: { name: { regex: ( searchTerm == '' ? "help" : "/".concat(searchTerm, "/ig")  ) } } }
-				},
-				onCompleted: ((data) => {console.log("completed", data.restaurantMany)})
-			})
-
-	useEffect(() => {
-		navigation.setParams({ previous_page: 'Search' })
-	},[navigation])
-
-	useMemo(() => {
-		if (data) {
-			if (data.dishMany) setDishResults(data.dishMany)
-			else if (data.restaurantMany) setRestaurantResults(data.restaurantMany)
-		}
-	}, [data])
-
-  // console.log(dishResults)
-
-	if (loading) return <Text>Loading...</Text>
-	if (error) return <Text>Ratings had trouble loading, whoopsy...</Text>
+	
 	return (
 		<View style={styles.container}>
 			<View style={styles.item_container}>
@@ -94,8 +58,7 @@ function Search({ navigation }) {
 					<Grid style={styles.review_item}>
 						<SearchRow
 							toggle={toggle}
-							dishes={dishResults}
-							restaurants={restaurantResults}
+							searchTerm={searchTerm}
               visible={false}
 							navigation={navigation}
 						/>
