@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import SearchScreen from '../pages/Search'
 import DishScreen from '../pages/Dish'
-import RestaurantScreen from '../pages/Restaurant'
+import RestaurantScreen from '../pages/Restaurants'
 
 const Stack = createStackNavigator();
 export default function SearchStackScreen() {
