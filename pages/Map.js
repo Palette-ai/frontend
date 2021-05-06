@@ -1,6 +1,19 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { SafeAreaView, StyleSheet, Text, View, Button } from 'react-native';
+import MapView, { Callout, CalloutSubview, Marker } from 'react-native-maps';
+import { GET_ALL_RESTAURANTS } from '../queries/restaurants';
+import { useQuery } from '@apollo/client';
+import { Col, Row, Grid } from "react-native-easy-grid"
+import { ScrollView } from 'react-native-gesture-handler';
+
+// const MAPS_API = "https://plus.codes/api?address="
+
+const Map = ({ navigation }) => {
+
+	const { loading, error, data } = useQuery(GET_ALL_RESTAURANTS)
+	if (loading) return <Text> Loading... </Text>
+	if (error) return <Text>{error}</Text>
+	const { restaurantMany: restaurants } = data
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -43,9 +56,25 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 					)
 				})}
 			</MapView>
-      <TouchableOpacity style={styles.overlay}>
-        <Text style={styles.text}>Touchable Opacity</Text>
-      </TouchableOpacity>
+			<ScrollView style={styles.overlay} horizontal={true} showsHorizontalScrollIndicator={false}>
+			<Row>
+			{data.restaurantMany.map(r => {
+					return (
+						<Col>
+						<View
+						style={styles.card}>
+						<Button
+						title={r.name}
+							onPress={() => navigation.navigate('Restaurant', { r, navigation })}
+						>
+								{r.name}
+						</Button>		
+						</View>	
+						</Col>
+					)
+				})}
+				</Row>
+				</ScrollView>
 		</SafeAreaView>
 	)
 }
@@ -57,8 +86,12 @@ const styles = StyleSheet.create({
 	overlay: {
     position: 'absolute',
     bottom: 50,
-    backgroundColor: 'rgba(255, 255, 255, 1)',
   },
+	card: {
+		backgroundColor: 'rgba(255, 255, 255, 1)',
+		margin: 10,
+		padding: 15,
+	}
 });
 
 export default Map

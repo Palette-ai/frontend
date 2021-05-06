@@ -99,19 +99,7 @@ const Discover = ({ navigation }) => {
 					</ScrollView>
 				</View>
 			</View>
-		) :
-		<View syle={styles.container}>
-		{/* TODO: Replace search UI with search and filter functionality */}
-		<Search />
-		<View style={styles.item_container}>
-			<LottieView
-				autoPlay
-				loop
-				source={require('../styles/l.json')}
-				style={styles.animationContainer}
-			/>
-		</View>
-	</View>
+		)
 }
 
 const styles = StyleSheet.create({
