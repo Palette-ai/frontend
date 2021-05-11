@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly should render the Map Component correctly 1`] = `
+<ForwardRef(SafeAreaView)
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <MapView
+    initialRegion={
+      Object {
+        "latitude": 43.70513,
+        "latitudeDelta": 0.0095,
+        "longitude": -72.28952,
+        "longitudeDelta": 0.0095,
+      }
+    }
+    provider="google"
+    showsUserLocation={true}
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  />
+</ForwardRef(SafeAreaView)>
+`;

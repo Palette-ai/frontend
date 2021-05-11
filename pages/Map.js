@@ -1,9 +1,11 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Button } from 'react-native';
 import MapView, { Callout, CalloutSubview, Marker } from 'react-native-maps';
 import { GET_ALL_RESTAURANTS } from '../queries/restaurants';
 import { useQuery } from '@apollo/client';
-import axios from 'axios';
+import { Col, Row, Grid } from "react-native-easy-grid"
+import { ScrollView } from 'react-native-gesture-handler';
+import Carousel from 'react-native-snap-carousel';
 
 // const MAPS_API = "https://plus.codes/api?address="
 
@@ -74,6 +76,25 @@ const Map = ({ navigation }) => {
 					)
 				})}
 			</MapView>
+			<ScrollView style={styles.overlay} horizontal={true} showsHorizontalScrollIndicator={false}>
+			<Row>
+			{data.restaurantMany.map(r => {
+					return (
+						<Col>
+						<View
+						style={styles.card}>
+						<Button
+						title={r.name}
+							onPress={() => navigation.navigate('Restaurant', { r, navigation })}
+						>
+								{r.name}
+						</Button>		
+						</View>	
+						</Col>
+					)
+				})}
+				</Row>
+				</ScrollView>
 		</SafeAreaView>
 	)
 }
@@ -82,6 +103,17 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 	},
+	overlay: {
+    position: 'absolute',
+    bottom: 50,
+  },
+	card: {
+		backgroundColor: 'rgba(255, 255, 255, 1)',
+		margin: 10,
+		padding: 15,
+	},
+	slide: { width: '100%', height: 150, position: 'absolute', bottom: 3, zIndex: 2, },
+
 });
 
 export default Map

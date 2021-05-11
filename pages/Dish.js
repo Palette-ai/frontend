@@ -1,9 +1,8 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useQuery } from '@apollo/client';
 import {
 	View,
 	StyleSheet,
-	TextInput,
 	Image,
 	TouchableWithoutFeedback,
 	ScrollView,
@@ -12,7 +11,7 @@ import {
 import { sushi, back_arrow } from '../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { Button } from '@ui-kitten/components';
-
+import OptionsModal from '../components/Dish/OptionsModal';
 import { GET_DISH_RATINGS } from '../queries/dishes';
 import DishReviewRow from '../components/Dish/DishReviewRow';
 import AddDishRatingModal from '../components/Dish/AddDishRatingModal';
@@ -22,6 +21,7 @@ function Dish({ route }) {
 
 	const [dishRatings, setDishRatings] = useState('')
 	const [isModalVisible, setModalVisible] = useState('');
+	const [isOptionsModalVisible, setOptionsModalVisible] = useState('');
 
 	// Queries all dishRatings
 	const { loading, error, data, refetch } = useQuery(GET_DISH_RATINGS, {
@@ -81,6 +81,9 @@ function Dish({ route }) {
 								<Button style={styles.add_review_btn} onPress={() => setModalVisible(true)}>
 									Add Review
       							</Button>
+								<Button style={styles.add_review_btn} onPress={() => setOptionsModalVisible(true)}>
+									Options
+      					</Button>
 							</Col>
 						</Row>
 						<DishReviewRow
@@ -95,7 +98,10 @@ function Dish({ route }) {
 				dish_id={dish._id}
 				refetchAllRatings={refetch}
 			/>
-
+			<OptionsModal
+				isModalVisible={isOptionsModalVisible}
+				setModalVisible={setOptionsModalVisible}
+			/>
 		</View>
 	);
 }

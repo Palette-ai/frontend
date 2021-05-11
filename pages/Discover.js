@@ -5,7 +5,7 @@ import {
 	Text,
 	View,
 } from 'react-native'
-import { useLazyQuery } from '@apollo/client';
+import { useMutation, useLazyQuery } from '@apollo/client';
 import { TouchableOpacity } from 'react-native'
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
@@ -13,36 +13,26 @@ import mongoose from 'mongoose';
 import LottieView from 'lottie-react-native';
 
 import { GET_ALL_DISHES, GET_SOME_DISHES } from '../queries/dishes';
-import { USER_LIKED_DISHES } from '../queries/users';
 
 
 import Search from '../components/Discover/Search'
 import DishCard from '../components/Discover/DishCard';
+
 import axios from 'axios';
 
 const Discover = ({ navigation }) => {
-	const [id, setID] = useState(firebase.auth().currentUser.photoURL)
-	const userID = firebase.auth().currentUser.photoURL;
 	const [getDishes, { loading, data, error }] = useLazyQuery(GET_SOME_DISHES)
-	// Get list of dishes that the user has liked
-	const [getLikedDishes, { loading: likedLoading, error: likedError, data: likedData }] = useLazyQuery(USER_LIKED_DISHES)
-	const [likedSet, setLikedSet] = useState(new Set())
 
+	const userIDString = firebase.auth().currentUser.photoURL;
 	useEffect(() => {
 		axios.post("https://palette-backend.herokuapp.com/rec", {
-			user_id: userID
+			user_id: userIDString
 		})
 			.then(res => {
-				// Get list of dishes
 				getDishes({
 					variables: {
 						_ids: res.data.map(d => mongoose.Types.ObjectId(d))
-					}
-				})
-				getLikedDishes({
-					variables: {
-						_id: mongoose.Types.ObjectId(userID)
-					}
+					},
 				})
 			})
 			.catch(e => {
@@ -50,33 +40,11 @@ const Discover = ({ navigation }) => {
 			})
 	}, [])
 
-	useEffect(() => {
-		if (likedData !== undefined && !likedLoading) {
-			// console.log(likedData.userById.liked_dishes)
-			setLikedSet(new Set(likedData.userById.liked_dishes.map(dish => String(dish))))
-		}
-	}, [likedData])
-	//if (likedSet.size !== 0) console.log(likedSet);
-
-
 	if (loading) return <Text>Loading...</Text>
 	if (error) return <Text>Not good why did it break...</Text>
-	return !data ?
-		//Animation if data isn't loaded yet
-		<View syle={styles.container}>
-			{/* TODO: Replace search UI with search and filter functionality */}
-			<Search />
-			<View style={styles.item_container}>
-				<LottieView
-					autoPlay
-					loop
-					source={require('../styles/l.json')}
-					style={styles.animationContainer}
-				/>
-			</View>
-		</View>
-		:
-		// Data successfully loaded
+
+	return data ?
+		
 		(
 			<View syle={styles.container}>
 				{/* TODO: Replace search UI with search and filter functionality */}
@@ -89,17 +57,25 @@ const Discover = ({ navigation }) => {
 								onPress={() => navigation.navigate('Dish', { dish, navigation })}
 								key={dish._id}
 							>
-								<DishCard
-									dish={dish}
-									userID={userID}
-									likedSet={likedSet}
-								/>
+								<DishCard dish={dish} />
 							</TouchableOpacity>
 						))}
 					</ScrollView>
 				</View>
 			</View>
-		)
+		) :
+				<View syle={styles.container}>
+			{/* TODO: Replace search UI with search and filter functionality */}
+			<Search />
+			<View style={styles.item_container}>
+				<LottieView
+					autoPlay
+					loop
+					source={require('../styles/l.json')}
+					style={styles.animationContainer}
+				/>
+			</View>
+		</View>
 }
 
 const styles = StyleSheet.create({

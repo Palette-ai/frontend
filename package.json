@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest"
   },
   "dependencies": {
     "@apollo/client": "^3.3.9",
@@ -34,6 +35,7 @@
     "react-dom": "16.13.1",
     "react-firebase-hooks": "^2.2.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
+    "react-native-app-link": "^1.0.1",
     "react-native-dialog-input": "^1.0.8",
     "react-native-easy-grid": "^0.2.2",
     "react-native-geocoding": "^0.5.0",
@@ -42,6 +44,7 @@
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~2.15.2",
+    "react-native-snap-carousel": "^3.9.1",
     "react-native-star-rating": "^1.1.0",
     "react-native-svg": "^12.1.1-0",
     "react-native-timeago": "^0.5.0",
@@ -52,7 +55,36 @@
     "react-time-ago": "^6.2.2"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0"
+    "@babel/core": "~7.9.0",
+    "@testing-library/react-native": "^7.2.0",
+    "babel-eslint": "^10.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "enzyme-to-json": "^3.6.1",
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.23.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "jest-expo": "^40.0.2",
+    "prettier": "^2.2.1",
+    "react-test-renderer": "^17.0.2"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/index.js"
+    ],
+    "coverageReporters": [
+      "text"
+    ]
   },
   "private": true
 }

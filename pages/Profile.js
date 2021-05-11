@@ -1,19 +1,13 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useQuery } from '@apollo/client';
 import {
 	View,
 	StyleSheet,
-	TextInput,
-	Image,
-	TouchableWithoutFeedback,
 	ScrollView,
 	Text,
 	RefreshControl,
-	TouchableOpacity
 } from 'react-native';
-import { sushi, back_arrow } from '../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
-import { Button } from '@ui-kitten/components';
 
 import { GET_DISH_RATINGS } from '../queries/dishes';
 import DishReviewRowProfile from '../components/Profile/DishReviewRowProfile';
