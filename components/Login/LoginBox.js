@@ -14,6 +14,8 @@ import LoginButton from "./LoginButton";
 import LoginInputBox from "./LoginInputBox";
 import { CREATE_USER } from '../../queries/users'
 import SignUpLink from "./SignUpLink";
+import ForgotPass from "../Profile/ForgotPass";
+import ForgotPassLogin from "./ForgotPassLogin";
 
 function LoginBox() {
 	const [name, setName] = useState('')
@@ -54,7 +56,6 @@ function LoginBox() {
 				console.log(userCredential.user)
 			})
 			.catch((error) => console.log(error.code, error.message))
-
 	}
 
 	return (
@@ -63,7 +64,7 @@ function LoginBox() {
 			style={styles.container}
 			keyboardVerticalOffset={65}
 		>
-			<View style={[styles.loginBG, { height: isSignUp ? 510 : 430 }]}>
+			<View style={[styles.loginBG, { height: isSignUp ? 400 : 330 }]}>
 				{isSignUp &&
 					<LoginInputBox
 						field={name}
@@ -88,18 +89,19 @@ function LoginBox() {
 					name={name}
 					password={password}
 				/>
-				<View style={styles.otherLoginProviders}>
+				{/* <View style={styles.otherLoginProviders}>
 					<Text style={styles.orLoginWith}>{isSignUp ? "Or Sign Up With" : "Or Log In With"}</Text>
 					<TouchableOpacity style={styles.providerButton}>
 					</TouchableOpacity>
 					<TouchableOpacity style={styles.providerButton}></TouchableOpacity>
 					<TouchableOpacity style={styles.providerButton}></TouchableOpacity>
-				</View>
+				</View> */}
 				<SignUpLink
 					linkText={isSignUp ? "Aready Have an Account?" : "Click Here To Create An Account"}
 					isSignUp={isSignUp}
 					setIsSignUp={setIsSignUp}
 				/>
+				<ForgotPassLogin />
 			</View>
 		</KeyboardAvoidingView>
 	);
@@ -126,7 +128,9 @@ const styles = StyleSheet.create({
 		elevation: 21,
 		shadowOpacity: 0.59,
 		shadowRadius: 7,
-		alignSelf: "center"
+		alignSelf: "center",
+		// paddingTop: 100
+		paddingBottom: 20
 	},
 	otherLoginProviders: {
 		width: 300,

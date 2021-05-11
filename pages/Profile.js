@@ -16,15 +16,13 @@ import { Col, Row, Grid } from "react-native-easy-grid"
 import { Button } from '@ui-kitten/components';
 
 import { GET_DISH_RATINGS } from '../queries/dishes';
-import DishReviewRowProfile from '../components/Dish/DishReviewRowProfile';
+import DishReviewRowProfile from '../components/Profile/DishReviewRowProfile';
 import UpdateDishRatingModal from '../components/Dish/UpdateDishRatingModal';
 import firebase from 'firebase/app'
-import SignOut from './SignOut';
+import SignOut from '../components/Profile/SignOut';
+import ForgotPass from '../components/Profile/ForgotPass';
 
 const Profile = () => {
-
-	//discover page has it 
-	
 	const [dishRatings, setDishRatings] = useState('');
 	const [reviews, setReviews] = useState('');
 	const [refreshing, setRefreshing] = useState('');
@@ -34,9 +32,9 @@ const Profile = () => {
 	const [review, setReview] = useState('');
 	const [dishID, setDishID] = useState('');
 
-	
+
 	// Queries all dishRatings
-	const {loading, error, data, refetch } = useQuery(GET_DISH_RATINGS, {
+	const { loading, error, data, refetch } = useQuery(GET_DISH_RATINGS, {
 		variables: {
 			filter: { user_id: firebase.auth().currentUser.photoURL, _operators: { review: { regex: "/.+/ig" } } },
 		},
@@ -46,7 +44,7 @@ const Profile = () => {
 	useMemo(() => {
 		if (data) {
 			setDishRatings(data.dishRatingMany)
-			setReviews(data.dishRatingMany.slice().sort((a, b) =>  a.createdAt < b.createdAt))
+			setReviews(data.dishRatingMany.slice().sort((a, b) => a.createdAt < b.createdAt))
 		}
 	}, [data])
 
@@ -60,22 +58,21 @@ const Profile = () => {
 		setRefreshing('true')
 		refetch()
 		// console.log(data)
-		setReviews(data.dishRatingMany.slice().sort((a, b) =>  b.createdAt - a.createdAt))
+		setReviews(data.dishRatingMany.slice().sort((a, b) => b.createdAt - a.createdAt))
 		setRefreshing('false')
 	}
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.item_container}>
-
 				<Grid>
 					<Row>
 						<Col>
 							<Text style={styles.dish_name}>{firebase.auth().currentUser.displayName}</Text>
-
 						</Col>
 						<Col>
-							<SignOut/>
+							<SignOut />
+							<ForgotPass />
 						</Col>
 					</Row>
 				</Grid>
@@ -156,12 +153,12 @@ const styles = StyleSheet.create({
 	item_container: {
 		flex: 1,
 		paddingTop: '20%'
-		
+
 	},
 	review_item: {
 		marginTop: '5%',
 		marginLeft: '5%',
-	
+
 	},
 	dish_container: {
 		marginTop: '15%',
@@ -173,10 +170,10 @@ const styles = StyleSheet.create({
 		flexWrap: 'wrap',
 		zIndex: 2,
 	},
-	review_title: { 
+	review_title: {
 		fontSize: 24,
-		 color: '#fff', 
-		 marginLeft: '30%'
+		color: '#fff',
+		marginLeft: '30%'
 	},
 	review_text: { color: '#fff' },
 	add_review_btn: {
