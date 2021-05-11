@@ -11,11 +11,7 @@ import {
 import { sushi, back_arrow } from '../assets';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { Button } from '@ui-kitten/components';
-<<<<<<< HEAD
 import OptionsModal from '../components/Dish/OptionsModal';
-=======
-
->>>>>>> dc59b84f854402c80f41fa82aa61b54920a63ac5
 import { GET_DISH_RATINGS } from '../queries/dishes';
 import DishReviewRow from '../components/Dish/DishReviewRow';
 import AddDishRatingModal from '../components/Dish/AddDishRatingModal';
