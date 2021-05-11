@@ -13,12 +13,8 @@ export default function SignUpLink({ linkText, isSignUp, setIsSignUp }) {
 }
 
 const styles = StyleSheet.create({
-	container: {
-
-	},
 	text: {
 		textAlign: 'center',
-		marginTop: 18,
 		color: 'blue'
 	}
 });
