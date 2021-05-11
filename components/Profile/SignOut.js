@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, Text, View, Button } from 'react-native'
+import { Button } from 'react-native'
 import firebase from 'firebase/app'
 
 const SignOut = ({ auth }) => {
