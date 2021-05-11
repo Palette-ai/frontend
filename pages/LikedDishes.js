@@ -11,13 +11,23 @@ import { useQuery } from '@apollo/client';
 const LikedDishes = ({ navigation }) => {
 	
 	const [refreshing, setRefreshing] = useState(false);
+	const [dishLikes, setDishLikes] = useState('');
 	
 	const { loading, error, data, refetch } = useQuery(USER_LIKES, {
 		variables: {
 			_id: mongoose.Types.ObjectId(firebase.auth().currentUser.photoURL)
 		},
+		
 	})
 
+	useMemo(() => {
+		if (data !== undefined && !loading) {
+			// console.log(likedData.userById.liked_dishes)
+			setDishLikes(new Set(data.userById.likes.map(dish => String(dish._id))))
+		}
+	}, [data])
+
+	console.log(data.userById.likes.map(dish => String(dish._id)))
 
 	// const userIDString = firebase.auth().currentUser.photoURL;
 	
@@ -29,21 +39,21 @@ const LikedDishes = ({ navigation }) => {
 	const _onRefresh = () => {
 		setRefreshing('true')
 		refetch()
-		console.log("yo")
+		// console.log("yo")
+		// setDishLikes(data.userById.likes)
 		//reviews = data.dishRatingMany.slice().sort((a, b) =>  b.createdAt - a.createdAt)
 		setRefreshing('false')
-		console.log(data)
+		// console.log(data)
 	}
 
 	return (
 			<View syle={styles.container}>
-				{/* TODO: Replace search UI with search and filter functionality */}
 				<Like />
 				<View style={styles.item_container}>
 					<ScrollView marginBottom={'70%'} showsVerticalScrollIndicator={false} refreshControl={
 					<RefreshControl
 						refreshing={refreshing}
-						onRefresh={_onRefresh}
+						onRefresh={() => refetch()}
 					/>}>
 						{data.userById.likes.map(dish => (
 							<TouchableOpacity
@@ -51,7 +61,10 @@ const LikedDishes = ({ navigation }) => {
 								onPress={() => navigation.navigate('Dish', { dish, navigation })}
 								key={dish._id}
 							>
-								<DishCard dish={dish} />
+								<DishCard
+									dish={dish}
+									likedSet={dishLikes}
+								/>
 							</TouchableOpacity>
 						))}
 					</ScrollView>
