@@ -6,6 +6,7 @@ import {
 	View,
 } from 'react-native'
 import { useMutation, useQuery } from '@apollo/client';
+import StarRating from 'react-native-star-rating';
 import firebase from 'firebase/app';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { sushi, dollar_sign, hot, organic, map_sign } from '../../assets'
@@ -19,6 +20,8 @@ const DishCard = ({ dish, userID, likedSet }) => {
 	useEffect(() => {
 		setLiked(likedSet !== undefined && likedSet.size !== 0 && likedSet.has(dish._id) ? true : false)
 	}, [likedSet])
+
+	console.log(dish)
 
 	const HeartIcon = (props) => (
 		<Icon
@@ -93,10 +96,29 @@ const DishCard = ({ dish, userID, likedSet }) => {
 							<View style={styles.score_circle} />
 						</Row>
 					</Col> */}
-					<Row size={.25} style={styles.row_reverse}>
-						<Text>2.3 miles away</Text>
-						<Image source={map_sign} />
-					</Row>
+					{/* <Col> */}
+						<Row size={.25} style={styles.row_reverse}>
+							{/* <Col style={styles.staridk}> */}
+								<StarRating
+												disabled={true}
+												maxStars={1}
+												rating={1}
+												fullStarColor={'blue'}
+												starSize={22}
+												// fullStarColor={'#ffffff'}
+												emptyStarColor={'#ffffff'}
+												reversed={true}
+												style={styles.staridk}
+											/>
+							{/* </Col> */}
+							{/* <Col> */}
+								<Text style={styles.rating}>
+									{String(dish.average_rating)}
+								</Text>
+							{/* </Col> */}
+							
+						</Row>
+					{/* </Col> */}
 				</Col>
 			</Grid>
 		</View>
@@ -133,9 +155,22 @@ const styles = StyleSheet.create({
 		flexWrap: 'wrap',
 		flex: 3
 	},
-	rest_name: { fontSize: 32, },
+	rest_name: {
+		fontSize: 32,
+	},
+	rating: {
+		fontSize: 24,
+	},
 	row_reverse: {
 		flexDirection: 'row-reverse',
+		alignItems: 'center',
+		marginLeft: 10,
+		paddingLeft: 10,
+		justifyContent: 'flex-start',
+		// paddingBottom: -5
 	},
+	staridk: {
+		marginRight: '5%'
+	}
 })
 export default DishCard
