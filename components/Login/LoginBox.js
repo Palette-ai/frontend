@@ -14,7 +14,7 @@ import LoginButton from "./LoginButton";
 import LoginInputBox from "./LoginInputBox";
 import { CREATE_USER } from '../../queries/users'
 import SignUpLink from "./SignUpLink";
-import ForgotPass from "../Profile/ForgotPass";
+import LoginError from "./Error"
 import ForgotPassLogin from "./ForgotPassLogin";
 
 function LoginBox() {
@@ -25,23 +25,25 @@ function LoginBox() {
 
 	const [createUser] = useMutation(CREATE_USER, {
 		onCompleted(data) {
-			console.log('Mongos User created: ', data.userCreateOne.recordId)
+			console.log('Mongo User created: ', data.userCreateOne.recordId)
 			//Can't add custom fields to firebase, so saving mongoid in photoUrl LMAO
 			firebase.auth().createUserWithEmailAndPassword(email, password)
 				.then((userCredential) => {
 					userCredential.user.updateProfile({ displayName: name })
 					userCredential.user.updateProfile({ photoURL: data.userCreateOne.recordId })
 				})
-				.catch((error) => {
-					console.log(console.log(error.code, error.message));
-				});
+				.catch((error) => LoginError(error))
 		},
 		onError(error) {
 			console.log(error);
+			return LoginError(error)
 		}
 	})
 
 	const SignUp = async (email, password) => {
+		if (email === '' || undefined) return LoginError("Email field cannot be empty")
+		if (password === '' || undefined) return LoginError("Password field cannot be empty")
+
 		createUser({
 			variables: {
 				record: { name, email, liked_dishes: [] }
@@ -55,7 +57,7 @@ function LoginBox() {
 				// Signed in
 				console.log(userCredential.user)
 			})
-			.catch((error) => console.log(error.code, error.message))
+			.catch((error) => LoginError(error, "logging in"))
 	}
 
 	return (
@@ -89,13 +91,6 @@ function LoginBox() {
 					name={name}
 					password={password}
 				/>
-				{/* <View style={styles.otherLoginProviders}>
-					<Text style={styles.orLoginWith}>{isSignUp ? "Or Sign Up With" : "Or Log In With"}</Text>
-					<TouchableOpacity style={styles.providerButton}>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.providerButton}></TouchableOpacity>
-					<TouchableOpacity style={styles.providerButton}></TouchableOpacity>
-				</View> */}
 				<SignUpLink
 					linkText={isSignUp ? "Aready Have an Account?" : "Click Here To Create An Account"}
 					isSignUp={isSignUp}
