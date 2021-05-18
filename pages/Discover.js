@@ -21,16 +21,17 @@ import DishCard from '../components/Discover/DishCard';
 import axios from 'axios';
 
 const Discover = ({ navigation }) => {
-	const [id, setID] = useState(firebase.auth().currentUser.photoURL)
+	// const [id, setID] = useState(firebase.auth().currentUser.photoURL)
 	const userID = firebase.auth().currentUser.photoURL;
 	const [getDishes, { loading, data, error }] = useLazyQuery(GET_SOME_DISHES)
 	// Get list of dishes that the user has liked
 	const [getLikedDishes, { loading: likedLoading, error: likedError, data: likedData }] = useLazyQuery(USER_LIKED_DISHES)
 	const [likedSet, setLikedSet] = useState(new Set())
-
+	const [userIDString, setuserIDString] = useState(firebase.auth().currentUser.photoURL)
 	useEffect(() => {
-		axios.post("https://palette-backend.herokuapp.com/rec", {
-			user_id: userID
+		let waitUntilIDIsInFirebase = setTimeout(() => setuserIDString(firebase.auth().currentUser.photoURL), 500)
+		if (userIDString !== null) axios.post("https://palette-backend.herokuapp.com/rec", {
+			user_id: userIDString
 		})
 			.then(res => {
 				// Get list of dishes
@@ -48,7 +49,8 @@ const Discover = ({ navigation }) => {
 			.catch(e => {
 				console.log(e)
 			})
-	}, [])
+		return () => clearTimeout(waitUntilIDIsInFirebase)
+	}, [userIDString, data])
 
 	useEffect(() => {
 		if (likedData !== undefined && !likedLoading) {
@@ -91,7 +93,7 @@ const Discover = ({ navigation }) => {
 							>
 								<DishCard
 									dish={dish}
-									userID={userID}
+									userID={userIDString}
 									likedSet={likedSet}
 								/>
 							</TouchableOpacity>

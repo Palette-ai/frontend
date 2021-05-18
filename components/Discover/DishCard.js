@@ -21,7 +21,7 @@ const DishCard = ({ dish, userID, likedSet }) => {
 		setLiked(likedSet !== undefined && likedSet.size !== 0 && likedSet.has(dish._id) ? true : false)
 	}, [likedSet])
 
-	console.log(dish)
+	//console.log(dish)
 
 	const HeartIcon = (props) => (
 		<Icon
@@ -97,27 +97,27 @@ const DishCard = ({ dish, userID, likedSet }) => {
 						</Row>
 					</Col> */}
 					{/* <Col> */}
-						<Row size={.25} style={styles.row_reverse}>
-							{/* <Col style={styles.staridk}> */}
-								<StarRating
-												disabled={true}
-												maxStars={1}
-												rating={1}
-												fullStarColor={'blue'}
-												starSize={22}
-												// fullStarColor={'#ffffff'}
-												emptyStarColor={'#ffffff'}
-												reversed={true}
-												style={styles.staridk}
-											/>
-							{/* </Col> */}
-							{/* <Col> */}
-								<Text style={styles.rating}>
-									{String(dish.average_rating)}
-								</Text>
-							{/* </Col> */}
-							
-						</Row>
+					<Row size={.25} style={styles.row_reverse}>
+						{/* <Col style={styles.staridk}> */}
+						<StarRating
+							disabled={true}
+							maxStars={1}
+							rating={1}
+							fullStarColor={'blue'}
+							starSize={22}
+							// fullStarColor={'#ffffff'}
+							emptyStarColor={'#ffffff'}
+							reversed={true}
+							style={styles.staridk}
+						/>
+						{/* </Col> */}
+						{/* <Col> */}
+						<Text style={styles.rating}>
+							{String(dish.average_rating)}
+						</Text>
+						{/* </Col> */}
+
+					</Row>
 					{/* </Col> */}
 				</Col>
 			</Grid>
