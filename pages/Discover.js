@@ -5,7 +5,7 @@ import {
 	Text,
 	View,
 } from 'react-native'
-import { useLazyQuery } from '@apollo/client';
+import { useMutation, useLazyQuery } from '@apollo/client';
 import { TouchableOpacity } from 'react-native'
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
@@ -13,11 +13,11 @@ import mongoose from 'mongoose';
 import LottieView from 'lottie-react-native';
 
 import { GET_ALL_DISHES, GET_SOME_DISHES } from '../queries/dishes';
-import { USER_LIKED_DISHES } from '../queries/users';
 
 
 import Search from '../components/Discover/Search'
 import DishCard from '../components/Discover/DishCard';
+
 import axios from 'axios';
 
 const Discover = ({ navigation }) => {
@@ -34,16 +34,10 @@ const Discover = ({ navigation }) => {
 			user_id: userIDString
 		})
 			.then(res => {
-				// Get list of dishes
 				getDishes({
 					variables: {
 						_ids: res.data.map(d => mongoose.Types.ObjectId(d))
-					}
-				})
-				getLikedDishes({
-					variables: {
-						_id: mongoose.Types.ObjectId(userID)
-					}
+					},
 				})
 			})
 			.catch(e => {
@@ -60,21 +54,35 @@ const Discover = ({ navigation }) => {
 	}, [likedData])
 	//if (likedSet.size !== 0) console.log(likedSet);
 
-
-	if (loading) return <Text>Loading...</Text>
+	if (loading || userIDString === null || data == undefined) return <View syle={styles.container}>
+		{/* TODO: Replace search UI with search and filter functionality */}
+		<Search />
+		<View style={styles.item_container}>
+			<LottieView
+				autoPlay
+				loop
+				source={require('../styles/l.json')}
+				style={styles.animationContainer}
+			/>
+		</View>
+	</View>
 	if (error) return <Text>Not good why did it break...</Text>
-	return !data ?
-		//Animation if data isn't loaded yet
+	if (data) return (
 		<View syle={styles.container}>
 			{/* TODO: Replace search UI with search and filter functionality */}
 			<Search />
 			<View style={styles.item_container}>
-				<LottieView
-					autoPlay
-					loop
-					source={require('../styles/l.json')}
-					style={styles.animationContainer}
-				/>
+				<ScrollView showsVerticalScrollIndicator={false} marginBottom={'63%'}>
+					{data.dishByIds.map(dish => (
+						<TouchableOpacity
+							activeOpacit={0.1}
+							onPress={() => navigation.navigate('Dish', { dish, navigation })}
+							key={dish._id}
+						>
+							<DishCard dish={dish} />
+						</TouchableOpacity>
+					))}
+				</ScrollView>
 			</View>
 		</View>
 		:

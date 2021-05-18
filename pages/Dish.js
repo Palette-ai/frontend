@@ -53,7 +53,7 @@ function Dish({ route }) {
 				</View>
 				<Grid>
 					<Row style={styles.dish_name_container}>
-							<Text style={styles.dish_name}>{dish.dish_name}</Text>
+						<Text style={styles.dish_name}>{dish.dish_name}</Text>
 					</Row>
 					<Row style={styles.dish_other_stuff}>
 						<Col>
@@ -65,7 +65,7 @@ function Dish({ route }) {
 							<Row style={styles.dish_container}>
 								<Text style={styles.dish_description_container}>{dish.description}</Text>
 								<Button
-									onPress={() => navigation.navigate('Restaurant', { r: dish.restaurant, navigation })}
+									onPress={() => navigation.navigate('Restaurant', { r: dish.restaurant._id, navigation })}
 									style={styles.add_review_btn}
 								>
 									{dish.restaurant.name}
