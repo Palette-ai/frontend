@@ -22,10 +22,10 @@ import axios from 'axios';
 
 const Discover = ({ navigation }) => {
 	const [getDishes, { loading, data, error }] = useLazyQuery(GET_SOME_DISHES)
-
-	const userIDString = firebase.auth().currentUser.photoURL;
+	const [userIDString, setuserIDString] = useState(firebase.auth().currentUser.photoURL)
 	useEffect(() => {
-		axios.post("https://palette-backend.herokuapp.com/rec", {
+		let waitUntilIDIsInFirebase = setTimeout(() => setuserIDString(firebase.auth().currentUser.photoURL), 500)
+		if (userIDString !== null) axios.post("https://palette-backend.herokuapp.com/rec", {
 			user_id: userIDString
 		})
 			.then(res => {
@@ -38,44 +38,43 @@ const Discover = ({ navigation }) => {
 			.catch(e => {
 				console.log(e)
 			})
-	}, [])
+		return () => clearTimeout(waitUntilIDIsInFirebase)
+	}, [userIDString, data])
 
-	if (loading) return <Text>Loading...</Text>
+	if (loading || userIDString === null || data == undefined) return <View syle={styles.container}>
+		{/* TODO: Replace search UI with search and filter functionality */}
+		<Search />
+		<View style={styles.item_container}>
+			<LottieView
+				autoPlay
+				loop
+				source={require('../styles/l.json')}
+				style={styles.animationContainer}
+			/>
+		</View>
+	</View>
 	if (error) return <Text>Not good why did it break...</Text>
-
-	return data ?
-		
-		(
-			<View syle={styles.container}>
-				{/* TODO: Replace search UI with search and filter functionality */}
-				<Search />
-				<View style={styles.item_container}>
-					<ScrollView showsVerticalScrollIndicator={false} marginBottom={'63%'}>
-						{data.dishByIds.map(dish => (
-							<TouchableOpacity
-								activeOpacit={0.1}
-								onPress={() => navigation.navigate('Dish', { dish, navigation })}
-								key={dish._id}
-							>
-								<DishCard dish={dish} />
-							</TouchableOpacity>
-						))}
-					</ScrollView>
-				</View>
-			</View>
-		) :
-				<View syle={styles.container}>
+	if (data) return (
+		<View syle={styles.container}>
 			{/* TODO: Replace search UI with search and filter functionality */}
 			<Search />
 			<View style={styles.item_container}>
-				<LottieView
-					autoPlay
-					loop
-					source={require('../styles/l.json')}
-					style={styles.animationContainer}
-				/>
+				<ScrollView showsVerticalScrollIndicator={false} marginBottom={'63%'}>
+					{data.dishByIds.map(dish => (
+						<TouchableOpacity
+							activeOpacit={0.1}
+							onPress={() => navigation.navigate('Dish', { dish, navigation })}
+							key={dish._id}
+						>
+							<DishCard dish={dish} />
+						</TouchableOpacity>
+					))}
+				</ScrollView>
 			</View>
 		</View>
+	)
+
+
 }
 
 const styles = StyleSheet.create({

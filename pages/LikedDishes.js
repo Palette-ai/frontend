@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, RefreshControl } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View, RefreshControl } from 'react-native';
 import Like from '../components/Liked/Like'
 import DishCard from '../components/Discover/DishCard';
 import firebase from 'firebase/app';
@@ -9,15 +9,13 @@ import { USER_LIKES } from '../queries/users';
 import { useQuery } from '@apollo/client';
 
 const LikedDishes = ({ navigation }) => {
-	
 	const [refreshing, setRefreshing] = useState(false);
 	const [dishLikes, setDishLikes] = useState('');
-	
+
 	const { loading, error, data, refetch } = useQuery(USER_LIKES, {
 		variables: {
 			_id: mongoose.Types.ObjectId(firebase.auth().currentUser.photoURL)
 		},
-		
 	})
 
 	useMemo(() => {
@@ -27,10 +25,8 @@ const LikedDishes = ({ navigation }) => {
 		}
 	}, [data])
 
-	console.log(data.userById.likes.map(dish => String(dish._id)))
-
 	// const userIDString = firebase.auth().currentUser.photoURL;
-	
+
 	if (loading) return <Text style={styles.standby}>Loading...</Text>
 	if (error) return <Text style={styles.standby}>Houston we have a problem</Text>
 	// console.log(data.userById.likes)
@@ -47,15 +43,26 @@ const LikedDishes = ({ navigation }) => {
 	}
 
 	return (
-			<View syle={styles.container}>
-				<Like />
-				<View style={styles.item_container}>
-					<ScrollView marginBottom={'70%'} showsVerticalScrollIndicator={false} refreshControl={
+		<View syle={styles.container}>
+			<Like />
+			<View style={styles.item_container}>
+				<ScrollView marginBottom={'70%'} showsVerticalScrollIndicator={false} refreshControl={
 					<RefreshControl
 						refreshing={refreshing}
 						onRefresh={() => refetch()}
 					/>}>
-						{data.userById.likes.map(dish => (
+					{data.userById.likes.length === 0 ?
+						Alert.alert(
+							"Currently you dont have any liked dishes",
+							"If you like a dish on the Discover page, they will save here!",
+							[
+								{
+									text: "Okay!",
+									onPress: () => console.log("Cancel Pressed"),
+								}
+							]
+						) :
+						data.userById.likes.map(dish => (
 							<TouchableOpacity
 								activeOpacit={0.1}
 								onPress={() => navigation.navigate('Dish', { dish, navigation })}
@@ -67,10 +74,10 @@ const LikedDishes = ({ navigation }) => {
 								/>
 							</TouchableOpacity>
 						))}
-					</ScrollView>
-				</View>
+				</ScrollView>
 			</View>
-		)
+		</View>
+	)
 }
 
 const styles = StyleSheet.create({
