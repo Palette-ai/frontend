@@ -17,6 +17,7 @@ import DishCard from '../components/Discover/DishCard';
 
 const Restaurant = ({ route }) => {
 	const { r, navigation } = route.params
+	console.log(r)
     // need to query to get dishes for the specific restaurant
     // add a prop thing 
 
@@ -48,7 +49,6 @@ const Restaurant = ({ route }) => {
     if(error) return <Text>{error}</Text>
 
 	console.log(data)
-
     //need to sort array of dishes that we get back 
 
 	// const { rest_loading, rest_error, data: rest_data} = useQuery(GET_RESTAURANT_BY_ID, {
