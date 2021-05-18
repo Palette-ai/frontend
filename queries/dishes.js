@@ -84,7 +84,7 @@ export const GET_DISHES_RESTAURANT = gql`
   			features
   			description
   			tags
-			restaurant { name }
+			restaurant { name, description }
 		}
 	}
 `
