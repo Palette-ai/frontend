@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import axios from 'axios';
 import { USER_LIKES } from '../queries/users';
 import { useQuery } from '@apollo/client';
+import Title from '../components/Discover/Title';
 
 const LikedDishes = ({ navigation }) => {
 	const [refreshing, setRefreshing] = useState(false);
@@ -44,7 +45,7 @@ const LikedDishes = ({ navigation }) => {
 
 	return (
 		<View syle={styles.container}>
-			<Like />
+			<Title text={"Liked Dishes"} />
 			<View style={styles.item_container}>
 				<ScrollView marginBottom={'70%'} showsVerticalScrollIndicator={false} refreshControl={
 					<RefreshControl

@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import LikedDishesScreen from '../pages/LikedDishes'
 import DishScreen from '../pages/Dish'
-import RestaurantScreen from '../pages/Restaurants'
+import RestaurantScreen from '../pages/Restaurant'
 
 const Stack = createStackNavigator();
 export default function LikeStackScreen() {

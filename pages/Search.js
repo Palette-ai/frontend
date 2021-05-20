@@ -14,21 +14,18 @@ import { Col, Row, Grid } from "react-native-easy-grid"
 import { Button, Toggle, Input } from '@ui-kitten/components';
 
 import SearchRow from '../components/Search/SearchRow';
+import Title from '../components/Discover/Title';
 
 
 function Search({ navigation }) {
-  const [searchTerm, setSearchTerm] = useState('')
+	const [searchTerm, setSearchTerm] = useState('')
 	const [toggle, setToggle] = useState('')
-	
+
 	return (
 		<View style={styles.container}>
+			<Title text={'Search'} />
 			<View style={styles.item_container}>
 				<Grid>
-					<Row style={styles.title_container}>
-						<View>
-							<Text style={styles.title}>Search</Text>
-						</View>
-					</Row>
 					<Row>
 						<View style={styles.search_box}>
 							<TextInput
@@ -44,7 +41,7 @@ function Search({ navigation }) {
 						<Grid style={styles.restaurant_box}>
 							<Text>Restaurants</Text>
 						</Grid>
-						<Toggle checked={toggle} onChange={checked => setToggle(checked)}/>
+						<Toggle checked={toggle} onChange={checked => setToggle(checked)} />
 						<Grid style={styles.dish_box}>
 							<Text>Dishes</Text>
 						</Grid>
@@ -57,13 +54,12 @@ function Search({ navigation }) {
 						<SearchRow
 							toggle={toggle}
 							searchTerm={searchTerm}
-              visible={false}
+							visible={false}
 							navigation={navigation}
 						/>
 					</Grid>
 				</ScrollView>
 			</View>
-
 		</View>
 	);
 }
@@ -90,18 +86,22 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontSize: 28,
-		marginLeft: '15%'
+		marginLeft: '15%',
 	},
 	search_box: {
-		borderWidth: 1,
-		marginLeft: '10%',
-		width: '75%',
+		borderWidth: .5,
+		borderRadius: 10,
 		marginBottom: '5%',
+		paddingLeft: 5,
+		width: '100%',
 	},
 	item_container: {
 		flex: 1,
-		paddingLeft: 20,
 		fontSize: 40,
+		marginTop: '5%',
+		width: '90%',
+		marginLeft: '5%',
+		marginRight: '5%',
 	},
 	review_item: {
 		marginTop: '20%',

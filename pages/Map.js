@@ -16,7 +16,7 @@ const Map = ({ navigation }) => {
 	if (error) return <Text>{error}</Text>
 
 	return (
-		<SafeAreaView style={styles.container}>
+		<View style={styles.container}>
 			<MapView
 				style={{ flex: 1 }}
 				provider={'google'}
@@ -40,7 +40,7 @@ const Map = ({ navigation }) => {
 							description={r.phone_number}
 						>
 							<Callout
-								onPress={() => navigation.navigate('Restaurant')}
+								onPress={() => navigation.navigate('Restaurant', { r, navigation })}
 							>
 								<View>
 									<Text>{r.name}</Text>
@@ -74,7 +74,7 @@ const Map = ({ navigation }) => {
 					})}
 				</Row>
 			</ScrollView>
-		</SafeAreaView>
+		</View>
 	)
 }
 

@@ -42,7 +42,6 @@ function Restaurant({ route }) {
 
 	if (loading) return <Text> Loading... </Text>
 	if (error) return <Text>{error}</Text>
-
 	return (
 		<SafeAreaView style={styles.container}>
 			<MapView
@@ -50,8 +49,8 @@ function Restaurant({ route }) {
 				provider={'google'}
 				showsUserLocation={true}
 				initialRegion={{
-					latitude: r.latitude,
-					longitude: r.longitude,
+					latitude: data.restaurantById.latitude,
+					longitude: data.restaurantById.longitude,
 					latitudeDelta: .0009,
 					longitudeDelta: .0009
 				}}
@@ -59,11 +58,11 @@ function Restaurant({ route }) {
 				<Marker
 					key={r._id}
 					coordinate={{
-						latitude: r.latitude,
-						longitude: r.longitude
+						latitude: data.restaurantById.latitude,
+						longitude: data.restaurantById.longitude
 					}}
-					title={r.name}
-					description={r.phone_number}
+					title={data.restaurantById.name}
+					description={data.restaurantById.phone_number}
 				>
 				</Marker>
 			</MapView>
