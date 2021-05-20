@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 	},
 	res_name: {
-		// fontSize: 32,
 		marginBottom: '1%',
 	},
 	rating: {
@@ -155,7 +154,6 @@ const styles = StyleSheet.create({
 		marginLeft: 10,
 		paddingLeft: 10,
 		justifyContent: 'flex-start',
-		// paddingBottom: -5
 	},
 	staridk: {
 		marginRight: '5%'
