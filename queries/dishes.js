@@ -7,6 +7,7 @@ export const GET_ALL_DISHES = gql`
 			description
 			restaurant_id
 			average_rating
+			price
 			restaurant { name }
 			_id
   		}
@@ -20,6 +21,7 @@ export const GET_SOME_DISHES = gql`
 			description
 			_id
 			average_rating
+			price
 			restaurant { name, _id }
   		}
 	}

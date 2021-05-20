@@ -25,7 +25,7 @@ const LikedDishes = ({ navigation }) => {
 		}
 	}, [data])
 
-	// const userIDString = firebase.auth().currentUser.photoURL;
+	const userIDString = firebase.auth().currentUser.photoURL;
 
 	if (loading) return <Text style={styles.standby}>Loading...</Text>
 	if (error) return <Text style={styles.standby}>Houston we have a problem</Text>
@@ -70,6 +70,7 @@ const LikedDishes = ({ navigation }) => {
 							>
 								<DishCard
 									dish={dish}
+									userID={userIDString}
 									likedSet={dishLikes}
 								/>
 							</TouchableOpacity>
