@@ -14,7 +14,6 @@ const Map = ({ navigation }) => {
 	const { loading, error, data } = useQuery(GET_ALL_RESTAURANTS)
 	if (loading) return <Text> Loading... </Text>
 	if (error) return <Text>{error}</Text>
-	const { restaurantMany: restaurants } = data
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -31,7 +30,6 @@ const Map = ({ navigation }) => {
 			>
 				{data.restaurantMany.map(r => {
 					return (
-
 						<Marker
 							key={r._id}
 							coordinate={{
@@ -42,7 +40,7 @@ const Map = ({ navigation }) => {
 							description={r.phone_number}
 						>
 							<Callout
-								onPress={() => navigation.navigate('Restaurants', { r, navigation })}
+								onPress={() => navigation.navigate('Restaurant')}
 							>
 								<View>
 									<Text>{r.name}</Text>
@@ -58,24 +56,24 @@ const Map = ({ navigation }) => {
 				})}
 			</MapView>
 			<ScrollView style={styles.overlay} horizontal={true} showsHorizontalScrollIndicator={false}>
-			<Row>
-			{data.restaurantMany.map(r => {
-					return (
-						<Col>
-						<View
-						style={styles.card}>
-						<Button
-						title={r.name}
-							onPress={() => navigation.navigate('Restaurant', { r, navigation })}
-						>
-								{r.name}
-						</Button>		
-						</View>	
-						</Col>
-					)
-				})}
+				<Row>
+					{data.restaurantMany.map(r => {
+						return (
+							<Col>
+								<View
+									style={styles.card}>
+									<Button
+										title={r.name}
+										onPress={() => navigation.navigate('Restaurant', { r, navigation })}
+									>
+										{r.name}
+									</Button>
+								</View>
+							</Col>
+						)
+					})}
 				</Row>
-				</ScrollView>
+			</ScrollView>
 		</SafeAreaView>
 	)
 }
@@ -85,9 +83,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	overlay: {
-    position: 'absolute',
-    bottom: 50,
-  },
+		position: 'absolute',
+		bottom: 50,
+	},
 	card: {
 		backgroundColor: 'rgba(255, 255, 255, 1)',
 		margin: 10,

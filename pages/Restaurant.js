@@ -1,37 +1,61 @@
-import React from 'react';
-import { View, StyleSheet, Text, SafeAreaView,ScrollView, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Text, SafeAreaView, ScrollView, TouchableOpacity, Button } from 'react-native';
 import { useQuery } from '@apollo/client';
 import MapView, { Marker } from 'react-native-maps';
 import { GET_RESTAURANT_BY_ID } from '../queries/restaurants';
-import { Col, Row, Grid } from "react-native-easy-grid"
+import { useLazyQuery } from '@apollo/client';
+import firebase from 'firebase/app';
+
+import { GET_DISHES_RESTAURANT } from '../queries/dishes';
+import DishCard from '../components/Discover/DishCard';
+import { USER_LIKED_DISHES } from '../queries/users';
 
 function Restaurant({ route }) {
-	const { r, navigation } = route.params
-	console.log(r._id)
+	// Get list of dishes that the user has liked
+	const [getLikedDishes, { loading: likedLoading, error: likedError, data: likedData }] = useLazyQuery(USER_LIKED_DISHES)
+	const [likedSet, setLikedSet] = useState(new Set())
+	const [userIDString, setuserIDString] = useState(firebase.auth().currentUser.photoURL)
+	useEffect(() => {
+		getLikedDishes({
+			variables: {
+				_id: mongoose.Types.ObjectId(userIDString)
+			}
+		})
+		if (likedData !== undefined && !likedLoading) {
+			setLikedSet(new Set(likedData.userById.liked_dishes.map(dish => String(dish))))
+		}
+	}, [likedData])
 
+	const { r, navigation } = route.params
 	const { loading, error, data, refetch } = useQuery(GET_RESTAURANT_BY_ID, {
 		variables: {
-			_id: "606f420b39906c7dda2be59f"
+			_id: r._id
 		},
 	})
-	console.log(data);
 
-	if (loading) return <Text>Loading...</Text>
-	if (error) return <Text>Not good why did it break...</Text>
+	const { loading: restLoading, error: restError, data: restData } = useQuery(GET_DISHES_RESTAURANT, {
+		variables: {
+			filter: { restaurant_id: r._id },
+			sort: '_ID_DESC'
+		}
+	})
+
+	if (loading) return <Text> Loading... </Text>
+	if (error) return <Text>{error}</Text>
 
 	return (
 		<SafeAreaView style={styles.container}>
-		<MapView
-		style={{ flex: 1 }}
-		provider={'google'}
-		showsUserLocation={true}
-		initialRegion={{
-			latitude: r.latitude,
-			longitude: r.longitude,
-			latitudeDelta: .0009,
-			longitudeDelta: .0009
-		}}
-	>
+			<MapView
+				style={{ flex: 1 }}
+				provider={'google'}
+				showsUserLocation={true}
+				initialRegion={{
+					latitude: r.latitude,
+					longitude: r.longitude,
+					latitudeDelta: .0009,
+					longitudeDelta: .0009
+				}}
+			>
 				<Marker
 					key={r._id}
 					coordinate={{
@@ -42,50 +66,48 @@ function Restaurant({ route }) {
 					description={r.phone_number}
 				>
 				</Marker>
-	</MapView>
-	<View style={styles.restaurant_container}>
-		<ScrollView>
-					<Grid>
-						<Row>
-							<Col>
-							<Text style={styles.restaurant_name}>{r.name}</Text>
-							</Col>
-						</Row>
-						<Row>
-						<Col>
-						<Text style={styles.restaurant_dist}>{r.description}</Text>
-						</Col>
-						</Row>
-						<Row>
-							<Button title="see restaurant menu" style={styles.menu_btn}>
-      				</Button>
-						</Row>
-					</Grid>
+			</MapView>
+			<View style={styles.restaurant_container}>
+				<Text style={styles.text_title}>{data.restaurantById.name}</Text>
+				<Text style={styles.dish_discription}>{data.restaurantById.description}</Text>
+				<ScrollView>
+					{!restLoading && !restError && restData.dishMany.map(dish => (
+						<TouchableOpacity
+							activeOpacity={0.1}
+							onPress={() => navigation.navigate('Dish', { dish, navigation })}
+							key={dish._id}
+						>
+							<DishCard
+								dish={dish}
+								userID={userIDString}
+								likedSet={likedSet}
+							/>
+						</TouchableOpacity>
+					))}
 				</ScrollView>
-				
-		</View>
+
+			</View>
 		</SafeAreaView>
 	);
 };
 
 const styles = StyleSheet.create({
-	container: {flex:1},
+	container: { flex: 1 },
 	restaurant_container: {
 		backgroundColor: '#FF5349',
-		paddingTop: '5%',
 		justifyContent: "center",
+		alignItems: 'center',
 		width: '100%',
-		height: '60%',
+		height: '72%',
 		borderTopLeftRadius: 30,
 		borderTopRightRadius: 30,
 		zIndex: -1,
 	},
-	restaurant_name:{
-		marginLeft: 15,
+	restaurant_name: {
 		color: '#fff',
 		fontSize: 28
 	},
-	restaurant_dist:{
+	restaurant_dist: {
 		marginTop: 15,
 		marginLeft: 15,
 		marginRight: 15,
@@ -97,6 +119,24 @@ const styles = StyleSheet.create({
 		backgroundColor: '#5349FF',
 		justifyContent: "center",
 	},
+	item_container: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: '100%',
+		backgroundColor: '#FDFCFC',
+	},
+	text_title: {
+		color: '#FFFFFF',
+		fontSize: 30,
+		marginTop: 30,
+		fontWeight: '600'
+	},
+	dish_discription: {
+		color: '#FFFFFF',
+		fontSize: 16,
+		marginLeft: 30,
+		marginRight: 30
+	}
 });
 
 export default Restaurant;

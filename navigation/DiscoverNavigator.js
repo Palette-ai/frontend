@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import DiscoverScreen from '../pages/Discover'
 import DishScreen from '../pages/Dish'
-import RestaurantScreen from '../pages/Restaurants'
+import RestaurantScreen from '../pages/Restaurant'
 
 const Stack = createStackNavigator();
 export default function HomeStackScreen() {
@@ -13,8 +13,8 @@ export default function HomeStackScreen() {
 				headerShown: false
 			}}>
 			<Stack.Screen name="Discover" component={DiscoverScreen} />
-			<Stack.Screen name="Dish" component={DishScreen} />
 			<Stack.Screen name="Restaurant" component={RestaurantScreen} />
+			<Stack.Screen name="Dish" component={DishScreen} />
 		</Stack.Navigator>
 	);
 }
