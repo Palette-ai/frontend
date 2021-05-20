@@ -1,45 +1,33 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
-import firebase from 'firebase/app';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import React, { useState, useMemo } from 'react';
+import { useQuery } from '@apollo/client';
 import {
 	View,
 	StyleSheet,
-	TextInput,
-	Image,
-	TouchableWithoutFeedback,
-	ScrollView,
-	Keyboard,
 	Text,
 	TouchableOpacity
 } from 'react-native';
-import { Col, Row, Grid } from "react-native-easy-grid"
-import { Icon, Button, Card, Modal } from '@ui-kitten/components';
-import StarRating from 'react-native-star-rating';
+import { Col, Row } from "react-native-easy-grid"
 
 import { GET_ALL_DISHES } from '../../queries/dishes';
 import { GET_ALL_RESTAURANTS } from '../../queries/restaurants'
 
 function SearchRow({ toggle, searchTerm, navigation }) {
-
 	const [dishResults, setDishResults] = useState('')
 	const [restaurantResults, setRestaurantResults] = useState('')
 
-	const { loading, error, data, refetch } = 
+	const { loading, error, data, refetch } =
 		toggle
-		?
+			?
 			useQuery(GET_ALL_DISHES, {
 				variables: {
-					filter: { _operators: { dish_name: { regex: ( searchTerm == '' ? "help" : "/".concat(searchTerm, "/ig")  ) } } }
-				},
-				onCompleted: ((data) => {console.log("completed", data.dishMany)})
+					filter: { _operators: { dish_name: { regex: (searchTerm == '' ? "help" : "/".concat(searchTerm, "/ig")) } } }
+				}
 			})
-		:
+			:
 			useQuery(GET_ALL_RESTAURANTS, {
 				variables: {
-					filter: { _operators: { name: { regex: ( searchTerm == '' ? "help" : "/".concat(searchTerm, "/ig")  ) } } }
-				},
-				onCompleted: ((data) => {console.log("completed", data.restaurantMany)})
+					filter: { _operators: { name: { regex: (searchTerm == '' ? "help" : "/".concat(searchTerm, "/ig")) } } }
+				}
 			})
 
 	useMemo(() => {
@@ -57,65 +45,66 @@ function SearchRow({ toggle, searchTerm, navigation }) {
 
 	if (searchTerm === '') return <Text>Enter a search term</Text>
 	if (restaurantResults == [] && dishResults == []) return <Text>No results :(</Text>
-
+	if (loading) return <Text>Loading...</Text>
+	if (error) return <Text>Search had trouble loading, whoopsy...</Text>
 	return (
 		!toggle
-		?
-		<Row>
-			<Col>
-				{restaurantResults?.map((r) => (
-					<TouchableOpacity
-								activeOpacit={0.1}
-								onPress={() => navigation.navigate('Restaurant', { r, navigation })}
-								key={r._id}
-					>
-						<Row key={r._id} style={styles.rect2}>
-							<View style={styles.reviewHolder}>
-								<View style={styles.reviewTop}>
-									<View style={styles.iconContainer}>
+			?
+			<Row>
+				<Col>
+					{restaurantResults?.map((r) => (
+						<TouchableOpacity
+							activeOpacit={0.1}
+							onPress={() => navigation.navigate('Restaurant', { r, navigation })}
+							key={r._id}
+						>
+							<Row key={r._id} style={styles.rect2}>
+								<View style={styles.reviewHolder}>
+									<View style={styles.reviewTop}>
+										<View style={styles.iconContainer}>
+										</View>
+										<View flexDirection='column'>
+											<Text style={styles.dish_name_text}>{r.name}</Text>
+										</View>
 									</View>
-									<View flexDirection='column'>
-										<Text style={styles.dish_name_text}>{r.name}</Text>
-									</View>
-								</View>
-								<View>
-									<Text style={styles.restaurant_text}>{`${r.description}`}</Text>
-								</View>
-							</View>
-						</Row>
-					</TouchableOpacity>
-				))
-				}
-			</Col>
-		</Row>
-		:
-		<Row>
-			<Col>
-				{dishResults?.map((dish) => (
-					<TouchableOpacity
-								activeOpacit={0.1}
-								onPress={() => navigation.navigate('Dish', { dish, navigation })}
-								key={dish._id}
-					>
-						<Row key={dish._id} style={styles.rect2}>
-							<View style={styles.reviewHolder}>
-								<View style={styles.reviewTop}>
-									<View style={styles.iconContainer}>
-									</View>
-									<View flexDirection='column'>
-										<Text style={styles.dish_name_text}>{dish.dish_name}</Text>
+									<View>
+										<Text style={styles.restaurant_text}>{`${r.description}`}</Text>
 									</View>
 								</View>
-								<View>
-									<Text style={styles.restaurant_text}>{`${dish.restaurant.name}`}</Text>
+							</Row>
+						</TouchableOpacity>
+					))
+					}
+				</Col>
+			</Row>
+			:
+			<Row>
+				<Col>
+					{dishResults?.map((dish) => (
+						<TouchableOpacity
+							activeOpacit={0.1}
+							onPress={() => navigation.navigate('Dish', { dish, navigation })}
+							key={dish._id}
+						>
+							<Row key={dish._id} style={styles.rect2}>
+								<View style={styles.reviewHolder}>
+									<View style={styles.reviewTop}>
+										<View style={styles.iconContainer}>
+										</View>
+										<View flexDirection='column'>
+											<Text style={styles.dish_name_text}>{dish.dish_name}</Text>
+										</View>
+									</View>
+									<View>
+										<Text style={styles.restaurant_text}>{`${dish.restaurant.name}`}</Text>
+									</View>
 								</View>
-							</View>
-						</Row>
-					</TouchableOpacity>
-				))
-				}
-			</Col>
-		</Row>
+							</Row>
+						</TouchableOpacity>
+					))
+					}
+				</Col>
+			</Row>
 	)
 }
 

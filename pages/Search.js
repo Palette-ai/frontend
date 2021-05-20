@@ -1,17 +1,13 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { useQuery } from '@apollo/client';
+import React, { useState } from 'react';
 import {
 	View,
 	StyleSheet,
 	TextInput,
-	Image,
-	TouchableWithoutFeedback,
 	ScrollView,
 	Text,
 } from 'react-native';
-import { sushi, back_arrow } from '../assets';
-import { Col, Row, Grid } from "react-native-easy-grid"
-import { Button, Toggle, Input } from '@ui-kitten/components';
+import { Row, Grid } from "react-native-easy-grid"
+import { Toggle } from '@ui-kitten/components';
 
 import SearchRow from '../components/Search/SearchRow';
 import Title from '../components/Discover/Title';

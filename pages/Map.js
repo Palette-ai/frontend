@@ -1,13 +1,10 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Button } from 'react-native';
-import MapView, { Callout, CalloutSubview, Marker } from 'react-native-maps';
+import MapView, { Callout, Marker } from 'react-native-maps';
 import { GET_ALL_RESTAURANTS } from '../queries/restaurants';
 import { useQuery } from '@apollo/client';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { ScrollView } from 'react-native-gesture-handler';
-import Carousel from 'react-native-snap-carousel';
-
-// const MAPS_API = "https://plus.codes/api?address="
 
 const Map = ({ navigation }) => {
 
@@ -28,38 +25,35 @@ const Map = ({ navigation }) => {
 					longitudeDelta: .0095
 				}}
 			>
-				{data.restaurantMany.map(r => {
-					return (
-						<Marker
-							key={r._id}
-							coordinate={{
-								latitude: r.latitude,
-								longitude: r.longitude
-							}}
-							title={r.name}
-							description={r.phone_number}
+				{data.restaurantMany.map(r => (
+					<Marker
+						key={r._id}
+						coordinate={{
+							latitude: r.latitude,
+							longitude: r.longitude
+						}}
+						title={r.name}
+						description={r.phone_number}
+					>
+						<Callout
+							onPress={() => navigation.navigate('Restaurant', { r, navigation })}
 						>
-							<Callout
-								onPress={() => navigation.navigate('Restaurant', { r, navigation })}
-							>
-								<View>
-									<Text>{r.name}</Text>
-									<Text>{r.phone_number}</Text>
-								</View>
-							</Callout>
-							{/* <View style={{ backgroundColor: "red", padding: 10 }}>
+							<View>
 								<Text>{r.name}</Text>
-							</View> */}
-							{/* <View /> */}
-						</Marker>
-					)
-				})}
+								<Text>{r.phone_number}</Text>
+							</View>
+						</Callout>
+					</Marker>
+				)
+				)}
 			</MapView>
 			<ScrollView style={styles.overlay} horizontal={true} showsHorizontalScrollIndicator={false}>
 				<Row>
 					{data.restaurantMany.map(r => {
 						return (
-							<Col>
+							<Col
+								key={r._id}
+							>
 								<View
 									style={styles.card}>
 									<Button

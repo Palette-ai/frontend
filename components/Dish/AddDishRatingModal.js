@@ -52,17 +52,10 @@ function AddDishRatingModal({ isModalVisible, setModalVisible, dish_id, refetchA
 						value={review}
 						placeholder='Add Review Text Here'
 						style={{ paddingBottom: 20 }}
-						maxLength = {280}
+						maxLength={280}
 					/>
 				</Row>
 				<Row>
-					{/* <TextInput
-						style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginTop: 30 }}
-						onChangeText={num => setRating(num)}
-						value={rating}
-						keyboardType='numeric'
-						placeholder='Add Rating Number Here'
-					/> */}
 					<StarRating
 						disabled={false}
 						maxStars={5}

@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from 'react-native'
 import firebase from 'firebase/app'
 
-const SignOut = ({ auth }) => {
+const SignOut = () => {
 	const signOut = () => {
 		firebase.auth().signOut()
 	}

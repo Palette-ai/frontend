@@ -5,14 +5,12 @@ import {
 	Text,
 	View,
 } from 'react-native'
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import StarRating from 'react-native-star-rating';
-import firebase from 'firebase/app';
 import { Col, Row, Grid } from "react-native-easy-grid"
-import { sushi, dollar_sign, hot, organic, map_sign } from '../../assets'
+import { sushi, dollar_sign } from '../../assets'
 import { Button, Icon } from '@ui-kitten/components'
 import { USER_LIKE_DISH, USER_UNLIKE_DISH } from '../../queries/users';
-import mongoose from 'mongoose';
 
 
 const DishCard = ({ dish, userID, likedSet }) => {
@@ -21,8 +19,6 @@ const DishCard = ({ dish, userID, likedSet }) => {
 	useEffect(() => {
 		setLiked(likedSet !== undefined && likedSet.size !== 0 && likedSet.has(dish._id) ? true : false)
 	}, [likedSet])
-
-	//console.log(dish)
 
 	const HeartIcon = (props) => (
 		<Icon
@@ -41,9 +37,7 @@ const DishCard = ({ dish, userID, likedSet }) => {
 	// Unlike a dish, then update the user's list of liked dishes
 	const [dishUnlike, { unlike_data }] = useMutation(USER_UNLIKE_DISH)
 
-
 	const overallHandler = () => {
-		console.log('thisworks')
 		setLiked(!liked)
 		liked ?
 			dishUnlike({
@@ -60,41 +54,11 @@ const DishCard = ({ dish, userID, likedSet }) => {
 	}
 
 	const numDollars = (price) => {
-		const roundPrice = Math.ceil(price)
-		if (price < 10) {
-			return (
-				<Row>
-					<Image source={dollar_sign} />
-				</Row>
-			)
-		}
-		else if (price < 20) {
-			return (
-				<Row>
-					<Image source={dollar_sign} />
-					<Image source={dollar_sign} />
-				</Row>
-			)
-		}
-		else if (price < 30) {
-			return (
-				<Row>
-					<Image source={dollar_sign} />
-					<Image source={dollar_sign} />
-					<Image source={dollar_sign} />
-				</Row>
-			)
-		}
-		else {
-			return (
-				<Row>
-					<Image source={dollar_sign} />
-					<Image source={dollar_sign} />
-					<Image source={dollar_sign} />
-					<Image source={dollar_sign} />
-				</Row>
-			)
-		}
+		const roundPrice = Math.ceil(price / 10) + 1
+		const dollarSigns = roundPrice <= 5 ?
+			new Array(roundPrice).fill(<Image source={dollar_sign} />) :
+			new Array(5).fill(<Image source={dollar_sign} />)
+		return <Row>{dollarSigns}</Row>
 	}
 
 	return (
@@ -107,17 +71,11 @@ const DishCard = ({ dish, userID, likedSet }) => {
 				</Col>
 				<Col>
 					<Col>
-						<Row style={{alignItems: 'center'}}>
-							<Text 
+						<Row style={{ alignItems: 'center' }}>
+							<Text
 								numberOfLines={3}
 								adjustsFontSizeToFit
 								style={styles.dish_name}
-								// onTextLayout={ (e) => {
-								// 	const { lines } = e.nativeEvent;
-								// 	if (lines.length > 3) {
-								// 		setCurrentFont(currentFont - 1);
-								// 	}
-								// } }
 							>
 								{dish.dish_name}
 							</Text>
@@ -129,19 +87,15 @@ const DishCard = ({ dish, userID, likedSet }) => {
 								style={styles.likeButton}
 							/>
 						</Row>
-						{/* <Row> */}
-							<Text style={styles.res_name}>{dish.restaurant.name}</Text>
-						{/* </Row> */}
+						<Text style={styles.res_name}>{dish.restaurant.name}</Text>
 					</Col>
 					<Row size={.25} style={styles.row_reverse}>
-						{/* <Col style={styles.staridk}> */}
 						<StarRating
 							disabled={true}
 							maxStars={1}
 							rating={1}
 							fullStarColor={'blue'}
 							starSize={22}
-							// fullStarColor={'#ffffff'}
 							emptyStarColor={'#ffffff'}
 							reversed={true}
 							style={styles.staridk}
@@ -149,7 +103,6 @@ const DishCard = ({ dish, userID, likedSet }) => {
 						<Text style={styles.rating}>
 							{String(dish.average_rating)}
 						</Text>
-						{/* </Col> */}
 						{numDollars(dish.price)}
 					</Row>
 				</Col>
