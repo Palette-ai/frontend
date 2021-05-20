@@ -41,7 +41,7 @@ function DishReviewRow({ dishRatings }) {
 								<Text style={styles.review_text}>{`${dr.review}`}</Text>
 							</View>
 							<View>
-								<TimeAgo time={dr.createdAt} interval={2000} />
+								<TimeAgo time={dr.createdAt} interval={2000} style={{ color: '#fff' }} />
 							</View>
 						</View>
 					</Row>
@@ -85,15 +85,6 @@ const styles = StyleSheet.create({
 		width: '80%',
 		zIndex: 2,
 	},
-	review_container: {
-		backgroundColor: '#FF5349',
-		paddingTop: '10%',
-		width: '100%',
-		height: '70%',
-		borderTopLeftRadius: 30,
-		borderTopRightRadius: 30,
-		zIndex: -1,
-	},
 	dish_name: {
 		fontSize: 28,
 		marginLeft: '15%'
@@ -115,7 +106,7 @@ const styles = StyleSheet.create({
 		flexWrap: 'wrap',
 		zIndex: 2,
 	},
-	review_title: { fontSize: 28, color: '#fff', },
+	review_title: { fontSize: 28, color: '#fff' },
 	review_text: { color: '#fff', fontSize: 16 },
 	username_text: {
 		color: '#fff',
@@ -126,9 +117,8 @@ const styles = StyleSheet.create({
 		marginRight: '5%'
 	},
 	reviewHolder: {
-		// backgroundColor: 'blue',
 		flex: 1,
-		marginLeft: 8,
+		marginLeft: 15,
 		marginBottom: 5,
 		marginTop: 5
 	},
