@@ -22,6 +22,9 @@ function Dish({ route }) {
 	const [dishRatings, setDishRatings] = useState('')
 	const [isModalVisible, setModalVisible] = useState('');
 	const [isOptionsModalVisible, setOptionsModalVisible] = useState('');
+	const [madeReview, setMadeReview] = useState('');
+
+	const userIDString = firebase.auth().currentUser.photoURL;
 
 	// Queries all dishRatings
 	const { loading, error, data, refetch } = useQuery(GET_DISH_RATINGS, {
@@ -31,9 +34,16 @@ function Dish({ route }) {
 		},
 	})
 
+
+
 	// Memoizes dishRatings and is updated when the dishRating Query is reran
 	useMemo(() => {
-		if (data) setDishRatings(data.dishRatingMany)
+		if (data) {
+			setDishRatings(data.dishRatingMany)
+			let reviewIds = data.dishRatingMany.map(a => a.user._id)
+			reviewIds.includes(userIDString) ? setMadeReview(true) : setMadeReview(false)
+		}
+		
 	}, [data])
 
 	if (loading) return <Text>Loading...</Text>
@@ -84,7 +94,10 @@ function Dish({ route }) {
 								<Text style={styles.review_title}>Reviews</Text>
 							</Col>
 							<Col>
-								<Button style={styles.add_review_btn} onPress={() => setModalVisible(true)}>
+								<Button 
+									style={styles.add_review_btn}
+									onPress={() => setModalVisible(true)}
+									disabled={madeReview}>
 									Add Review
       							</Button>
 							</Col>

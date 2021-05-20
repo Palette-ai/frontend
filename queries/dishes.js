@@ -64,7 +64,7 @@ export const GET_DISH_RATINGS = gql`
 		dishRatingMany (filter: $filter sort: $sort) {
 			_id
 			dish_id
-			user { name }
+			user { name, _id }
 			rating
 			review
 			createdAt
