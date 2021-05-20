@@ -10,8 +10,6 @@ import { DISH_UPDATE_RATING, GET_DISH_RATINGS, DELETE_RATING } from '../../queri
 
 
 function UpdateDishRatingModal({ isModalVisible, setModalVisible, rating, setRating, review, setReview, ratingID, dishID, refetchAllRatings }) {
-	// const [rating, setRating] = useState('')
-	// const [review, setReview] = useState('')
 
 	// Adding a dishRating, then refetching all dishRatings to update the cache
 	const [updateReview] = useMutation(DISH_UPDATE_RATING, {
@@ -25,7 +23,7 @@ function UpdateDishRatingModal({ isModalVisible, setModalVisible, rating, setRat
 		refetchQueries: [{ query: GET_DISH_RATINGS }]
 	})
 
-  const [deleteRating] = useMutation(DELETE_RATING, {
+	const [deleteRating] = useMutation(DELETE_RATING, {
 		onCompleted: (data) => {
 			Keyboard.dismiss()
 			setModalVisible(false)
@@ -40,7 +38,7 @@ function UpdateDishRatingModal({ isModalVisible, setModalVisible, rating, setRat
 	const updateDishRatingHandler = () => {
 		updateReview({
 			variables: {
-        _id: ratingID,
+				_id: ratingID,
 				record: {
 					dish_id: dishID,
 					user_id: firebase.auth().currentUser.photoURL,
@@ -51,13 +49,13 @@ function UpdateDishRatingModal({ isModalVisible, setModalVisible, rating, setRat
 		})
 	}
 
-  const deleteDishRatingHandler = () => {
-    deleteRating({
-      variables: {
-        _id: ratingID,
-      }
-    })
-  }
+	const deleteDishRatingHandler = () => {
+		deleteRating({
+			variables: {
+				_id: ratingID,
+			}
+		})
+	}
 
 	return (
 		<Modal
@@ -73,17 +71,10 @@ function UpdateDishRatingModal({ isModalVisible, setModalVisible, rating, setRat
 						value={review}
 						placeholder='Add Review Text Here'
 						style={{ paddingBottom: 20 }}
-						maxLength = {280}
+						maxLength={280}
 					/>
 				</Row>
 				<Row>
-					{/* <TextInput
-						style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginTop: 30 }}
-						onChangeText={num => setRating(num)}
-						value={rating}
-						keyboardType='numeric'
-						placeholder='Add Rating Number Here'
-					/> */}
 					<StarRating
 						disabled={false}
 						maxStars={5}
@@ -95,16 +86,16 @@ function UpdateDishRatingModal({ isModalVisible, setModalVisible, rating, setRat
 				</Row>
 				<Row>
 				</Row>
-				<Button 
-          style={styles.updateButton}
-          title="Update Review" 
-          onPress={updateDishRatingHandler}>
+				<Button
+					style={styles.updateButton}
+					title="Update Review"
+					onPress={updateDishRatingHandler}>
 					Update Review
         </Button>
-        <Button 
-          style={styles.deleteButton}
-          title="Delete Review"
-          onPress={deleteDishRatingHandler}>
+				<Button
+					style={styles.deleteButton}
+					title="Delete Review"
+					onPress={deleteDishRatingHandler}>
 					Delete Review
         </Button>
 			</Card>
@@ -117,12 +108,12 @@ const styles = StyleSheet.create({
 	backdrop: {
 		backgroundColor: 'rgba(0, 0, 0, 0.5)',
 	},
-  updateButton: {
-    marginBottom: '2%'
-  },
-  deleteButton: {
-    backgroundColor: 'red'
-  },
+	updateButton: {
+		marginBottom: '2%'
+	},
+	deleteButton: {
+		backgroundColor: 'red'
+	},
 });
 
 export default UpdateDishRatingModal;

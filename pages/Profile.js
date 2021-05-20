@@ -26,7 +26,6 @@ const Profile = () => {
 	const [review, setReview] = useState('');
 	const [dishID, setDishID] = useState('');
 
-
 	// Queries all dishRatings
 	const { loading, error, data, refetch } = useQuery(GET_DISH_RATINGS, {
 		variables: {
@@ -44,14 +43,10 @@ const Profile = () => {
 
 	if (loading) return <Text>Loading...</Text>
 	if (error) return <Text>Ratings had trouble loading, whoopsy...</Text>
-	// console.log(data)
-
-	// data.dishRatingMany.slice().sort((a, b) =>  a.createdAt < b.createdAt)
 
 	const _onRefresh = () => {
 		setRefreshing('true')
 		refetch()
-		// console.log(data)
 		setReviews(data.dishRatingMany.slice().sort((a, b) => b.createdAt - a.createdAt))
 		setRefreshing('false')
 	}

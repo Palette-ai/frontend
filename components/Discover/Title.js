@@ -1,8 +1,6 @@
 import React from 'react'
 import {
-	ScrollView,
 	StyleSheet,
-	Image,
 	Text,
 	View,
 } from 'react-native'

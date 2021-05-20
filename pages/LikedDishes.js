@@ -1,10 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View, RefreshControl } from 'react-native';
-import Like from '../components/Liked/Like'
 import DishCard from '../components/Discover/DishCard';
 import firebase from 'firebase/app';
 import mongoose from 'mongoose';
-import axios from 'axios';
 import { USER_LIKES } from '../queries/users';
 import { useQuery } from '@apollo/client';
 import Title from '../components/Discover/Title';
@@ -21,7 +19,6 @@ const LikedDishes = ({ navigation }) => {
 
 	useMemo(() => {
 		if (data !== undefined && !loading) {
-			// console.log(likedData.userById.liked_dishes)
 			setDishLikes(new Set(data.userById.likes.map(dish => String(dish._id))))
 		}
 	}, [data])
@@ -30,18 +27,6 @@ const LikedDishes = ({ navigation }) => {
 
 	if (loading) return <Text style={styles.standby}>Loading...</Text>
 	if (error) return <Text style={styles.standby}>Houston we have a problem</Text>
-	// console.log(data.userById.likes)
-
-
-	const _onRefresh = () => {
-		setRefreshing('true')
-		refetch()
-		// console.log("yo")
-		// setDishLikes(data.userById.likes)
-		//reviews = data.dishRatingMany.slice().sort((a, b) =>  b.createdAt - a.createdAt)
-		setRefreshing('false')
-		// console.log(data)
-	}
 
 	return (
 		<View syle={styles.container}>

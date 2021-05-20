@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import firebase from 'firebase/app'
 import DialogInput from 'react-native-dialog-input';
 
@@ -10,7 +10,6 @@ function ForgotPassLogin() {
 		firebase.auth().sendPasswordResetEmail(email).then(function () {
 			console.log('reset email sent');
 		}).catch(function (error) {
-			// An error happened.
 			console.log(error);
 		});
 		setModalVisible(false)

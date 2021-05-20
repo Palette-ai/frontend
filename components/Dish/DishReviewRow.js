@@ -1,22 +1,12 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
-import firebase from 'firebase/app';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import React from 'react';
 import {
 	View,
 	StyleSheet,
-	TextInput,
-	Image,
-	TouchableWithoutFeedback,
-	ScrollView,
-	Keyboard,
 	Text,
 } from 'react-native';
-import { sushi, back_arrow } from '../../assets';
-import { Col, Row, Grid } from "react-native-easy-grid"
-import { Icon, Button, Card, Modal } from '@ui-kitten/components';
+import { Col, Row } from "react-native-easy-grid"
+import { Icon } from '@ui-kitten/components';
 import StarRating from 'react-native-star-rating';
-
 import TimeAgo from 'react-native-timeago';
 
 function DishReviewRow({ dishRatings }) {
@@ -51,7 +41,7 @@ function DishReviewRow({ dishRatings }) {
 								<Text style={styles.review_text}>{`${dr.review}`}</Text>
 							</View>
 							<View>
-								<TimeAgo time={dr.createdAt} interval={2000}/>
+								<TimeAgo time={dr.createdAt} interval={2000} />
 							</View>
 						</View>
 					</Row>

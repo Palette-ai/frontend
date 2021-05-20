@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, SafeAreaView, ScrollView, TouchableOpacity, Button } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { useQuery } from '@apollo/client';
 import MapView, { Marker } from 'react-native-maps';
 import { GET_RESTAURANT_BY_ID } from '../queries/restaurants';

@@ -31,9 +31,7 @@ function ForgotPass() {
 			onPress={createTwoButtonAlert}
 			title={"Change Password"}
 		>
-
 		</Button>
-
 	)
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-export default function LoginButton({ onSubmit, name, password, placeholder, email }) {
+export default function LoginButton({ onSubmit, password, placeholder, email }) {
 	return (
 		<View style={styles.loginButton}>
 			<TouchableOpacity

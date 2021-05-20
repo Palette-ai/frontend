@@ -1,5 +1,5 @@
 import { Alert } from 'react-native'
-const LoginError = (error, loginType) => {
+const LoginError = (error) => {
 	Alert.alert(
 		`${error}`,
 		""

@@ -1,21 +1,11 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
-import firebase from 'firebase/app';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import React from 'react';
 import {
 	View,
 	StyleSheet,
-	TextInput,
-	Image,
-	TouchableWithoutFeedback,
-	ScrollView,
-	Keyboard,
 	Text,
 	TouchableOpacity
 } from 'react-native';
-import { sushi, back_arrow } from '../../assets';
-import { Col, Row, Grid } from "react-native-easy-grid"
-import { Icon, Button, Card, Modal } from '@ui-kitten/components';
+import { Col, Row } from "react-native-easy-grid"
 import StarRating from 'react-native-star-rating';
 import TimeAgo from 'react-native-timeago';
 
@@ -25,9 +15,9 @@ function DishReviewRowProfile({ dishRatings, setRatingID, setRating, setReview, 
 			<Col>
 				{dishRatings?.map((dr) => (
 					<TouchableOpacity
-								activeOpacit={0.1}
-								onPress={() => {setRatingID(dr._id); setRating(dr.rating); setDishID(dr.dish_id); setReview(dr.review); setModalVisible(true); }}
-								key={dr._id}
+						activeOpacit={0.1}
+						onPress={() => { setRatingID(dr._id); setRating(dr.rating); setDishID(dr.dish_id); setReview(dr.review); setModalVisible(true); }}
+						key={dr._id}
 					>
 						<Row key={dr._id} style={styles.rect2}>
 							<View style={styles.reviewHolder}>
@@ -49,7 +39,7 @@ function DishReviewRowProfile({ dishRatings, setRatingID, setRating, setReview, 
 									<Text style={styles.review_text}>{`${dr.review}`}</Text>
 								</View>
 								<View>
-									<TimeAgo time={dr.createdAt} interval={2000}/>
+									<TimeAgo time={dr.createdAt} interval={2000} />
 								</View>
 							</View>
 						</Row>

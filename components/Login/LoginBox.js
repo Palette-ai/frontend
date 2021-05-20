@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import {
 	StyleSheet,
 	View,
-	Text,
-	TouchableOpacity,
 	KeyboardAvoidingView,
 	Platform
 } from "react-native";
@@ -55,7 +53,6 @@ function LoginBox() {
 		firebase.auth().signInWithEmailAndPassword(email, password)
 			.then((userCredential) => {
 				// Signed in
-				console.log(userCredential.user)
 			})
 			.catch((error) => LoginError(error, "logging in"))
 	}
