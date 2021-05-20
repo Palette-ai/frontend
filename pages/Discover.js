@@ -14,7 +14,7 @@ import axios from 'axios'
 
 import { GET_SOME_DISHES } from '../queries/dishes';
 import { USER_LIKED_DISHES } from '../queries/users';
-import Search from '../components/Discover/Search'
+import Title from '../components/Discover/Title'
 import DishCard from '../components/Discover/DishCard';
 
 
@@ -55,21 +55,22 @@ const Discover = ({ navigation }) => {
 		}
 	}, [likedData])
 
-	if (loading || userIDString === null || data == undefined) return <View syle={styles.container}>
-		<Search />
-		<View style={styles.item_container}>
-			<LottieView
-				autoPlay
-				loop
-				source={require('../styles/l.json')}
-				style={styles.animationContainer}
-			/>
-		</View>
-	</View>
+	if (loading || userIDString === null || data == undefined) return (
+		<View>
+			<Title text={'Recommendations'} />
+			<View style={styles.item_container}>
+				<LottieView
+					autoPlay
+					loop
+					source={require('../styles/l.json')}
+					style={styles.animationContainer}
+				/>
+			</View>
+		</View>)
 	if (error) return <Text>Not good why did it break...</Text>
 	if (data) return (
-		<View>
-			<Search />
+		<View style={{ backgroundColor: '#FDFCFC' }}>
+			<Title text={'Recommendations'} />
 			<View style={styles.item_container}>
 				<ScrollView showsVerticalScrollIndicator={false} marginBottom={'63%'}>
 					{data.dishByIds.map(dish => (
