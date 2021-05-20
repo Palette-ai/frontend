@@ -17,6 +17,7 @@ import mongoose from 'mongoose';
 
 const DishCard = ({ dish, userID, likedSet }) => {
 	const [liked, setLiked] = useState(false)
+	const [currentFont, setCurrentFont] = useState(24);
 	useEffect(() => {
 		setLiked(likedSet !== undefined && likedSet.size !== 0 && likedSet.has(dish._id) ? true : false)
 	}, [likedSet])
@@ -106,16 +107,31 @@ const DishCard = ({ dish, userID, likedSet }) => {
 				</Col>
 				<Col>
 					<Col>
-						<Text style={styles.dish_name}>{dish.dish_name}</Text>
-						<Button
-							accessoryLeft={HeartIcon}
-							appearance={liked ? 'filled' : 'outline'}
-							size={'giant'}
-							onPress={overallHandler}
-							style={styles.likeButton}
-						/>
-						<Text style={styles.res_name}>{dish.restaurant.name}</Text>
-						{numDollars(dish.price)}
+						<Row style={{alignItems: 'center'}}>
+							<Text 
+								numberOfLines={3}
+								adjustsFontSizeToFit
+								style={styles.dish_name}
+								// onTextLayout={ (e) => {
+								// 	const { lines } = e.nativeEvent;
+								// 	if (lines.length > 3) {
+								// 		setCurrentFont(currentFont - 1);
+								// 	}
+								// } }
+							>
+								{dish.dish_name}
+							</Text>
+							<Button
+								accessoryLeft={HeartIcon}
+								appearance={liked ? 'filled' : 'outline'}
+								size={'giant'}
+								onPress={overallHandler}
+								style={styles.likeButton}
+							/>
+						</Row>
+						{/* <Row> */}
+							<Text style={styles.res_name}>{dish.restaurant.name}</Text>
+						{/* </Row> */}
 					</Col>
 					<Row size={.25} style={styles.row_reverse}>
 						{/* <Col style={styles.staridk}> */}
@@ -133,6 +149,8 @@ const DishCard = ({ dish, userID, likedSet }) => {
 						<Text style={styles.rating}>
 							{String(dish.average_rating)}
 						</Text>
+						{/* </Col> */}
+						{numDollars(dish.price)}
 					</Row>
 				</Col>
 			</Grid>
@@ -168,10 +186,12 @@ const styles = StyleSheet.create({
 	dish_name: {
 		fontSize: 24,
 		flexWrap: 'wrap',
-		flex: 3
+		flex: 3,
+		fontWeight: 'bold',
 	},
-	rest_name: {
-		fontSize: 32,
+	res_name: {
+		// fontSize: 32,
+		marginBottom: '1%',
 	},
 	rating: {
 		fontSize: 24,
