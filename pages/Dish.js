@@ -3,9 +3,10 @@ import { useMutation, useQuery } from '@apollo/client';
 import firebase from 'firebase/app';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { DISH_ADD_RATING, GET_DISH_RATINGS } from '../queries/dishes';
-import { View, 
-	StyleSheet,  
-	TextInput, 
+import {
+	View,
+	StyleSheet,
+	TextInput,
 	Image,
 	TouchableWithoutFeedback,
 	ScrollView,
@@ -32,9 +33,8 @@ function Dish({ route }) {
 			sort: '_ID_DESC'
 		},
 	})
-	// console.log(dish._id)
 
-	// Memor izes dishRatings and is updated when the dishRating Query is reran
+	// Memoizes dishRatings and is updated when the dishRating Query is reran
 	useMemo(() => {
 		if (data) setDishRatings(data.dishRatingMany)
 	}, [data])
@@ -65,7 +65,7 @@ function Dish({ route }) {
 							<Row style={styles.dish_container}>
 								<Text style={styles.dish_description_container}>{dish.description}</Text>
 								<Button
-									onPress={() => navigation.navigate('Restaurant', { r: dish.restaurant._id, navigation })}
+									onPress={() => navigation.navigate('Restaurant', { r: dish.restaurant, navigation })}
 									style={styles.add_review_btn}
 								>
 									{dish.restaurant.name}
@@ -73,7 +73,7 @@ function Dish({ route }) {
 
 								<Button style={styles.add_review_btn} onPress={() => setOptionsModalVisible(true)}>
 									Order
-      					</Button>
+      							</Button>
 							</Row>
 						</Col>
 					</Row>
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
 		zIndex: 2,
 		marginBottom: '5%'
 	},
-	review_title: { 
+	review_title: {
 		fontSize: 28,
 		color: '#fff',
 		paddingTop: 0,
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
 	},
 	review_text: {
 		color: '#fff',
-	 },
+	},
 	add_review_btn: {
 		marginRight: '10%',
 		marginBottom: '5%',

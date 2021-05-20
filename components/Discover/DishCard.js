@@ -117,20 +117,6 @@ const DishCard = ({ dish, userID, likedSet }) => {
 						<Text style={styles.res_name}>{dish.restaurant.name}</Text>
 						{numDollars(dish.price)}
 					</Col>
-					{/* <Col size={1}>
-						<Row style={styles.row_reverse}>
-							<Image source={organic} />
-							<Image source={hot} />
-						</Row>
-						<Row style={styles.row_reverse}>
-							<Image source={organic} />
-							<Image source={hot} />
-						</Row>
-						<Row style={styles.row_reverse}>
-							<View style={styles.score_circle} />
-						</Row>
-					</Col> */}
-					{/* <Col> */}
 					<Row size={.25} style={styles.row_reverse}>
 						{/* <Col style={styles.staridk}> */}
 						<StarRating
@@ -144,15 +130,10 @@ const DishCard = ({ dish, userID, likedSet }) => {
 							reversed={true}
 							style={styles.staridk}
 						/>
-						{/* </Col> */}
-						{/* <Col> */}
 						<Text style={styles.rating}>
 							{String(dish.average_rating)}
 						</Text>
-						{/* </Col> */}
-
 					</Row>
-					{/* </Col> */}
 				</Col>
 			</Grid>
 		</View>
@@ -161,10 +142,10 @@ const DishCard = ({ dish, userID, likedSet }) => {
 
 const styles = StyleSheet.create({
 	rect2: {
-		width: 350,
+		width: 400,
 		height: 150,
 		backgroundColor: "#F3F3F3",
-		marginTop: 25,
+		marginTop: 17,
 		borderRadius: 30,
 	},
 	food_pic: {
