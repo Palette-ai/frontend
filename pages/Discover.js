@@ -13,6 +13,7 @@ import mongoose from 'mongoose';
 import LottieView from 'lottie-react-native';
 
 import { GET_ALL_DISHES, GET_SOME_DISHES } from '../queries/dishes';
+import { USER_LIKED_DISHES } from '../queries/users';
 
 
 import Search from '../components/Discover/Search'
@@ -54,7 +55,7 @@ const Discover = ({ navigation }) => {
 	}, [likedData])
 	//if (likedSet.size !== 0) console.log(likedSet);
 
-	if (loading || userIDString === null || data == undefined) return <View syle={styles.container}>
+	if (loading || userIDString === null || data == undefined) return <View style={styles.container}>
 		{/* TODO: Replace search UI with search and filter functionality */}
 		<Search />
 		<View style={styles.item_container}>
@@ -68,26 +69,6 @@ const Discover = ({ navigation }) => {
 	</View>
 	if (error) return <Text>Not good why did it break...</Text>
 	if (data) return (
-		<View syle={styles.container}>
-			{/* TODO: Replace search UI with search and filter functionality */}
-			<Search />
-			<View style={styles.item_container}>
-				<ScrollView showsVerticalScrollIndicator={false} marginBottom={'63%'}>
-					{data.dishByIds.map(dish => (
-						<TouchableOpacity
-							activeOpacit={0.1}
-							onPress={() => navigation.navigate('Dish', { dish, navigation })}
-							key={dish._id}
-						>
-							<DishCard dish={dish} />
-						</TouchableOpacity>
-					))}
-				</ScrollView>
-			</View>
-		</View>
-		:
-		// Data successfully loaded
-		(
 			<View syle={styles.container}>
 				{/* TODO: Replace search UI with search and filter functionality */}
 				<Search />

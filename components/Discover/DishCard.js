@@ -58,6 +58,44 @@ const DishCard = ({ dish, userID, likedSet }) => {
 			})
 	}
 
+	const numDollars = (price) => {
+		const roundPrice = Math.ceil(price)
+		if (price < 10) {
+			return (
+				<Row>
+					<Image source={dollar_sign} />
+				</Row>
+			)
+		}
+		else if (price < 20) {
+			return (
+				<Row>
+					<Image source={dollar_sign} />
+					<Image source={dollar_sign} />
+				</Row>
+			)
+		}
+		else if (price < 30) {
+			return (
+				<Row>
+					<Image source={dollar_sign} />
+					<Image source={dollar_sign} />
+					<Image source={dollar_sign} />
+				</Row>
+			)
+		}
+		else {
+			return (
+				<Row>
+					<Image source={dollar_sign} />
+					<Image source={dollar_sign} />
+					<Image source={dollar_sign} />
+					<Image source={dollar_sign} />
+				</Row>
+			)
+		}
+	}
+
 	return (
 		<View style={styles.rect2}>
 			<Grid>
@@ -77,11 +115,7 @@ const DishCard = ({ dish, userID, likedSet }) => {
 							style={styles.likeButton}
 						/>
 						<Text style={styles.res_name}>{dish.restaurant.name}</Text>
-						<Row>
-							<Image source={dollar_sign} />
-							<Image source={dollar_sign} />
-							<Image source={dollar_sign} />
-						</Row>
+						{numDollars(dish.price)}
 					</Col>
 					{/* <Col size={1}>
 						<Row style={styles.row_reverse}>
