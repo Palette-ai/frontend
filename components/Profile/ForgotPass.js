@@ -29,7 +29,7 @@ function ForgotPass() {
 	return (
 		<Button
 			onPress={createTwoButtonAlert}
-			title={"Forgot you Password?"}
+			title={"Change Password"}
 		>
 
 		</Button>
