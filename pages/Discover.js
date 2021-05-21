@@ -49,12 +49,15 @@ const Discover = ({ navigation }) => {
 		return () => clearTimeout(waitUntilIDIsInFirebase)
 	}, [userIDString, data])
 
+
+
 	useEffect(() => {
 		if (likedData !== undefined && !likedLoading) {
 			setLikedSet(new Set(likedData.userById.liked_dishes.map(dish => String(dish))))
 		}
 	}, [likedData])
 
+	if (error) return <Text>Discover had trouble loading, whoopsy...</Text>
 	if (loading || userIDString === null || data == undefined) return (
 		<View>
 			<Title text={'Recommendations'} />
@@ -67,7 +70,7 @@ const Discover = ({ navigation }) => {
 				/>
 			</View>
 		</View>)
-	if (error) return <Text>Not good why did it break...</Text>
+	// if (data) console.log("discover data", data.dishByIds[0])
 	if (data) return (
 		<View style={{ backgroundColor: '#FDFCFC' }}>
 			<Title text={'Recommendations'} />
@@ -76,13 +79,14 @@ const Discover = ({ navigation }) => {
 					{data.dishByIds.map(dish => (
 						<TouchableOpacity
 							activeOpacity={0.1}
-							onPress={() => navigation.navigate('Dish', { dish, navigation })}
+							onPress={() => navigation.navigate('Dish', { dish })}
 							key={dish._id}
 						>
 							<DishCard
 								dish={dish}
 								userID={userIDString}
 								likedSet={likedSet}
+								key={dish._id}
 							/>
 						</TouchableOpacity>
 					))}
@@ -109,18 +113,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		height: '100%',
-		backgroundColor: '#FDFCFC',
-	},
-	score_circle: {
-		borderRadius: 100,
-		width: 40,
-		height: 40,
-		backgroundColor: '#F7B300',
-	},
-	footer_container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
 		backgroundColor: '#FDFCFC',
 	}
 });

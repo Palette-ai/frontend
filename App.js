@@ -18,7 +18,7 @@ export default function App() {
   firebaseInit()
   const auth = firebase.auth()
   const [user] = useAuthState(auth)
-  LogBox.ignoreAllLogs();
+  LogBox.ignoreAllLogs()
   return (
     <ApolloProvider client={client}>
       <IconRegistry icons={EvaIconsPack} />

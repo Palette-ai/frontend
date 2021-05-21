@@ -55,9 +55,10 @@ const DishCard = ({ dish, userID, likedSet }) => {
 
 	const numDollars = (price) => {
 		const roundPrice = Math.ceil(price / 10) + 1
+		// Need to key for react children problem, but not sure how to fix it...
 		const dollarSigns = roundPrice <= 5 ?
-			new Array(roundPrice).fill(<Image source={dollar_sign} />) :
-			new Array(5).fill(<Image source={dollar_sign} />)
+			new Array(roundPrice).fill(null).map(() => <Image source={dollar_sign} key={Math.random()} />) :
+			new Array(5).fill(null).map(() => <Image source={dollar_sign} key={Math.random()} />)
 		return <Row>{dollarSigns}</Row>
 	}
 
@@ -71,7 +72,7 @@ const DishCard = ({ dish, userID, likedSet }) => {
 				</Col>
 				<Col>
 					<Col>
-						<Row style={{ alignItems: 'center' }}>
+						<Row style={{ alignItems: 'flex-start', paddingTop: 15, paddingLeft: 10 }}>
 							<Text
 								numberOfLines={3}
 								adjustsFontSizeToFit
@@ -94,7 +95,7 @@ const DishCard = ({ dish, userID, likedSet }) => {
 							disabled={true}
 							maxStars={1}
 							rating={1}
-							fullStarColor={'blue'}
+							fullStarColor={'red'}
 							starSize={22}
 							emptyStarColor={'#ffffff'}
 							reversed={true}
@@ -144,6 +145,7 @@ const styles = StyleSheet.create({
 	},
 	res_name: {
 		marginBottom: '1%',
+		paddingLeft: 10
 	},
 	rating: {
 		fontSize: 24,
@@ -154,6 +156,7 @@ const styles = StyleSheet.create({
 		marginLeft: 10,
 		paddingLeft: 10,
 		justifyContent: 'flex-start',
+		paddingRight: 10
 	},
 	staridk: {
 		marginRight: '5%'

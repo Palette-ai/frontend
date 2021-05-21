@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { useQuery } from '@apollo/client';
 import MapView, { Marker } from 'react-native-maps';
-import { GET_RESTAURANT_BY_ID } from '../queries/restaurants';
+
 import { useLazyQuery } from '@apollo/client';
 import firebase from 'firebase/app';
 
 import { GET_DISHES_RESTAURANT } from '../queries/dishes';
 import DishCard from '../components/Discover/DishCard';
 import { USER_LIKED_DISHES } from '../queries/users';
+import { GET_RESTAURANT_BY_ID } from '../queries/restaurants';
 
-function Restaurant({ route }) {
+function Restaurant({ route, navigation }) {
 	// Get list of dishes that the user has liked
 	const [getLikedDishes, { loading: likedLoading, error: likedError, data: likedData }] = useLazyQuery(USER_LIKED_DISHES)
 	const [likedSet, setLikedSet] = useState(new Set())
@@ -26,8 +27,8 @@ function Restaurant({ route }) {
 		}
 	}, [likedData])
 
-	const { r, navigation } = route.params
-	const { loading, error, data, refetch } = useQuery(GET_RESTAURANT_BY_ID, {
+	const { r } = route.params
+	const { loading, error, data } = useQuery(GET_RESTAURANT_BY_ID, {
 		variables: {
 			_id: r._id
 		},
@@ -42,6 +43,7 @@ function Restaurant({ route }) {
 
 	if (loading) return <Text> Loading... </Text>
 	if (error) return <Text>{error}</Text>
+	// if (restData) console.log("Dish on Rest Page", restData.dishMany[8])
 	return (
 		<SafeAreaView style={styles.container}>
 			<MapView
@@ -71,9 +73,10 @@ function Restaurant({ route }) {
 				<Text style={styles.dish_discription}>{data.restaurantById.description}</Text>
 				<ScrollView>
 					{!restLoading && !restError && restData.dishMany.map(dish => (
+						// Key error cause dishes with the same keys also load on the discover page... Not sure how to fix
 						<TouchableOpacity
 							activeOpacity={0.1}
-							onPress={() => navigation.navigate('Dish', { dish, navigation })}
+							onPress={() => navigation.navigate('Dish', { dish: dish })}
 							key={dish._id}
 						>
 							<DishCard
@@ -84,7 +87,6 @@ function Restaurant({ route }) {
 						</TouchableOpacity>
 					))}
 				</ScrollView>
-
 			</View>
 		</SafeAreaView>
 	);
