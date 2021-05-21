@@ -3,21 +3,24 @@ import { useQuery } from '@apollo/client';
 import { GET_DISH_RATINGS } from '../queries/dishes';
 import {
 	View,
+	Text,
 	StyleSheet,
 	Image,
 	TouchableWithoutFeedback,
 	ScrollView,
-	Text,
 } from 'react-native';
 import { sushi, back_arrow } from '../assets';
+import firebase from 'firebase/app'
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { Button } from '@ui-kitten/components';
+
 import OptionsModal from '../components/Dish/OptionsModal';
 import DishReviewRow from '../components/Dish/DishReviewRow';
 import AddDishRatingModal from '../components/Dish/AddDishRatingModal';
 
-function Dish({ route }) {
-	const { dish, navigation } = route.params
+function Dish({ route, navigation }) {
+	const { dish } = route.params
+	// console.log("dish on Dish Page", dish)
 
 	const [dishRatings, setDishRatings] = useState('')
 	const [isModalVisible, setModalVisible] = useState('');
@@ -34,8 +37,6 @@ function Dish({ route }) {
 		},
 	})
 
-
-
 	// Memoizes dishRatings and is updated when the dishRating Query is reran
 	useMemo(() => {
 		if (data) {
@@ -43,7 +44,6 @@ function Dish({ route }) {
 			let reviewIds = data.dishRatingMany.map(a => a.user._id)
 			reviewIds.includes(userIDString) ? setMadeReview(true) : setMadeReview(false)
 		}
-		
 	}, [data])
 
 	if (loading) return <Text>Loading...</Text>
@@ -72,12 +72,11 @@ function Dish({ route }) {
 							<Row style={styles.dish_container}>
 								<Text style={styles.dish_description_container}>{dish.description}</Text>
 								<Button
-									onPress={() => navigation.navigate('Restaurant', { r: dish.restaurant, navigation })}
+									onPress={() => navigation.navigate('Restaurant', { r: dish.restaurant })}
 									style={styles.add_review_btn}
 								>
 									{dish.restaurant.name}
 								</Button>
-
 								<Button style={styles.add_review_btn} onPress={() => setOptionsModalVisible(true)}>
 									Order
       							</Button>
@@ -94,7 +93,7 @@ function Dish({ route }) {
 								<Text style={styles.review_title}>Reviews</Text>
 							</Col>
 							<Col>
-								<Button 
+								<Button
 									style={styles.add_review_btn}
 									onPress={() => setModalVisible(true)}
 									disabled={madeReview}>
@@ -117,6 +116,7 @@ function Dish({ route }) {
 			<OptionsModal
 				isModalVisible={isOptionsModalVisible}
 				setModalVisible={setOptionsModalVisible}
+				dish={dish}
 			/>
 		</View>
 	);
@@ -137,15 +137,11 @@ const styles = StyleSheet.create({
 		shadowOpacity: 3,
 		shadowRadius: 4,
 		paddingLeft: '10%',
-		// paddingTop: '10%',
 		paddingRight: '10%',
 	},
 	food_pic: {
-		// marginTop: '15%',
-		// marginLeft: '10%',
 		borderRadius: 30,
 		height: '100%',
-		// paddingTop: '80%',
 		width: '100%',
 		zIndex: 2,
 	},
@@ -158,7 +154,6 @@ const styles = StyleSheet.create({
 		borderTopRightRadius: 30,
 		zIndex: -1,
 		marginTop: '5%',
-		// borderWidth: 1,
 	},
 	dish_name: {
 		fontSize: 28,

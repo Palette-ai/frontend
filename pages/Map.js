@@ -36,7 +36,7 @@ const Map = ({ navigation }) => {
 						description={r.phone_number}
 					>
 						<Callout
-							onPress={() => navigation.navigate('Restaurant', { r, navigation })}
+							onPress={() => navigation.navigate('Restaurant', { r })}
 						>
 							<View>
 								<Text>{r.name}</Text>
