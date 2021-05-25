@@ -12,6 +12,7 @@ import mongoose from 'mongoose';
 import LottieView from 'lottie-react-native';
 import axios from 'axios'
 
+import Error from '../components/Error'
 import { GET_SOME_DISHES } from '../queries/dishes';
 import { USER_LIKED_DISHES } from '../queries/users';
 import Title from '../components/Discover/Title'
@@ -70,18 +71,16 @@ const Discover = ({ navigation }) => {
 		}
 	}, [likedData])
 
-	if (error) return <Text>Discover had trouble loading, whoopsy...</Text>
+	if (error) return <Error />
 	if (loading || userIDString === null || dishRecThings == '') return (
-		<View>
+		<View style={{ backgroundColor: '#FDFCFC', height: '100%', }}>
 			<Title text={'Recommendations'} />
-			<View style={styles.item_container}>
-				<LottieView
-					autoPlay
-					loop
-					source={require('../styles/l.json')}
-					style={styles.animationContainer}
-				/>
-			</View>
+			<LottieView
+				autoPlay
+				loop
+				source={require('../styles/l.json')}
+				style={styles.animationContainer}
+			/>
 		</View>)
 	if (dishRecThings) return (
 		<View style={{ backgroundColor: '#FDFCFC', height: '100%' }}>
@@ -110,7 +109,6 @@ const Discover = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 	animationContainer: {
-		marginTop: -90,
 		alignItems: "flex-start",
 		justifyContent: 'flex-start',
 		flex: 1,

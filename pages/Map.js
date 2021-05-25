@@ -6,12 +6,13 @@ import { useQuery } from '@apollo/client';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { ScrollView } from 'react-native-gesture-handler';
 
+import Error from '../components/Error'
+
 const Map = ({ navigation }) => {
 
 	const { loading, error, data } = useQuery(GET_ALL_RESTAURANTS)
 	if (loading) return <Text> Loading... </Text>
-	if (error) return <Text>{error}</Text>
-
+	if (error) return <Error />
 	return (
 		<View style={styles.container}>
 			<MapView

@@ -16,7 +16,6 @@ import Title from '../components/Discover/Title';
 function Search({ navigation }) {
 	const [searchTerm, setSearchTerm] = useState('')
 	const [toggle, setToggle] = useState('')
-
 	return (
 		<View style={styles.container}>
 			<Title text={'Search'} />

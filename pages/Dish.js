@@ -14,6 +14,7 @@ import firebase from 'firebase/app'
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { Button } from '@ui-kitten/components';
 
+import Error from '../components/Error'
 import OptionsModal from '../components/Dish/OptionsModal';
 import DishReviewRow from '../components/Dish/DishReviewRow';
 import AddDishRatingModal from '../components/Dish/AddDishRatingModal';
@@ -46,7 +47,7 @@ function Dish({ route, navigation }) {
 	}, [data])
 
 	if (loading) return <Text>Loading...</Text>
-	if (error) return <Text>Ratings had trouble loading, whoopsy...</Text>
+	if (error) return <Error />
 	return (
 		<View style={styles.container}>
 			<View style={styles.item_container}>
