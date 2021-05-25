@@ -47,12 +47,12 @@ function Restaurant({ route, navigation }) {
 	return (
 		<SafeAreaView style={styles.container}>
 			<TouchableWithoutFeedback onPress={() => navigation.goBack()} style={{ backgroundColor: 'red' }}>
-				<View style={{ backgroundColor: 'rgba(52, 52, 52, 0)' }}>
-					<Image source={back_arrow} style={{ backgroundColor: 'rgba(52, 52, 52, 0)' }} />
+				<View style={{ backgroundColor: 'rgba(0, 0, 0, 0)', height: 0}}>
+					<Image source={back_arrow} style={{ backgroundColor: 'rgba(0, 0, 0, 0)', marginTop: '2%', zIndex: 90909090909 }} />
 				</View>
 			</TouchableWithoutFeedback>
 			<MapView
-				style={{ flex: 1 }}
+				style={{ flex: 1, zIndex: -1 }}
 				provider={'google'}
 				showsUserLocation={true}
 				initialRegion={{
