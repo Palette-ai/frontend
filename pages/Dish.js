@@ -9,7 +9,7 @@ import {
 	TouchableWithoutFeedback,
 	ScrollView,
 } from 'react-native';
-import { sushi, back_arrow } from '../assets';
+import { back_arrow } from '../assets';
 import firebase from 'firebase/app'
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { Button } from '@ui-kitten/components';
@@ -65,7 +65,7 @@ function Dish({ route, navigation }) {
 					<Row style={styles.dish_other_stuff}>
 						<Col>
 							<View style={styles.shadow_box}>
-								<Image source={sushi} style={styles.food_pic} />
+								<Image source={{ uri: dish.img }} style={styles.food_pic} />
 							</View>
 						</Col>
 						<Col>
@@ -112,6 +112,7 @@ function Dish({ route, navigation }) {
 				setModalVisible={setModalVisible}
 				dish_id={dish._id}
 				refetchAllRatings={refetch}
+				style={styles.modal}
 			/>
 			<OptionsModal
 				isModalVisible={isOptionsModalVisible}
@@ -126,6 +127,11 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#FFFFFF',
+	},
+	modal: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center'
 	},
 	back_arrow: {
 		marginTop: '10%',
@@ -162,7 +168,6 @@ const styles = StyleSheet.create({
 	dish_name_container: {
 		margin: 0,
 		padding: 0,
-		// borderWidth: 1,
 		flexWrap: 'wrap',
 		alignItems: 'center'
 
@@ -173,14 +178,12 @@ const styles = StyleSheet.create({
 	item_container: {
 		flex: 1,
 		height: '30%',
-		// marginBottom: '50%',
 	},
 	review_item: {
 		marginTop: '5%',
 		marginLeft: '5%'
 	},
 	dish_container: {
-		// marginTop: '15%',
 		width: '90%',
 		flexWrap: 'wrap'
 	},

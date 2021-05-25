@@ -27,12 +27,11 @@ const LikedDishes = ({ navigation }) => {
 
 	if (loading) return <Text style={styles.standby}>Loading...</Text>
 	if (error) return <Text style={styles.standby}>Houston we have a problem</Text>
-
 	return (
-		<View syle={styles.container}>
+		<View style={styles.container}>
 			<Title text={"Liked Dishes"} />
 			<View style={styles.item_container}>
-				<ScrollView marginBottom={'70%'} showsVerticalScrollIndicator={false} refreshControl={
+				<ScrollView marginBottom={'28%'} style={{ height: '100%' }} showsVerticalScrollIndicator={false} refreshControl={
 					<RefreshControl
 						refreshing={refreshing}
 						onRefresh={() => refetch()}
@@ -50,7 +49,7 @@ const LikedDishes = ({ navigation }) => {
 						) :
 						data.userById.likes.map(dish => (
 							<TouchableOpacity
-								activeOpacit={0.1}
+								activeOpacity={0.1}
 								onPress={() => navigation.navigate('Dish', { dish, navigation })}
 								key={dish._id}
 							>
@@ -70,8 +69,6 @@ const LikedDishes = ({ navigation }) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
 		backgroundColor: '#FDFCFC',
 	},
 	item_container: {

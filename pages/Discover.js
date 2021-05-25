@@ -49,7 +49,7 @@ const Discover = ({ navigation }) => {
 			.catch(e => {
 				console.log(e)
 			})
-		
+
 		return () => clearTimeout(waitUntilIDIsInFirebase)
 	}, [userIDString, data])
 
@@ -57,7 +57,7 @@ const Discover = ({ navigation }) => {
 		if (data !== undefined && recBois !== undefined && !loading && !error) {
 			// console.log("do you fucking work", data.dishByIds)
 			setDishRecThings(
-				data.dishByIds.slice().sort((a,b) => {
+				data.dishByIds.slice().sort((a, b) => {
 					return recBois.indexOf(a._id) - recBois.indexOf(b._id)
 				})
 			)
@@ -88,7 +88,7 @@ const Discover = ({ navigation }) => {
 		<View style={{ backgroundColor: '#FDFCFC' }}>
 			<Title text={'Recommendations'} />
 			<View style={styles.item_container}>
-				<ScrollView showsVerticalScrollIndicator={false} marginBottom={'63%'}>
+				<ScrollView showsVerticalScrollIndicator={false} marginBottom={'56%'} style={{ height: '100%' }}>
 					{dishRecThings.map(dish => (
 						<TouchableOpacity
 							activeOpacity={0.1}
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
 	item_container: {
 		justifyContent: 'center',
 		alignItems: 'center',
-		height: '100%',
+
 		backgroundColor: '#FDFCFC',
 	}
 });

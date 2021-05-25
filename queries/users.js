@@ -32,7 +32,7 @@ export const USER_LIKES = gql`
 	query ($_id: MongoID!) {
 		userById(_id: $_id){
 			_id
-			likes { dish_name, average_rating, description, _id, price, restaurant { name } }
+			likes { dish_name, average_rating, description, _id, price, restaurant { name } img }
 		}
 	}
 `
