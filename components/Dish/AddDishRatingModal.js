@@ -65,8 +65,6 @@ function AddDishRatingModal({ isModalVisible, setModalVisible, dish_id, refetchA
 						fullStarColor={'#43474A'}
 					/>
 				</Row>
-				<Row>
-				</Row>
 				<Button title="Add Review" onPress={addDishRatingHandler}>
 					Add Review
           		</Button>
@@ -76,10 +74,12 @@ function AddDishRatingModal({ isModalVisible, setModalVisible, dish_id, refetchA
 }
 
 const styles = StyleSheet.create({
-	container: {},
 	backdrop: {
 		backgroundColor: 'rgba(0, 0, 0, 0.5)',
-
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 500
 	},
 });
 

@@ -8,7 +8,7 @@ import {
 import { useMutation } from '@apollo/client';
 import StarRating from 'react-native-star-rating';
 import { Col, Row, Grid } from "react-native-easy-grid"
-import { sushi, dollar_sign } from '../../assets'
+import { dollar_sign } from '../../assets'
 import { Button, Icon } from '@ui-kitten/components'
 import { USER_LIKE_DISH, USER_UNLIKE_DISH } from '../../queries/users';
 
@@ -70,7 +70,9 @@ const DishCard = ({ dish, userID, likedSet }) => {
 			<Grid>
 				<Col size={.75}>
 					<View style={styles.shadow_box}>
-						<Image source={sushi} style={styles.food_pic} />
+						<Image source={{
+							uri: dish.img,
+						}} style={styles.food_pic} />
 					</View>
 				</Col>
 				<Col>
@@ -122,6 +124,10 @@ const styles = StyleSheet.create({
 		backgroundColor: "#F3F3F3",
 		marginTop: 17,
 		borderRadius: 30,
+		shadowColor: '#40404040',
+		shadowOffset: { width: 1, height: 3 },
+		shadowOpacity: 3,
+		shadowRadius: 2,
 	},
 	food_pic: {
 		borderBottomLeftRadius: 30,
@@ -133,12 +139,6 @@ const styles = StyleSheet.create({
 		backgroundColor: "#B0B0B000",
 		borderWidth: 0,
 		color: 'red'
-	},
-	shadow_box: {
-		shadowColor: '#40404040',
-		shadowOffset: { width: -1, height: 2 },
-		shadowOpacity: 4,
-		shadowRadius: 1,
 	},
 	dish_name: {
 		fontSize: 24,
