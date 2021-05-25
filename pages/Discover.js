@@ -20,6 +20,8 @@ import DishCard from '../components/Discover/DishCard';
 
 const Discover = ({ navigation }) => {
 	const [getDishes, { loading, data, error }] = useLazyQuery(GET_SOME_DISHES)
+	const [recBois, setRecBois] = useState('')
+	const [dishRecThings, setDishRecThings] = useState('')
 	const [userIDString, setuserIDString] = useState(firebase.auth().currentUser.photoURL)
 
 	// Get list of dishes that the user has liked
@@ -32,6 +34,7 @@ const Discover = ({ navigation }) => {
 			user_id: userIDString
 		})
 			.then(res => {
+				setRecBois(res.data)
 				getDishes({
 					variables: {
 						_ids: res.data.map(d => mongoose.Types.ObjectId(d))
@@ -46,10 +49,21 @@ const Discover = ({ navigation }) => {
 			.catch(e => {
 				console.log(e)
 			})
+		
 		return () => clearTimeout(waitUntilIDIsInFirebase)
 	}, [userIDString, data])
 
-
+	useEffect(() => {
+		if (data !== undefined && recBois !== undefined && !loading && !error) {
+			// console.log("do you fucking work", data.dishByIds)
+			setDishRecThings(
+				data.dishByIds.slice().sort((a,b) => {
+					return recBois.indexOf(a._id) - recBois.indexOf(b._id)
+				})
+			)
+			console.log("trash", dishRecThings)
+		}
+	}, [data])
 
 	useEffect(() => {
 		if (likedData !== undefined && !likedLoading) {
@@ -58,7 +72,7 @@ const Discover = ({ navigation }) => {
 	}, [likedData])
 
 	if (error) return <Text>Discover had trouble loading, whoopsy...</Text>
-	if (loading || userIDString === null || data == undefined) return (
+	if (loading || userIDString === null || dishRecThings == '') return (
 		<View>
 			<Title text={'Recommendations'} />
 			<View style={styles.item_container}>
@@ -70,13 +84,12 @@ const Discover = ({ navigation }) => {
 				/>
 			</View>
 		</View>)
-	// if (data) console.log("discover data", data.dishByIds[0])
-	if (data) return (
+	if (dishRecThings) return (
 		<View style={{ backgroundColor: '#FDFCFC' }}>
 			<Title text={'Recommendations'} />
 			<View style={styles.item_container}>
 				<ScrollView showsVerticalScrollIndicator={false} marginBottom={'63%'}>
-					{data.dishByIds.map(dish => (
+					{dishRecThings.map(dish => (
 						<TouchableOpacity
 							activeOpacity={0.1}
 							onPress={() => navigation.navigate('Dish', { dish })}
