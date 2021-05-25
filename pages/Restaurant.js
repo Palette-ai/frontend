@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Image } from 'react-native';
 import { useQuery } from '@apollo/client';
 import MapView, { Marker } from 'react-native-maps';
-
+import { back_arrow } from '../assets';
 import { useLazyQuery } from '@apollo/client';
 import firebase from 'firebase/app';
 
@@ -46,6 +46,11 @@ function Restaurant({ route, navigation }) {
 	// if (restData) console.log("Dish on Rest Page", restData.dishMany[8])
 	return (
 		<SafeAreaView style={styles.container}>
+			<TouchableWithoutFeedback onPress={() => navigation.goBack()} style={{ backgroundColor: 'red' }}>
+				<View style={{ backgroundColor: 'rgba(52, 52, 52, 0)' }}>
+					<Image source={back_arrow} style={{ backgroundColor: 'rgba(52, 52, 52, 0)' }} />
+				</View>
+			</TouchableWithoutFeedback>
 			<MapView
 				style={{ flex: 1 }}
 				provider={'google'}

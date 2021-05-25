@@ -20,7 +20,6 @@ import AddDishRatingModal from '../components/Dish/AddDishRatingModal';
 
 function Dish({ route, navigation }) {
 	const { dish } = route.params
-	// console.log("dish on Dish Page", dish)
 
 	const [dishRatings, setDishRatings] = useState('')
 	const [isModalVisible, setModalVisible] = useState('');
