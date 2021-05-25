@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, SafeAreaView, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Image } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Image } from 'react-native';
 import { useQuery } from '@apollo/client';
 import MapView, { Marker } from 'react-native-maps';
 import { back_arrow } from '../assets';
@@ -45,10 +45,10 @@ function Restaurant({ route, navigation }) {
 	if (loading) return <Text> Loading... </Text>
 	if (error) return <Error />
 	return (
-		<SafeAreaView style={styles.container}>
+		<View style={styles.container}>
 			<TouchableWithoutFeedback onPress={() => navigation.goBack()} style={{ backgroundColor: 'red' }}>
-				<View style={{ backgroundColor: 'rgba(0, 0, 0, 0)', height: 0}}>
-					<Image source={back_arrow} style={{ backgroundColor: 'rgba(0, 0, 0, 0)', marginTop: '2%', zIndex: 90909090909 }} />
+				<View style={{ backgroundColor: 'rgba(0, 0, 0, 0)', height: 0 }}>
+					<Image source={back_arrow} style={styles.back_arrow} />
 				</View>
 			</TouchableWithoutFeedback>
 			<MapView
@@ -93,12 +93,18 @@ function Restaurant({ route, navigation }) {
 					))}
 				</ScrollView>
 			</View>
-		</SafeAreaView>
+		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	container: { flex: 1 },
+	back_arrow: {
+		backgroundColor: 'rgba(0, 0, 0, 0)',
+		marginTop: '8%',
+		marginLeft: '5%',
+		zIndex: 90909090909
+	},
 	restaurant_container: {
 		backgroundColor: '#FF5349',
 		justifyContent: "center",
