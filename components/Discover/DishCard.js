@@ -54,12 +54,15 @@ const DishCard = ({ dish, userID, likedSet }) => {
 	}
 
 	const numDollars = (price) => {
-		const roundPrice = Math.ceil(price / 10) + 1
-		// Need to key for react children problem, but not sure how to fix it...
-		const dollarSigns = roundPrice <= 5 ?
-			new Array(roundPrice).fill(null).map(() => <Image source={dollar_sign} key={Math.random()} />) :
-			new Array(5).fill(null).map(() => <Image source={dollar_sign} key={Math.random()} />)
-		return <Row>{dollarSigns}</Row>
+		const roundPrice = Math.ceil(price)
+		return (
+			<Row>
+				<Image source={dollar_sign} />
+				<Image source={dollar_sign} style={(roundPrice < 10) ? {display: 'none'} : {}} />
+				<Image source={dollar_sign} style={(roundPrice < 20) ? {display: 'none'} : {}} />
+				<Image source={dollar_sign} style={(roundPrice < 30) ? {display: 'none'} : {}} />
+			</Row>
+		)
 	}
 
 	return (
