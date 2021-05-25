@@ -55,7 +55,7 @@ function SearchRow({ toggle, searchTerm, navigation }) {
 					{restaurantResults?.map((r) => (
 						<TouchableOpacity
 							activeOpacit={0.1}
-							onPress={() => navigation.navigate('Restaurant', { r, navigation })}
+							onPress={() => navigation.navigate('Restaurant', { r })}
 							key={r._id}
 						>
 							<Row key={r._id} style={styles.rect2}>
@@ -83,7 +83,7 @@ function SearchRow({ toggle, searchTerm, navigation }) {
 					{dishResults?.map((dish) => (
 						<TouchableOpacity
 							activeOpacit={0.1}
-							onPress={() => navigation.navigate('Dish', { dish, navigation })}
+							onPress={() => navigation.navigate('Dish', { dish })}
 							key={dish._id}
 						>
 							<Row key={dish._id} style={styles.rect2}>

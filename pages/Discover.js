@@ -61,7 +61,6 @@ const Discover = ({ navigation }) => {
 					return recBois.indexOf(a._id) - recBois.indexOf(b._id)
 				})
 			)
-			console.log("trash", dishRecThings)
 		}
 	}, [data])
 
@@ -85,7 +84,7 @@ const Discover = ({ navigation }) => {
 			</View>
 		</View>)
 	if (dishRecThings) return (
-		<View style={{ backgroundColor: '#FDFCFC' }}>
+		<View style={{ backgroundColor: '#FDFCFC', height: '100%' }}>
 			<Title text={'Recommendations'} />
 			<View style={styles.item_container}>
 				<ScrollView showsVerticalScrollIndicator={false} marginBottom={'56%'} style={{ height: '100%' }}>
@@ -125,7 +124,6 @@ const styles = StyleSheet.create({
 	item_container: {
 		justifyContent: 'center',
 		alignItems: 'center',
-
 		backgroundColor: '#FDFCFC',
 	}
 });

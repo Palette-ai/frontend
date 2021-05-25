@@ -58,7 +58,7 @@ const Map = ({ navigation }) => {
 									style={styles.card}>
 									<Button
 										title={r.name}
-										onPress={() => navigation.navigate('Restaurant', { r, navigation })}
+										onPress={() => navigation.navigate('Restaurant', { r })}
 									>
 										{r.name}
 									</Button>
