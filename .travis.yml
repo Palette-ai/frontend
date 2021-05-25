@@ -8,5 +8,5 @@ cache: yarn
 #before_script:
 #  - npm install -g npm@latest
 script:
-  - yarn test
+  - yarn test --legacy-peer-deps
   #- npx jest --ci
