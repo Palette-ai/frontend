@@ -15,6 +15,7 @@ import UpdateDishRatingModal from '../components/Dish/UpdateDishRatingModal';
 import firebase from 'firebase/app'
 import SignOut from '../components/Profile/SignOut';
 import ForgotPass from '../components/Profile/ForgotPass';
+import Error from '../components/Error'
 
 const Profile = () => {
 	const [dishRatings, setDishRatings] = useState('');
@@ -42,7 +43,7 @@ const Profile = () => {
 	}, [data])
 
 	if (loading) return <Text>Loading...</Text>
-	if (error) return <Text>Ratings had trouble loading, whoopsy...</Text>
+	if (error) return <Error />
 
 	const _onRefresh = () => {
 		setRefreshing('true')

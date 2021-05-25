@@ -10,6 +10,7 @@ import { GET_DISHES_RESTAURANT } from '../queries/dishes';
 import DishCard from '../components/Discover/DishCard';
 import { USER_LIKED_DISHES } from '../queries/users';
 import { GET_RESTAURANT_BY_ID } from '../queries/restaurants';
+import Error from '../components/Error'
 
 function Restaurant({ route, navigation }) {
 	// Get list of dishes that the user has liked
@@ -42,8 +43,7 @@ function Restaurant({ route, navigation }) {
 	})
 
 	if (loading) return <Text> Loading... </Text>
-	if (error) return <Text>{error}</Text>
-	// if (restData) console.log("Dish on Rest Page", restData.dishMany[8])
+	if (error) return <Error />
 	return (
 		<SafeAreaView style={styles.container}>
 			<TouchableWithoutFeedback onPress={() => navigation.goBack()} style={{ backgroundColor: 'red' }}>

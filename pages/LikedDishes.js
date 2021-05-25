@@ -1,11 +1,13 @@
 import React, { useMemo, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View, RefreshControl } from 'react-native';
-import DishCard from '../components/Discover/DishCard';
 import firebase from 'firebase/app';
 import mongoose from 'mongoose';
-import { USER_LIKES } from '../queries/users';
 import { useQuery } from '@apollo/client';
+
+import DishCard from '../components/Discover/DishCard';
+import { USER_LIKES } from '../queries/users';
 import Title from '../components/Discover/Title';
+import Error from '../components/Error'
 
 const LikedDishes = ({ navigation }) => {
 	const [refreshing, setRefreshing] = useState(false);
@@ -26,7 +28,7 @@ const LikedDishes = ({ navigation }) => {
 	const userIDString = firebase.auth().currentUser.photoURL;
 
 	if (loading) return <Text style={styles.standby}>Loading...</Text>
-	if (error) return <Text style={styles.standby}>Houston we have a problem</Text>
+	if (error) return <Error />
 	return (
 		<View style={styles.container}>
 			<Title text={"Liked Dishes"} />
