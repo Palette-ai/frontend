@@ -3,6 +3,7 @@ node_js:
   - node
   - lts/*
 cache: yarn
+  npm: false
   #directories:
   #  - ~/.npm
 #before_script:
