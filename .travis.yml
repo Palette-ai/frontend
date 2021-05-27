@@ -2,12 +2,10 @@ language: node_js
 node_js:
   - node
   - lts/*
-cache: yarn
-  npm: false
-  #directories:
-  #  - ~/.npm
-#before_script:
-#  - npm install -g npm@latest
+cache:
+  directories:
+    - ~/.npm
+before_script:
+  - npm install -g npm@latest
 script:
-  - yarn test
-  #- npx jest --ci
+  - npm ci
