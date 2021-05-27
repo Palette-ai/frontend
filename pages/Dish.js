@@ -70,7 +70,11 @@ function Dish({ route, navigation }) {
 						</Col>
 						<Col>
 							<Row style={styles.dish_container}>
-								<Text style={styles.dish_description_container}>{dish.description}</Text>
+								<View style={{height: 62, marginBottom: "3%"}}>
+									<ScrollView>
+										<Text style={styles.dish_description_container}>{dish.description}</Text>
+									</ScrollView>
+								</View>
 								<Button
 									onPress={() => navigation.navigate('Restaurant', { r: dish.restaurant })}
 									style={styles.add_review_btn}
@@ -155,7 +159,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#FF5349',
 		paddingTop: '0%',
 		width: '100%',
-		height: '60%',
+		height: '55%',
 		borderTopLeftRadius: 30,
 		borderTopRightRadius: 30,
 		zIndex: -1,
@@ -203,7 +207,7 @@ const styles = StyleSheet.create({
 		color: '#fff',
 	},
 	add_review_btn: {
-		marginRight: '10%',
+		marginRight: '20%',
 		marginBottom: '5%',
 		width: '80%',
 	},
