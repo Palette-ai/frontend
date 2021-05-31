@@ -2,12 +2,15 @@ language: node_js
 node_js:
   - node
   - lts/*
-cache: yarn
+before_install: # if "install" is overridden
+  # Repo for Yarn
+  - sudo apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
+  - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+  - sudo apt-get update -qq
+  - sudo apt-get install -y -qq yarn
+  - npm install --force
+cache:
   npm: false
-  #directories:
-  #  - ~/.npm
-#before_script:
-#  - npm install -g npm@latest
+  yarn: true
 script:
   - yarn test
-  #- npx jest --ci
