@@ -24,6 +24,7 @@ const Discover = ({ navigation }) => {
 	const [recBois, setRecBois] = useState('')
 	const [dishRecThings, setDishRecThings] = useState('')
 	const [userIDString, setuserIDString] = useState(firebase.auth().currentUser.photoURL)
+	const [otherError, setOtherError] = useState(false)
 
 	// Get list of dishes that the user has liked
 	const [getLikedDishes, { loading: likedLoading, error: likedError, data: likedData }] = useLazyQuery(USER_LIKED_DISHES)
@@ -49,6 +50,7 @@ const Discover = ({ navigation }) => {
 			})
 			.catch(e => {
 				console.log(e)
+				setOtherError(true)
 			})
 
 		return () => clearTimeout(waitUntilIDIsInFirebase)
@@ -71,7 +73,7 @@ const Discover = ({ navigation }) => {
 		}
 	}, [likedData])
 
-	if (error) return <Error />
+	if (error || otherError) return <Error />
 	if (loading || userIDString === null || dishRecThings == '') return (
 		<View style={{ backgroundColor: '#FDFCFC', height: '100%', }}>
 			<Title text={'Recommendations'} />
