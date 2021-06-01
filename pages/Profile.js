@@ -61,7 +61,7 @@ const Profile = () => {
 							<Text 
 							numberOfLines={3}
 							adjustsFontSizeToFit
-							style={styles.dish_name}>Hello, {firebase.auth().currentUser.displayName}</Text>
+							style={styles.dish_name}>Hello,{"\n"}{firebase.auth().currentUser.displayName}</Text>
 						</Col>
 						<Col>
 							<SignOut />
