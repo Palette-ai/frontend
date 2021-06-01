@@ -43,9 +43,9 @@ function SearchRow({ toggle, searchTerm, navigation }) {
 		}
 	}, [data])
 
-	if (searchTerm === '') return <Text>Enter a search term</Text>
+	if (searchTerm === '') return <Text style={{fontSize: 24, color: "#FFFFFF", marginLeft: "20%", fontWeight: "bold"}}>Enter a search term!</Text>
 	if (restaurantResults == [] && dishResults == []) return <Text>No results :(</Text>
-	if (loading) return <Text>Loading...</Text>
+	if (loading) return <Text style={{fontSize: 24, color: "#FFFFFF", marginLeft: "35%", fontWeight: "bold"}}>Loading...</Text>
 	if (error) return <Text>Search had trouble loading, whoopsy...</Text>
 	return (
 		!toggle

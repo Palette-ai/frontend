@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
 	ScrollView,
 	StyleSheet,
-	Text,
 	View,
 } from 'react-native'
 import { useLazyQuery } from '@apollo/client';

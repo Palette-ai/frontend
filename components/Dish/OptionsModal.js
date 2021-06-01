@@ -27,17 +27,18 @@ function AddDishRatingModal({ isModalVisible, setModalVisible, dish }) {
 			<Card disabled={true}>
 				<Row>
 					<Button title="Add Review" onPress={() => { AppLink.maybeOpenURL('ubereats://', { appName: 'UberEats', appStoreId: '1058959277', appStoreLocale: 'us', playStoreId: 'com.ubercab.eats' }) }}>
-						open in ubereats
+						Open in Uber Eats
           			</Button>
 				</Row>
 				<Row>
 				</Row>
 				<Button
+					style={styles.contact_button}
 					title="Add Review"
 					onPress={() => Linking.openURL(`tel:${data.restaurantById.phone_number}`)}
 
 				>
-					Call restaurant
+					Call Restaurant
           </Button>
 			</Card>
 		</Modal>
@@ -49,6 +50,9 @@ const styles = StyleSheet.create({
 	backdrop: {
 		backgroundColor: 'rgba(0, 0, 0, 0.5)',
 
+	},
+	contact_button: {
+		marginTop: '10%',
 	},
 });
 

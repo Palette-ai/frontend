@@ -185,7 +185,8 @@ const styles = StyleSheet.create({
 	},
 	review_item: {
 		marginTop: '5%',
-		marginLeft: '5%'
+		marginLeft: '5%',
+		marginRight: '5%',
 	},
 	dish_container: {
 		width: '90%',

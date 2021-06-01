@@ -58,7 +58,10 @@ const Profile = () => {
 				<Grid>
 					<Row>
 						<Col>
-							<Text style={styles.dish_name}>{firebase.auth().currentUser.displayName}</Text>
+							<Text 
+							numberOfLines={3}
+							adjustsFontSizeToFit
+							style={styles.dish_name}>Hello, {firebase.auth().currentUser.displayName}</Text>
 						</Col>
 						<Col>
 							<SignOut />
@@ -137,7 +140,8 @@ const styles = StyleSheet.create({
 		zIndex: -1,
 	},
 	dish_name: {
-		fontSize: 28,
+		fontSize: 30,
+		//fontWeight: "bold",
 		marginLeft: '20%'
 	},
 	item_container: {
