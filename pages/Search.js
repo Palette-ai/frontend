@@ -34,11 +34,11 @@ function Search({ navigation }) {
 					</Row>
 					<Row style={styles.toggle_thing}>
 						<Grid style={styles.restaurant_box}>
-							<Text>Restaurants</Text>
+							<Text style ={{fontSize: 22}}>Restaurants</Text>
 						</Grid>
 						<Toggle checked={toggle} onChange={checked => setToggle(checked)} />
 						<Grid style={styles.dish_box}>
-							<Text>Dishes</Text>
+							<Text style={{fontSize: 22, marginLeft: "20%"}}>Dishes</Text>
 						</Grid>
 					</Row>
 				</Grid>
@@ -131,6 +131,6 @@ const styles = StyleSheet.create({
 	review_text: { color: '#fff' },
 	add_review_btn: {
 		marginRight: '5%'
-	}
+	},
 });
 export default Search;
