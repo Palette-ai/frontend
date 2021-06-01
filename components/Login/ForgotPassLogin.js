@@ -20,7 +20,7 @@ function ForgotPassLogin() {
 				onPress={() => setModalVisible(true)}
 				style={styles.container}
 			>
-				<Text style={styles.text}>{"Forgot you Password?"}</Text>
+				<Text style={styles.text}>{"Forgot your Password?"}</Text>
 			</TouchableOpacity>
 			<DialogInput isDialogVisible={modalVisible}
 				title={"Password Reset"}
