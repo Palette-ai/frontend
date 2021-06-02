@@ -48,7 +48,7 @@ const Profile = () => {
 	const _onRefresh = () => {
 		setRefreshing('true')
 		refetch()
-		setReviews(data.dishRatingMany.slice().sort((a, b) => b.createdAt - a.createdAt))
+		setReviews(data.dishRatingMany.slice().sort((a, b) => a.createdAt < b.createdAt))
 		setRefreshing('false')
 	}
 
